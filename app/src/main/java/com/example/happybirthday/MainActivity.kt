@@ -14,7 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 const val GRAVITY = -10.0f
 const val FLAP_VELOCITY = 100.0f
 const val UPDATE_INTERVAL = 30L
-
+//hello-dc
 class MainActivity : AppCompatActivity() {
 
     //thread stuff
