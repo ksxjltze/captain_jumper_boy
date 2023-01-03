@@ -1,8 +1,10 @@
 package com.example.happybirthday
 
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
+import android.util.DisplayMetrics
 import android.view.MotionEvent
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -89,8 +91,17 @@ class MainActivity : AppCompatActivity() {
         }
 
         private fun getScreenHeight(): Int {
-            // get device dimensions
-            return activity.windowManager.currentWindowMetrics.bounds.height()
+            //wtf is this syntax man?
+            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) //API version 30
+            {
+                activity.windowManager.currentWindowMetrics.bounds.height()
+            } else {
+                //DEPRECATED BUT WHATEVER
+                val displayMetrics = DisplayMetrics()
+                @Suppress("DEPRECATION")
+                activity.windowManager.defaultDisplay.getMetrics(displayMetrics)
+                displayMetrics.heightPixels
+            }
         }
     }
 
