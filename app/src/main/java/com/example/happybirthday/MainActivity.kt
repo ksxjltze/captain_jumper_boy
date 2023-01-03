@@ -19,30 +19,78 @@ class MainActivity : AppCompatActivity() {
     private lateinit var updateThread: HandlerThread
     private lateinit var updateHandler: Handler
 
-    //views
-    private lateinit var gameLayout: ConstraintLayout
-    private lateinit var bird: ImageView
-    private lateinit var ground: ImageView
-
-    //game stuff
-    private var birdX = 0.0f
-    private var birdY = 0.0f
-    private var groundY = 0.0f
-    private var velocity = 0.0f
-
     class Game(act: MainActivity, hand : Handler) : Runnable
     {
         private var activity: MainActivity
         private var handler: Handler
 
+        //views
+        private var gameLayout: ConstraintLayout
+        private var bird: ImageView
+        private var ground: ImageView
+
+        //game stuff
+        private var birdX = 0.0f
+        private var birdY = 0.0f
+        private var groundY = 0.0f
+        private var velocity = 0.0f
+
         init{
             activity = act
             handler = hand
+
+            // Initialize bird
+            birdX = 100.0f
+            birdY = 300.0f
+
+            groundY = 0.0f
+
+            //initialize view refs
+            gameLayout = activity.findViewById(R.id.gameLayout)
+            bird = activity.findViewById(R.id.bird)
+            ground = activity.findViewById(R.id.ground)
+
+            //all of the following calculation assumes that y = 0 is for some reason in the center of the screen
+            //somewhat scuffed method for calculating ground height
+            // https://stackoverflow.com/questions/3591784/views-getwidth-and-getheight-returns-0
+            ground.post {groundY += getScreenHeight() * 0.5f - ground.height }
+            bird.post {groundY -= bird.height * 0.5f}
+
+            // Set up touch listener
+            gameLayout.setOnTouchListener { _, event ->
+                if (event.action == MotionEvent.ACTION_DOWN) {
+                    // Flap the bird when the screen is tapped
+                    velocity = -FLAP_VELOCITY
+                    gameLayout.performClick() //gets rid of some warning
+                }
+                true
+            }
         }
 
         override fun run(){
-            activity.update()
+            update()
             handler.postDelayed(this, UPDATE_INTERVAL)
+        }
+
+        private fun update() {
+            // Update bird position
+            birdY += velocity
+            velocity -= GRAVITY
+
+            // Check for collision with ground
+            if (birdY > groundY - bird.height) {
+                birdY = groundY - bird.height
+                velocity = 0.0f
+            }
+
+            // Update positions
+            bird.translationX = birdX
+            bird.translationY = birdY
+        }
+
+        private fun getScreenHeight(): Int {
+            // get device dimensions
+            return activity.windowManager.currentWindowMetrics.bounds.height()
         }
     }
 
@@ -56,60 +104,11 @@ class MainActivity : AppCompatActivity() {
         updateThread.start()
         updateHandler = Handler(updateThread.looper)
 
-        //initialize view refs
-        gameLayout = findViewById(R.id.gameLayout)
-        bird = findViewById(R.id.bird)
-        ground = findViewById(R.id.ground)
-
-        // Initialize bird
-        birdX = 100.0f
-        birdY = 300.0f
-
-        groundY = 0.0f
-
-        //all of the following calculation assumes that y = 0 is for some reason in the center of the screen
-
-        //somewhat scuffed method for calculating ground height
-        // https://stackoverflow.com/questions/3591784/views-getwidth-and-getheight-returns-0
-        ground.post {groundY += getScreenHeight() * 0.5f - ground.height }
-        bird.post {groundY -= bird.height * 0.5f}
-
-        // Update positions
-        update()
-
-        // Set up touch listener
-        gameLayout.setOnTouchListener { _, event ->
-            if (event.action == MotionEvent.ACTION_DOWN) {
-                // Flap the bird when the screen is tapped
-                velocity = -FLAP_VELOCITY
-                gameLayout.performClick() //gets rid of some warning
-            }
-            true
-        }
+        val game = Game(this, updateHandler)
 
         // Start the update loop
-        updateHandler.post(Game(this, updateHandler))
+        updateHandler.post(game)
     }
 
-    private fun update() {
-        // Update bird position
-        birdY += velocity
-        velocity -= GRAVITY
-
-        // Check for collision with ground
-        if (birdY > groundY - bird.height) {
-            birdY = groundY - bird.height
-            velocity = 0.0f
-        }
-
-        // Update positions
-        bird.translationX = birdX
-        bird.translationY = birdY
-    }
-
-    fun getScreenHeight(): Int {
-        // get device dimensions
-        return windowManager.currentWindowMetrics.bounds.height()
-    }
 }
 
