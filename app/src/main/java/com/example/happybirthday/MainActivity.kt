@@ -13,7 +13,7 @@ const val GRAVITY = -10.0f
 const val FLAP_VELOCITY = 100.0f
 const val UPDATE_INTERVAL = 30L
 
-class MainActivity : AppCompatActivity(), Runnable {
+class MainActivity : AppCompatActivity() {
 
     //thread stuff
     private lateinit var updateThread: HandlerThread
@@ -29,6 +29,22 @@ class MainActivity : AppCompatActivity(), Runnable {
     private var birdY = 0.0f
     private var groundY = 0.0f
     private var velocity = 0.0f
+
+    class Game(act: MainActivity, hand : Handler) : Runnable
+    {
+        private var activity: MainActivity
+        private var handler: Handler
+
+        init{
+            activity = act
+            handler = hand
+        }
+
+        override fun run(){
+            activity.update()
+            handler.postDelayed(this, UPDATE_INTERVAL)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,13 +82,13 @@ class MainActivity : AppCompatActivity(), Runnable {
             if (event.action == MotionEvent.ACTION_DOWN) {
                 // Flap the bird when the screen is tapped
                 velocity = -FLAP_VELOCITY
-
+                gameLayout.performClick() //gets rid of some warning
             }
             true
         }
 
         // Start the update loop
-        updateHandler.post(this)
+        updateHandler.post(Game(this, updateHandler))
     }
 
     private fun update() {
@@ -89,11 +105,6 @@ class MainActivity : AppCompatActivity(), Runnable {
         // Update positions
         bird.translationX = birdX
         bird.translationY = birdY
-    }
-
-    override fun run() {
-        update()
-        updateHandler.postDelayed(this, UPDATE_INTERVAL)
     }
 
     fun getScreenHeight(): Int {
