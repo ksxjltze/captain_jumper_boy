@@ -119,7 +119,6 @@ class GameActivity : AppCompatActivity() {
         val spritesheet = BitmapFactory.decodeResource(resources,R.drawable.spritesheet_)
         val rows = 2
         val cols = 4
-        val maxFrame: Int = rows * cols
         val frames = ArrayList<Bitmap>()
 
         val width: Int = spritesheet.width / cols
