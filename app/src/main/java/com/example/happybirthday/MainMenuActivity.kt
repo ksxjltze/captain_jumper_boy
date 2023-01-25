@@ -18,9 +18,8 @@ class MainMenuActivity : AppCompatActivity() {
 
         val startbtn: Button = findViewById(R.id.playbtn)
 
-
         startbtn.setOnClickListener {
-            Toast.makeText(this, "Temp Button Pressed!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Game starting!", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, GameActivity::class.java)
             startActivity(intent)
         }
