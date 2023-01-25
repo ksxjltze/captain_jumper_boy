@@ -15,15 +15,15 @@ const val GRAVITY = -10.0f
 const val FLAP_VELOCITY = 100.0f
 const val UPDATE_INTERVAL = 30L
 //hello-dc
-class MainActivity : AppCompatActivity() {
+class GameActivity : AppCompatActivity() {
 
     //thread stuff
     private lateinit var updateThread: HandlerThread
     private lateinit var updateHandler: Handler
 
-    class Game(act: MainActivity, hand : Handler) : Runnable
+    class Game(act: GameActivity, hand : Handler) : Runnable
     {
-        private var activity: MainActivity
+        private var activity: GameActivity
         private var handler: Handler
 
         //views
@@ -107,7 +107,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_game)
 
         // Create a background thread for updates
         // aka game loop
