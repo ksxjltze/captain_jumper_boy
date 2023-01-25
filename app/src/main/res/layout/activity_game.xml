@@ -39,7 +39,7 @@
         android:id="@+id/bird"
         android:layout_width="79dp"
         android:layout_height="78dp"
-        android:src="@drawable/bird"
+        android:src="@drawable/spritesheet_"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/bg"

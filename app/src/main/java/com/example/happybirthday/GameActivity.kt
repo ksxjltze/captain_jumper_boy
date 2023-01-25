@@ -1,5 +1,9 @@
 package com.example.happybirthday
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.AnimationDrawable
+import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -9,6 +13,7 @@ import android.view.MotionEvent
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+
 
 //global constants
 const val GRAVITY = -10.0f
@@ -23,6 +28,7 @@ class GameActivity : AppCompatActivity() {
 
     class Game(act: GameActivity, hand : Handler) : Runnable
     {
+
         private var activity: GameActivity
         private var handler: Handler
 
@@ -108,6 +114,30 @@ class GameActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
+
+        //ANIMATION
+        val spritesheet = BitmapFactory.decodeResource(resources,R.drawable.spritesheet_)
+        val rows = 2
+        val cols = 4
+        val maxFrame: Int = rows * cols
+        val frames = ArrayList<Bitmap>()
+
+        val width: Int = spritesheet.width / cols
+        val height: Int = spritesheet.height / rows
+        for (row in 0 until rows) {
+            for (col in 0 until cols) {
+                frames.add(Bitmap.createBitmap(spritesheet, col * width, row * height, width, height))
+            }
+        }
+
+        val imageView = findViewById<ImageView>(R.id.bird)
+        val animation = AnimationDrawable()
+        for (frame in frames) {
+            animation.addFrame(BitmapDrawable(resources, frame), 100)
+        }
+        animation.isOneShot = false
+        imageView.setImageDrawable(animation)
+        animation.start()
 
         // Create a background thread for updates
         // aka game loop
