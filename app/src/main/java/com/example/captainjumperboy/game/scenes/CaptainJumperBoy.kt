@@ -9,17 +9,29 @@ import com.example.captainjumperboy.ui.GameView
 
 class CaptainJumperBoy(view : GameView) : Scene(view){
     init {
+        val birdBitmap = BitmapFactory.decodeResource(view.resources, R.drawable.bird)
+
         val keithObject = getObject()
-        val transform = keithObject.transform
+        var transform = keithObject.transform
 
         transform.position.x = 100F
-        transform.scale.x = 0.5F
-        transform.scale.y = 0.5F
+        transform.scale.x = 2F
+        transform.scale.y = 2F
         transform.rotation = 0F
 
-        val sprite = Sprite(BitmapFactory.decodeResource(view.resources, R.drawable.bird))
-        keithObject.addComponent(sprite)
+        val keithSprite = Sprite(birdBitmap)
+        keithObject.addComponent(keithSprite)
         keithObject.addScript<Keith>()
+
+        val matthiasObject = getObject()
+        transform = matthiasObject.transform
+        transform.position.y = 100F
+        transform.scale.x = 1F
+
+        val matthiasSprite = Sprite(birdBitmap)
+        matthiasObject.addComponent(matthiasSprite)
+        matthiasObject.addScript<Keith>()
+
     }
 
 }

@@ -9,7 +9,7 @@ open class Scene(var view: GameView) {
     //get first inactive object, creates a new game object if none found
     fun getObject() : GameObject{
         return try {
-            gameObjectList.first { gameObject -> gameObject.active }
+            gameObjectList.first { gameObject -> !gameObject.active }
         }
         catch (_ : Exception){
             if (!gameObjectList.add(GameObject()))
