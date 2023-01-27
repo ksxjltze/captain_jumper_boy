@@ -10,10 +10,15 @@ import com.example.captainjumperboy.ui.GameView
 class CaptainJumperBoy(view : GameView) : Scene(view){
     init {
         val keithObject = getObject()
+        val transform = keithObject.transform
+
+        transform.position.x = 10F
+        transform.scale.x = 2F
+        transform.rotation = 45F
+
         val sprite = Sprite(BitmapFactory.decodeResource(view.resources, R.drawable.bird))
         keithObject.addComponent(sprite)
         keithObject.addScript<Keith>()
-        //keithObject.addScript(Keith::class)
     }
 
 }
