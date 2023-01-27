@@ -3,7 +3,6 @@ package com.example.captainjumperboy.engine
 import android.graphics.Canvas
 import com.example.captainjumperboy.engine.component.Component
 import com.example.captainjumperboy.engine.component.Scriptable
-import com.example.captainjumperboy.game.Keith
 import com.example.captainjumperboy.math.Transform
 import kotlin.reflect.KClass
 
@@ -32,7 +31,10 @@ class GameObject() {
         componentList.add(component)
     }
 
+    inline fun <reified T : Any> addScript(){
+        addScript(T::class)
+    }
     fun <T : Any> addScript(klass: KClass<T>) {
-        //scriptList.add(klass.constructors.first { it.parameters.size==1 }.call(this) as Scriptable)
+        scriptList.add(klass.constructors.first { it.parameters.size==1 }.call(this) as Scriptable)
     }
 }

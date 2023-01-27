@@ -44,7 +44,8 @@ class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback
         sprite = Sprite(BitmapFactory.decodeResource(resources, R.drawable.bird))
         val keithObject = scene.getObject()
         keithObject.addComponent(sprite)
-        keithObject.addScript(Keith::class)
+        keithObject.addScript<Keith>()
+        //keithObject.addScript(Keith::class)
 
         thread.setRunning(true)
         thread.start()
