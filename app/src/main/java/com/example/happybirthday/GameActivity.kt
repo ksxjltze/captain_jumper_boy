@@ -4,6 +4,8 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.AnimationDrawable
 import android.graphics.drawable.BitmapDrawable
+import android.media.MediaPlayer
+import android.media.audiofx.Equalizer
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -13,6 +15,7 @@ import android.view.MotionEvent
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+
 
 
 //global constants
@@ -138,6 +141,13 @@ class GameActivity : AppCompatActivity() {
         animation.isOneShot = false
         imageView.setImageDrawable(animation)
         animation.start()
+
+        //AUDIO
+        val mediaPlayer = MediaPlayer.create(this, R.raw.bgm)
+        mediaPlayer.start()
+        mediaPlayer.setVolume(0.5f,1.0f)
+        mediaPlayer.isLooping = true
+
 
         // Create a background thread for updates
         // aka game loop
