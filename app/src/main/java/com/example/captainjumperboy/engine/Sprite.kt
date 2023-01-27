@@ -7,12 +7,15 @@ import com.example.captainjumperboy.engine.component.Renderable
 
 class Sprite(private var image : Bitmap) : Renderable, Component() {
     public override fun draw(canvas: Canvas){
-        //is this expensive? lol dunno
-        canvas.save()
+        canvas.save() //poosh
+
+        //this transform order seems to work so far
         canvas.translate(transform.position.x, transform.position.y);
         canvas.scale(transform.scale.x, transform.scale.y)
         canvas.rotate(transform.rotation)
-        canvas.drawBitmap(image, 0F, 0F, null)
-        canvas.restore()
+
+        //draw the sprite in center of transformed canvas, effectively applying the transform to the sprite
+        canvas.drawBitmap(image, image.width/2F, image.height/2F, null)
+        canvas.restore() //poup
     }
 }
