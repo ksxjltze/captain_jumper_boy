@@ -17,7 +17,7 @@ class MainMenuActivity : AppCompatActivity() {
 
         startbtn.setOnClickListener {
             Toast.makeText(this, "Game starting!", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, GameActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
 
