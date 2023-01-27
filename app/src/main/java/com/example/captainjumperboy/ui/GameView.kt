@@ -10,7 +10,8 @@ import android.view.SurfaceHolder
 import android.view.SurfaceView
 import com.example.captainjumperboy.R
 import com.example.captainjumperboy.game.GameThread
-import com.example.captainjumperboy.game.Sprite
+import com.example.captainjumperboy.game.engine.Scene
+import com.example.captainjumperboy.game.engine.Sprite
 
 class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback{
     companion object{
@@ -18,6 +19,7 @@ class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback
     }
 
     private lateinit var sprite : Sprite
+    private var scene = Scene()
 
     init {
         holder.addCallback(this)
@@ -33,16 +35,13 @@ class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback
         super.draw(canvas)
         if (canvas != null) {
             canvas.drawColor(Color.WHITE)
-            val paint = Paint()
-            paint.color = Color.rgb(250, 0, 0)
-            canvas.drawRect(100F, 100F, 200F, 200F, paint)
-
-            sprite.draw(canvas)
+            scene.draw(canvas)
         }
     }
 
     override fun surfaceCreated(holder: SurfaceHolder) {
         sprite = Sprite(BitmapFactory.decodeResource(resources, R.drawable.bird))
+        scene.getObject().addComponent(sprite)
 
         thread.setRunning(true)
         thread.start()
