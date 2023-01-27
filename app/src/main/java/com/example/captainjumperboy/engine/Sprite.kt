@@ -9,15 +9,10 @@ import com.example.captainjumperboy.engine.component.Renderable
 
 class Sprite(private var image : Bitmap) : Renderable, Component() {
     public override fun draw(canvas: Canvas){
+        val matrix = transform.getMatrix()
+        matrix.preConcat(Camera.transform.getMatrix());
 
-        //@todo could move elsewhere
-        //@todo camera stuff
-        val matrix = Matrix()
-        matrix.postScale(transform.scale.x, transform.scale.y)
-        matrix.postRotate(  transform.rotation)
-        matrix.postTranslate(transform.position.x, transform.position.y);
-
-        //apply transform
+        //apply transform and draw
         canvas.withMatrix(matrix) {
             canvas.drawBitmap(image, 0F, 0F, null)
         }
