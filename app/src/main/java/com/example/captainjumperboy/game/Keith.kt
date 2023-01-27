@@ -6,11 +6,7 @@ import com.example.captainjumperboy.engine.GameObject
 import com.example.captainjumperboy.engine.component.Scriptable
 import com.example.captainjumperboy.math.Transform
 
-class Keith(override var gameObject: GameObject) : Scriptable{
-    override var transform: Transform
-        get() = gameObject.transform
-        set(value) {gameObject.transform = value}
-
+class Keith(gameObject: GameObject) : Scriptable(gameObject) {
     override fun start() {
 
     }

@@ -41,8 +41,8 @@ class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback
 
     override fun surfaceCreated(holder: SurfaceHolder) {
         // TODO: move
-        sprite = Sprite(BitmapFactory.decodeResource(resources, R.drawable.bird))
         val keithObject = scene.getObject()
+        sprite = Sprite(keithObject, BitmapFactory.decodeResource(resources, R.drawable.bird))
         keithObject.addComponent(sprite)
         keithObject.addScript<Keith>()
         //keithObject.addScript(Keith::class)

@@ -5,12 +5,8 @@ import android.graphics.Canvas
 import com.example.captainjumperboy.engine.component.Component
 import com.example.captainjumperboy.engine.component.Renderable
 
-class Sprite(private var image : Bitmap) : Renderable, Component{
-    override fun update() {
-
-    }
-
+class Sprite(gameObject: GameObject, private var image : Bitmap) : Renderable, Component(gameObject) {
     public override fun draw(canvas: Canvas){
-        canvas.drawBitmap(image, 100F, 100F, null)
+        canvas.drawBitmap(image, transform.position.x, transform.position.y, null)
     }
 }
