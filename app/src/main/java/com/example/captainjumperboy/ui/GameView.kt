@@ -5,13 +5,13 @@ import android.content.Context
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.Paint
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import com.example.captainjumperboy.R
-import com.example.captainjumperboy.game.GameThread
-import com.example.captainjumperboy.game.engine.Scene
-import com.example.captainjumperboy.game.engine.Sprite
+import com.example.captainjumperboy.engine.GameThread
+import com.example.captainjumperboy.engine.Scene
+import com.example.captainjumperboy.engine.Sprite
+import com.example.captainjumperboy.game.Keith
 
 class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback{
     companion object{
@@ -28,7 +28,7 @@ class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback
     }
 
     fun update(){
-
+        scene.update()
     }
 
     override fun draw(canvas: Canvas?) {
@@ -40,8 +40,11 @@ class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback
     }
 
     override fun surfaceCreated(holder: SurfaceHolder) {
+        // TODO: move
         sprite = Sprite(BitmapFactory.decodeResource(resources, R.drawable.bird))
-        scene.getObject().addComponent(sprite)
+        val keithObject = scene.getObject()
+        keithObject.addComponent(sprite)
+        keithObject.addScript(Keith::class)
 
         thread.setRunning(true)
         thread.start()

@@ -1,4 +1,4 @@
-package com.example.captainjumperboy.game
+package com.example.captainjumperboy.engine
 
 import android.graphics.Canvas
 import android.view.SurfaceHolder
