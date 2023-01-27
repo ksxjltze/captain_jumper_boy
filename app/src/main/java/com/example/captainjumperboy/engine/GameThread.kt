@@ -18,6 +18,7 @@ class GameThread(private var surfaceHolder: SurfaceHolder, private var gameView:
     }
 
     override fun run() {
+        //variables for frame rate control
         var startTime: Long
         var timeMillis: Long
         var waitTime: Long
@@ -48,6 +49,7 @@ class GameThread(private var surfaceHolder: SurfaceHolder, private var gameView:
                 }
             }
 
+            //frame rate controller, @todo could move into separate class
             timeMillis = (System.nanoTime() - startTime) / 1000000
             waitTime = targetTime - timeMillis
 

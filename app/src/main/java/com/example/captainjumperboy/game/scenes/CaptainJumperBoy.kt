@@ -12,9 +12,10 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
         val keithObject = getObject()
         val transform = keithObject.transform
 
-        transform.position.x = 10F
-        transform.scale.x = 2F
-        transform.rotation = 45F
+        transform.position.x = 100F
+        transform.scale.x = 0.5F
+        transform.scale.y = 0.5F
+        transform.rotation = 0F
 
         val sprite = Sprite(BitmapFactory.decodeResource(view.resources, R.drawable.bird))
         keithObject.addComponent(sprite)
