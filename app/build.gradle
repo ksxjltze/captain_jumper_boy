@@ -7,7 +7,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.example.happybirthday"
+        applicationId "com.example.captainjumperboy"
         minSdk 19
         targetSdk 32
         versionCode 1
@@ -29,7 +29,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    namespace 'com.example.happybirthday'
+    namespace 'com.example.captainjumperboy'
 }
 
 dependencies {

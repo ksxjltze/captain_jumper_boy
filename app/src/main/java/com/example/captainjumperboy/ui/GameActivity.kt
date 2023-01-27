@@ -1,4 +1,4 @@
-package com.example.happybirthday
+package com.example.captainjumperboy.ui
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -13,6 +13,7 @@ import android.view.MotionEvent
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.captainjumperboy.R
 
 
 //global constants
@@ -116,7 +117,7 @@ class GameActivity : AppCompatActivity() {
         setContentView(R.layout.activity_game)
 
         //ANIMATION
-        val spritesheet = BitmapFactory.decodeResource(resources,R.drawable.spritesheet_)
+        val spritesheet = BitmapFactory.decodeResource(resources, R.drawable.spritesheet_)
         val rows = 2
         val cols = 4
         val maxFrame: Int = rows * cols

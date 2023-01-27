@@ -13,7 +13,7 @@
         android:theme="@style/Theme.HappyBirthday"
         tools:targetApi="31">
         <activity
-            android:name=".MainMenuActivity"
+            android:name=".ui.MainMenuActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +23,7 @@
         </activity>
 
         <activity
-            android:name=".GameActivity"
+            android:name=".ui.GameActivity"
             android:exported="true">
 
         </activity>

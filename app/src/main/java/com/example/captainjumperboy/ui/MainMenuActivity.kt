@@ -1,14 +1,11 @@
-package com.example.happybirthday
+package com.example.captainjumperboy.ui
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.HandlerThread
 import android.widget.Button
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.appcompat.app.AppCompatActivity
+import com.example.captainjumperboy.R
 
 class MainMenuActivity : AppCompatActivity() {
 
