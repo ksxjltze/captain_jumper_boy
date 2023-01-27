@@ -30,6 +30,12 @@
 
         </activity>
 
+        <activity
+            android:name=".PhysicsTestActivity"
+            android:exported="true">
+
+        </activity>
+
     </application>
 
 </manifest>
