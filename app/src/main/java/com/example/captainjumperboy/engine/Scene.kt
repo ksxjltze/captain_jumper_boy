@@ -1,8 +1,9 @@
 package com.example.captainjumperboy.engine
 
 import android.graphics.Canvas
+import com.example.captainjumperboy.ui.GameView
 
-class Scene {
+open class Scene(var view: GameView) {
     var gameObjectList = ArrayList<GameObject>()
 
     //get first inactive object, creates a new game object if none found

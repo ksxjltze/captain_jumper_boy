@@ -11,15 +11,15 @@ import com.example.captainjumperboy.R
 import com.example.captainjumperboy.engine.GameThread
 import com.example.captainjumperboy.engine.Scene
 import com.example.captainjumperboy.engine.Sprite
-import com.example.captainjumperboy.game.Keith
+import com.example.captainjumperboy.game.scenes.CaptainJumperBoy
+import com.example.captainjumperboy.game.scripts.Keith
 
 class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback{
     companion object{
         private lateinit var thread: GameThread
     }
 
-    private lateinit var sprite : Sprite
-    private var scene = Scene()
+    private var scene = CaptainJumperBoy(this)
 
     init {
         holder.addCallback(this)
@@ -40,13 +40,6 @@ class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback
     }
 
     override fun surfaceCreated(holder: SurfaceHolder) {
-        // TODO: move
-        val keithObject = scene.getObject()
-        sprite = Sprite(keithObject, BitmapFactory.decodeResource(resources, R.drawable.bird))
-        keithObject.addComponent(sprite)
-        keithObject.addScript<Keith>()
-        //keithObject.addScript(Keith::class)
-
         thread.setRunning(true)
         thread.start()
     }

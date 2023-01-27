@@ -7,8 +7,8 @@ import com.example.captainjumperboy.math.Transform
 import kotlin.reflect.KClass
 
 class GameObject() {
-    var componentList = ArrayList<Component>()
-    var scriptList = ArrayList<Scriptable>()
+    private var componentList = ArrayList<Component>()
+    private var scriptList = ArrayList<Scriptable>()
 
     var active : Boolean = true
     var transform = Transform()
@@ -28,13 +28,36 @@ class GameObject() {
     }
 
     fun addComponent(component: Component){
+        component.gameObject = this
         componentList.add(component)
     }
 
-    inline fun <reified T : Any> addScript(){
+    fun destroyComponent(component: Component){
+        componentList.remove(component)
+    }
+
+    fun destroy(){
+        active = false
+        componentList.clear()
+        scriptList.clear()
+    }
+
+    fun addScript(script : Scriptable){
+        script.gameObject = this
+        scriptList.add(script)
+    }
+
+    inline fun <reified T : Scriptable> addScript(){
         addScript(T::class)
     }
-    fun <T : Any> addScript(klass: KClass<T>) {
-        scriptList.add(klass.constructors.first { it.parameters.size==1 }.call(this) as Scriptable)
+    fun <T : Scriptable> addScript(klass: KClass<T>) {
+        try{
+            val instance = klass.constructors.first { it.parameters.isEmpty() }.call() as Scriptable
+            instance.gameObject = this
+            scriptList.add(instance)
+        }
+        catch (e : Exception){
+            e.printStackTrace()
+        }
     }
 }
