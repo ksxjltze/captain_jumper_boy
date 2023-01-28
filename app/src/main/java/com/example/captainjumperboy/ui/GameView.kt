@@ -34,13 +34,19 @@ class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback
         }
     }
 
+    //temp hack
+    private var started = false
+
     override fun surfaceCreated(holder: SurfaceHolder) {
         thread = GameThread(holder, this)
 
         //@todo maybe should move elsewhere
         run {
             Assets.view = this
-            scene.start()
+            if (!started){
+                scene.start()
+                started = true
+            }
         }
 
         thread.setRunning(true)
