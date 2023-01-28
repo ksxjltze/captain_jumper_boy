@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
+import android.util.Log
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import com.example.captainjumperboy.R
@@ -24,7 +25,6 @@ class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback
 
     init {
         holder.addCallback(this)
-        thread = GameThread(holder, this)
         focusable = FOCUSABLE
     }
 
@@ -41,6 +41,8 @@ class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback
     }
 
     override fun surfaceCreated(holder: SurfaceHolder) {
+        thread = GameThread(holder, this)
+
         //@todo maybe should move elsewhere
         run {
             Assets.view = this
