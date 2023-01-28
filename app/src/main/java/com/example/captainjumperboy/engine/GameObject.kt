@@ -6,7 +6,7 @@ import com.example.captainjumperboy.engine.component.Scriptable
 import com.example.captainjumperboy.math.Transform
 import kotlin.reflect.KClass
 
-class GameObject() {
+class GameObject {
     private var componentList = ArrayList<Component>()
     private var scriptList = ArrayList<Scriptable>()
 

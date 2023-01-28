@@ -2,15 +2,13 @@ package com.example.captainjumperboy.engine
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.graphics.Matrix
 import androidx.core.graphics.withMatrix
 import com.example.captainjumperboy.engine.component.Component
-import com.example.captainjumperboy.engine.component.Renderable
 
 class Sprite(private var image : Bitmap) : Component() {
-    public override fun draw(canvas: Canvas){
+    override fun draw(canvas: Canvas){
         val matrix = transform.getMatrix()
-        matrix.postConcat(Camera.transform.getMatrix()); //View * Model
+        matrix.postConcat(Camera.transform.getMatrix()) //View * Model
 
         //apply transform and draw
         canvas.withMatrix(matrix) {

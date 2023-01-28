@@ -2,19 +2,13 @@ package com.example.captainjumperboy.ui
 
 
 import android.content.Context
-import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
-import android.util.Log
 import android.view.SurfaceHolder
 import android.view.SurfaceView
-import com.example.captainjumperboy.R
 import com.example.captainjumperboy.engine.Assets
 import com.example.captainjumperboy.engine.GameThread
-import com.example.captainjumperboy.engine.Scene
-import com.example.captainjumperboy.engine.Sprite
 import com.example.captainjumperboy.game.scenes.CaptainJumperBoy
-import com.example.captainjumperboy.game.scripts.Keith
 
 class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback{
     companion object{

@@ -1,9 +1,6 @@
 package com.example.captainjumperboy.engine
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Canvas
-import com.example.captainjumperboy.R
 import com.example.captainjumperboy.engine.component.Component
 import com.example.captainjumperboy.ui.GameView
 

@@ -5,7 +5,7 @@ import com.example.captainjumperboy.engine.GameObject
 import com.example.captainjumperboy.engine.Scene
 import com.example.captainjumperboy.math.Transform
 
-open class Component() : Updatable, Renderable {
+open class Component : Updatable, Renderable {
     companion object{ //laziness
         //assumes that only one scene can exist at a time
         lateinit var scene : Scene

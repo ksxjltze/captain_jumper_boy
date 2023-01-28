@@ -2,7 +2,7 @@ package com.example.captainjumperboy.game.scripts
 
 import com.example.captainjumperboy.engine.component.Scriptable
 
-class Matthias() : Scriptable() {
+class Matthias : Scriptable() {
     override fun start() {
         transform.position.x = 500F
         transform.position.y = 100F
