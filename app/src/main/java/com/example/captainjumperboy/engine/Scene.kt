@@ -1,13 +1,17 @@
 package com.example.captainjumperboy.engine
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Canvas
+import com.example.captainjumperboy.R
+import com.example.captainjumperboy.engine.component.Component
 import com.example.captainjumperboy.ui.GameView
 
 open class Scene(var view: GameView) {
     private var gameObjectList = ArrayList<GameObject>()
 
     //get first inactive object, creates a new game object if none found
-    fun getObject() : GameObject{
+    fun createObject() : GameObject{
         return try {
             gameObjectList.first { gameObject -> !gameObject.active }
         }
@@ -18,8 +22,22 @@ open class Scene(var view: GameView) {
         }
     }
 
+    //same as createObject, but calls start()
+    fun spawnObject() : GameObject{
+        val gameObject = createObject()
+        gameObject.start()
+        return gameObject
+    }
+
+    fun findObject(name : String) : GameObject{
+        return gameObjectList.first{gameObject -> gameObject.name == name }
+    }
+
     fun start(){
-        gameObjectList.forEach {gameObject -> gameObject.start() }
+        Component.scene = this
+        for (i in 0..gameObjectList.count()){
+            gameObjectList[i].start()
+        }
     }
 
     fun update(){

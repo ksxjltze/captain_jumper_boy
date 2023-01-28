@@ -11,6 +11,7 @@ class GameObject() {
     private var scriptList = ArrayList<Scriptable>()
 
     var active : Boolean = true
+    val name : String = "GameObject"
     var transform = Transform()
 
     fun start(){

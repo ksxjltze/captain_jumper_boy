@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import com.example.captainjumperboy.R
+import com.example.captainjumperboy.engine.Assets
 import com.example.captainjumperboy.engine.GameThread
 import com.example.captainjumperboy.engine.Scene
 import com.example.captainjumperboy.engine.Sprite
@@ -41,7 +42,11 @@ class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback
 
     override fun surfaceCreated(holder: SurfaceHolder) {
         //@todo maybe should move elsewhere
-        scene.start()
+        run {
+            Assets.view = this
+            scene.start()
+        }
+
         thread.setRunning(true)
         thread.start()
     }

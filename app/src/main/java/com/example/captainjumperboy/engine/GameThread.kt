@@ -26,10 +26,14 @@ class GameThread(private var surfaceHolder: SurfaceHolder, private var gameView:
         var frameCount = 0
         val targetTime: Long = 1000 / targetFPS
 
+        //main game loop
         while (running) {
             startTime = System.nanoTime()
             canvas = null
 
+            //@todo game state manager
+
+            //update game logic and render to canvas
             try {
                 canvas = surfaceHolder.lockCanvas()
                 synchronized(surfaceHolder) {
@@ -41,7 +45,7 @@ class GameThread(private var surfaceHolder: SurfaceHolder, private var gameView:
             finally {
                 if (canvas != null){
                     try{
-                        surfaceHolder.unlockCanvasAndPost(canvas)
+                        surfaceHolder.unlockCanvasAndPost(canvas) //like swapping frame buffers i guess?
                     }
                     catch (e : Exception){
                         e.printStackTrace()

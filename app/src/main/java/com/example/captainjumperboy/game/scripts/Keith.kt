@@ -17,6 +17,6 @@ class Keith() : Scriptable() {
 
     override fun update() {
         Camera.transform.position.y += 1
-        //transform.position.y += 1
+        transform.position.y += 1
     }
 }
