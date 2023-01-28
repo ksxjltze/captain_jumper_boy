@@ -7,14 +7,14 @@ import androidx.core.graphics.withMatrix
 import com.example.captainjumperboy.engine.component.Component
 import com.example.captainjumperboy.engine.component.Renderable
 
-class Sprite(private var image : Bitmap) : Renderable, Component() {
+class Sprite(private var image : Bitmap) : Component() {
     public override fun draw(canvas: Canvas){
         val matrix = transform.getMatrix()
         matrix.postConcat(Camera.transform.getMatrix());
 
         //apply transform and draw
         canvas.withMatrix(matrix) {
-            canvas.drawBitmap(image, 0F, 0F, null)
+            canvas.drawBitmap(image, -image.width/2F, -image.height/2F, null) //draw centered in canvas to apply transform correctly
         }
 
     }

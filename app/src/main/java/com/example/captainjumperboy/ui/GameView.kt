@@ -40,6 +40,8 @@ class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback
     }
 
     override fun surfaceCreated(holder: SurfaceHolder) {
+        //@todo maybe should move elsewhere
+        scene.start()
         thread.setRunning(true)
         thread.start()
     }

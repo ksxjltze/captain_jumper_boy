@@ -18,6 +18,10 @@ open class Scene(var view: GameView) {
         }
     }
 
+    fun start(){
+        gameObjectList.forEach {gameObject -> gameObject.start() }
+    }
+
     fun update(){
         gameObjectList.forEach {gameObject ->  gameObject.update()}
     }

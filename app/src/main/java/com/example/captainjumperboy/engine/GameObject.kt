@@ -13,6 +13,10 @@ class GameObject() {
     var active : Boolean = true
     var transform = Transform()
 
+    fun start(){
+        scriptList.forEach{scriptable -> scriptable.start() }
+    }
+
     fun update(){
         for (component in componentList){
             component.update()
