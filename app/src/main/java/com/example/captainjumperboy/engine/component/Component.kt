@@ -21,6 +21,10 @@ open class Component : Updatable, Renderable {
         return scene.spawnObject()
     }
 
+    fun findObject(name : String) : GameObject{
+        return scene.findObject(name)
+    }
+
     override fun draw(canvas: Canvas) {}
     override fun update() {}
 

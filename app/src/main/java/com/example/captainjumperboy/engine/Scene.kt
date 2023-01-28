@@ -7,14 +7,24 @@ import com.example.captainjumperboy.ui.GameView
 open class Scene(var view: GameView) {
     private var gameObjectList = ArrayList<GameObject>()
 
+    init {
+        Assets.view = view
+    }
+
     //get first inactive object, creates a new game object if none found
-    fun createObject() : GameObject{
+    fun createObject(name : String = "") : GameObject{
         return try {
-            gameObjectList.first { gameObject -> !gameObject.active }
+            val gameObject = gameObjectList.first { gameObject -> !gameObject.active }
+            gameObject.name = name
+
+            gameObject
         }
         catch (_ : Exception){
-            if (!gameObjectList.add(GameObject()))
+            val gameObject = GameObject()
+            gameObject.name = name
+            if (!gameObjectList.add(gameObject))
                 throw Exception()
+
             gameObjectList.last()
         }
     }
@@ -30,9 +40,16 @@ open class Scene(var view: GameView) {
         return gameObjectList.first{gameObject -> gameObject.name == name }
     }
 
+    fun startEarly(){
+        Component.scene = this
+        for (i in 0 until gameObjectList.count()){
+            gameObjectList[i].startEarly()
+        }
+    }
+
     fun start(){
         Component.scene = this
-        for (i in 0..gameObjectList.count()){
+        for (i in 0 until gameObjectList.count()){
             gameObjectList[i].start()
         }
     }

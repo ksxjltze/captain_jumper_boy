@@ -5,7 +5,7 @@ import android.graphics.Canvas
 import androidx.core.graphics.withMatrix
 import com.example.captainjumperboy.engine.component.Component
 
-class Sprite(private var image : Bitmap) : Component() {
+class Sprite(var image : Bitmap) : Component() {
     override fun draw(canvas: Canvas){
         val matrix = transform.getMatrix()
         matrix.postConcat(Camera.transform.getMatrix()) //View * Model

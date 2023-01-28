@@ -7,13 +7,16 @@ import com.example.captainjumperboy.math.Transform
 import kotlin.reflect.KClass
 
 class GameObject {
-    private var componentList = ArrayList<Component>()
-    private var scriptList = ArrayList<Scriptable>()
+    var componentList = ArrayList<Component>()
+    var scriptList = ArrayList<Scriptable>()
 
     var active : Boolean = true
-    val name : String = "GameObject"
+    var name : String = "GameObject"
     var transform = Transform()
 
+    fun startEarly() {
+        scriptList.forEach{scriptable -> scriptable.startEarly() }
+    }
     fun start(){
         scriptList.forEach{scriptable -> scriptable.start() }
     }
@@ -41,6 +44,23 @@ class GameObject {
         componentList.remove(component)
     }
 
+    inline fun <reified T> getComponent() : T?{
+        componentList.forEach{component ->
+            if (component is T)
+                return component
+        }
+        return null
+    }
+
+    inline fun <reified T> getScript() : T?{
+        scriptList.forEach{script ->
+            if (script is T)
+                return script
+        }
+        return null
+    }
+
+
     fun destroy(){
         active = false
         componentList.clear()
@@ -52,17 +72,15 @@ class GameObject {
         scriptList.add(script)
     }
 
-    inline fun <reified T : Scriptable> addScript(){
-        addScript(T::class)
+    inline fun <reified T : Scriptable> addScript() : T{
+        return addScript(T::class)
     }
-    fun <T : Scriptable> addScript(klass: KClass<T>) {
-        try{
-            val instance = klass.constructors.first { it.parameters.isEmpty() }.call() as Scriptable
-            instance.gameObject = this
-            scriptList.add(instance)
-        }
-        catch (e : Exception){
-            e.printStackTrace()
-        }
+    fun <T : Scriptable> addScript(klass: KClass<T>) : T {
+        val instance = klass.constructors.first { it.parameters.isEmpty() }.call()
+        instance.gameObject = this
+
+        scriptList.add(instance)
+        return instance
     }
+
 }

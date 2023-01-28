@@ -4,6 +4,7 @@ package com.example.captainjumperboy.ui
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
+import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import com.example.captainjumperboy.engine.Assets
@@ -37,13 +38,16 @@ class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback
     //temp hack
     private var started = false
 
+//    override fun onTouchEvent(event: MotionEvent?): Boolean {
+//            return super.onTouchEvent(event)
+//    }
     override fun surfaceCreated(holder: SurfaceHolder) {
         thread = GameThread(holder, this)
 
         //@todo maybe should move elsewhere
         run {
-            Assets.view = this
             if (!started){
+                scene.startEarly()
                 scene.start()
                 started = true
             }

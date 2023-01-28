@@ -11,6 +11,7 @@ class GameThread(private var surfaceHolder: SurfaceHolder, private var gameView:
 
     companion object{
         private var canvas : Canvas? = null
+        var deltaTime : Float = 0F
     }
 
     fun setRunning(isRunning: Boolean) {
@@ -55,6 +56,7 @@ class GameThread(private var surfaceHolder: SurfaceHolder, private var gameView:
 
             //frame rate controller, @todo could move into separate class
             timeMillis = (System.nanoTime() - startTime) / 1000000
+            deltaTime = ((System.nanoTime() - startTime).toFloat() / 1000000) / 1000 //dt in seconds
             waitTime = targetTime - timeMillis
 
             try {
