@@ -4,9 +4,11 @@ package com.example.captainjumperboy.ui
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
+import android.media.MediaPlayer
 import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
+import com.example.captainjumperboy.R
 import com.example.captainjumperboy.engine.Assets
 import com.example.captainjumperboy.engine.GameThread
 import com.example.captainjumperboy.game.scenes.CaptainJumperBoy
@@ -17,7 +19,7 @@ class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback
     }
 
     private var scene = CaptainJumperBoy(this)
-
+    val mediaplayer = MediaPlayer.create(Assets.view.context, R.raw.bgm)
     init {
         holder.addCallback(this)
         focusable = FOCUSABLE
@@ -25,6 +27,10 @@ class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback
 
     fun update(){
         scene.update()
+
+        mediaplayer.isLooping = true
+        mediaplayer.start()
+        mediaplayer.setVolume(10f,10f)
     }
 
     override fun draw(canvas: Canvas?) {
@@ -51,10 +57,13 @@ class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback
                 scene.start()
                 started = true
             }
+
+
         }
 
         thread.setRunning(true)
         thread.start()
+
     }
 
     override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
