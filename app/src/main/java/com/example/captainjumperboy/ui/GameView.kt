@@ -30,7 +30,7 @@ class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback
 
         mediaplayer.isLooping = true
         mediaplayer.start()
-        mediaplayer.setVolume(10f,10f)
+        mediaplayer.setVolume(1f,1f)
     }
 
     override fun draw(canvas: Canvas?) {
