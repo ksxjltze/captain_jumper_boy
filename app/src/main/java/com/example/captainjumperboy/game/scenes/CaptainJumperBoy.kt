@@ -4,6 +4,7 @@ import com.example.captainjumperboy.R
 import com.example.captainjumperboy.engine.Assets
 import com.example.captainjumperboy.engine.Scene
 import com.example.captainjumperboy.engine.Sprite
+import com.example.captainjumperboy.engine.Spritesheet
 import com.example.captainjumperboy.game.scripts.Keith
 import com.example.captainjumperboy.game.scripts.PlatformSpawner
 import com.example.captainjumperboy.game.scripts.Player
@@ -18,10 +19,10 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
         keithObject.addScript<Keith>()
 
         val playerObject = createObject()
-        playerObject.addComponent(Sprite(Assets.getBitmap(R.drawable.swole)))
-        playerObject.transform.scale.x = 0.05F
-        playerObject.transform.scale.y = 0.05F
-        playerObject.addScript<Player>()
+        playerObject.addComponent(Spritesheet(Assets.getBitmap(R.drawable.spritesheet_),2,4))
+//        playerObject.transform.scale.x = 0.05F
+//        playerObject.transform.scale.y = 0.05F
+        //playerObject.addScript<Player>()
 
         //val birdBitmap = BitmapFactory.decodeResource(view.resources, R.drawable.bird)
 //        val keithObject = createObject()
