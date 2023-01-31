@@ -55,7 +55,7 @@ class Spritesheet (val image: Bitmap, rows: Int, cols: Int) : Component()
         }
 
         if (animation.isRunning) {
-            timer += 0.1f
+            timer += 0.5f
             if(timer >= 2f)
             {
                 frameIndex++
