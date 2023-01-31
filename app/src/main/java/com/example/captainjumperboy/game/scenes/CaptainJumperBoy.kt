@@ -1,5 +1,6 @@
 package com.example.captainjumperboy.game.scenes
 
+import android.media.MediaPlayer
 import com.example.captainjumperboy.R
 import com.example.captainjumperboy.engine.Assets
 import com.example.captainjumperboy.engine.Scene
@@ -20,6 +21,9 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
 
         val playerObject = createObject()
         playerObject.addComponent(Spritesheet(Assets.getBitmap(R.drawable.spritesheet_),2,4))
+
+
+
 //        playerObject.transform.scale.x = 0.05F
 //        playerObject.transform.scale.y = 0.05F
         //playerObject.addScript<Player>()
