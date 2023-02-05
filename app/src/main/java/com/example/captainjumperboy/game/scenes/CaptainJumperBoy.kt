@@ -1,17 +1,15 @@
 package com.example.captainjumperboy.game.scenes
 
-import android.media.MediaPlayer
 import com.example.captainjumperboy.R
 import com.example.captainjumperboy.engine.Assets
 import com.example.captainjumperboy.engine.Scene
-import com.example.captainjumperboy.engine.Sprite
 import com.example.captainjumperboy.engine.Spritesheet
 import com.example.captainjumperboy.game.scripts.Keith
 import com.example.captainjumperboy.game.scripts.PlatformSpawner
-import com.example.captainjumperboy.game.scripts.Player
 import com.example.captainjumperboy.ui.GameView
 
 class CaptainJumperBoy(view : GameView) : Scene(view){
+
     init {
         val platformSpawner = createObject("spawner")
         platformSpawner.addScript<PlatformSpawner>()
@@ -21,6 +19,8 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
 
         val playerObject = createObject()
         playerObject.addComponent(Spritesheet(Assets.getBitmap(R.drawable.spritesheet_),2,4))
+
+
 
 
 
