@@ -18,12 +18,9 @@ import com.example.captainjumperboy.engine.Assets
 import com.example.captainjumperboy.engine.GameThread
 import com.example.captainjumperboy.game.scenes.CaptainJumperBoy
 
-class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback,
-    SensorEventListener {
+class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback {
     companion object{
         private lateinit var thread: GameThread
-        private lateinit var sensorManager: SensorManager
-        private lateinit var accelerometer : Sensor
     }
 
     private var scene = CaptainJumperBoy(this)
@@ -32,36 +29,27 @@ class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback
         holder.addCallback(this) //enables callback events
         focusable = FOCUSABLE
 
-        //Set up sensors
-        // 1. Initializes SensorManager by getting reference of the sensor service
-        sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
-        // 2. Registers sensor event callback to listen to changes in the accelerometer
-        // at a set rate. SENSOR_DELAY_GAME: Gets sensors data at a rate suitable for games
-        sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)?.also {
-            accelerometer -> sensorManager.registerListener(this, accelerometer,
-            SensorManager.SENSOR_DELAY_GAME)
-        }
     }
 
-    /**
-     * Android system calls onSensorChanged every time there’s a new sensor event.
-     * @param event SensorEvent parameter gives a set of array of 3 values along x,y,z.
-     */
-    override fun onSensorChanged(event: SensorEvent?) {
-        Log.d("GameView", "onSensorChanged()")
-        //TODO "Not yet implemented"
-    }
-
-    /**
-     * Android system only calls onAccuracyChanged when there’s a change in accuracy.
-     * @param sensor whose accuracy changed
-     * @param accuracy the new accuracy value
-     */
-    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-        Log.d("GameView", "onAccuracyChanged()")
-        //TODO "Not Needed for us"
-    }
+//    /**
+//     * Android system calls onSensorChanged every time there’s a new sensor event.
+//     * @param event SensorEvent parameter gives a set of array of 3 values along x,y,z.
+//     */
+//    override fun onSensorChanged(event: SensorEvent?) {
+//        Log.d("GameView", "onSensorChanged()")
+//        //TODO "Not yet implemented"
+//    }
+//
+//    /**
+//     * Android system only calls onAccuracyChanged when there’s a change in accuracy.
+//     * @param sensor whose accuracy changed
+//     * @param accuracy the new accuracy value
+//     */
+//    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+//        Log.d("GameView", "onAccuracyChanged()")
+//        //TODO "Not Needed for us"
+//    }
 
     /**
      * Update function of the main GameView

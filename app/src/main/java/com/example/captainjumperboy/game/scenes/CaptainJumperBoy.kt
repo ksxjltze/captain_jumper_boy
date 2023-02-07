@@ -6,7 +6,9 @@ import com.example.captainjumperboy.engine.Scene
 import com.example.captainjumperboy.engine.Spritesheet
 import com.example.captainjumperboy.game.scripts.Keith
 import com.example.captainjumperboy.game.scripts.PlatformSpawner
+import com.example.captainjumperboy.game.scripts.Player
 import com.example.captainjumperboy.ui.GameView
+import com.example.captainjumperboy.ui.MainActivity
 
 class CaptainJumperBoy(view : GameView) : Scene(view){
 
@@ -19,9 +21,8 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
 
         val playerObject = createObject()
         playerObject.addComponent(Spritesheet(Assets.getBitmap(R.drawable.spritesheet_),2,4))
-
-
-
+        playerObject.addScript<Player>()
+        playerObject.getScript<Player>()?.setMainActivity(this.view.context as MainActivity)
 
 
 //        playerObject.transform.scale.x = 0.05F

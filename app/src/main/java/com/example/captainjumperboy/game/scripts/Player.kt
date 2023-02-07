@@ -4,15 +4,23 @@ import com.example.captainjumperboy.engine.GameThread
 import com.example.captainjumperboy.engine.Sprite
 import com.example.captainjumperboy.engine.component.Scriptable
 import com.example.captainjumperboy.math.Vector2D
+import com.example.captainjumperboy.ui.MainActivity
+import com.example.captainjumperboy.ui.OnSensorDataChanged
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
-class Player : Scriptable() {
+class Player : Scriptable(), OnSensorDataChanged
+{
     var velocity = Vector2D()
     val jumpInterval = 2L
 
     val scope = CoroutineScope(Dispatchers.Default)
+    private lateinit var mainActivity: MainActivity
 
+    fun setMainActivity(mainActivity: MainActivity) {
+        this.mainActivity = mainActivity
+        this.mainActivity.setSensorDataChangedListener(this)
+    }
     override fun start() {
         val platformSpawner = findObject("spawner")
         val spawner = platformSpawner.getScript<PlatformSpawner>() ?: return
@@ -40,5 +48,9 @@ class Player : Scriptable() {
 //        }
 
         velocity.y += 10F
+    }
+
+    override fun onSensorDataChanged(x: Float, y: Float, z: Float) {
+        //todo...
     }
 }
