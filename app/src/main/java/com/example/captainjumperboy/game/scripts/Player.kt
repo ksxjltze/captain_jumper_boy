@@ -2,6 +2,7 @@ package com.example.captainjumperboy.game.scripts
 
 import com.example.captainjumperboy.engine.GameThread
 import com.example.captainjumperboy.engine.Sprite
+import com.example.captainjumperboy.engine.Spritesheet
 import com.example.captainjumperboy.engine.component.Scriptable
 import com.example.captainjumperboy.math.Collision
 import com.example.captainjumperboy.math.Vector2D
@@ -23,15 +24,15 @@ class Player : Scriptable(), OnSensorDataChanged
         this.mainActivity.setSensorDataChangedListener(this)
     }
     override fun start() {
+        aabb= gameObject.getComponent<Collision.AABB>() as Collision.AABB
         val platformSpawner = findObject("spawner")
         val spawner = platformSpawner.getScript<PlatformSpawner>() ?: return
-        val sprite = gameObject.getComponent<Sprite>() ?: return
+        val sprite = gameObject.getComponent<Spritesheet>() ?: return
 
-        val firstPlatform = spawner.platforms[0]
+        val firstPlatform = spawner.platforms[1]
         transform.position.x = firstPlatform.transform.position.x
         transform.position.y = firstPlatform.transform.position.y - sprite.image.height * transform.scale.y / 2F
 
-        aabb=gameObject.getComponent<Collision.AABB>()?:return
     }
 
     fun jump(){
@@ -40,10 +41,10 @@ class Player : Scriptable(), OnSensorDataChanged
 
     override fun update() {
         val dt = GameThread.deltaTime
+        aabb.pos =transform.position
         transform.position.x += velocity.x
         transform.position.y += velocity.y
 
-        //aabb.pos=transform.position
         velocity.y += 10F
 
 
