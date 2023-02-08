@@ -26,7 +26,7 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
         playerObject.addComponent(Collision.AABB(playerObject.transform.position,playerObject.transform.scale*0.5f))
         playerObject.addScript<Player>()
         playerObject.getScript<Player>()?.setMainActivity(this.view.context as MainActivity)
-
+        playerObject.getScript<Player>()?.setScene(this)
 
 //        playerObject.transform.scale.x = 0.05F
 //        playerObject.transform.scale.y = 0.05F

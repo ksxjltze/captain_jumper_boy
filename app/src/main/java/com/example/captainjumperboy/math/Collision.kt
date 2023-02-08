@@ -6,7 +6,7 @@ import kotlin.math.abs
 class Collision {
     class AABB(var pos: Vector2D, var halfSize: Vector2D) : Component()
     {
-
+        var iscollided:Boolean=false
         //for collision detection
         fun collidesWith(other: AABB): Boolean {
             val distance = pos.add(other.pos.add(other.halfSize.add(halfSize.negate())))

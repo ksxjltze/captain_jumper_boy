@@ -1,11 +1,9 @@
 package com.example.captainjumperboy.game.scripts
 
 import com.example.captainjumperboy.R
-import com.example.captainjumperboy.engine.Assets
-import com.example.captainjumperboy.engine.Camera
-import com.example.captainjumperboy.engine.GameObject
-import com.example.captainjumperboy.engine.Sprite
+import com.example.captainjumperboy.engine.*
 import com.example.captainjumperboy.engine.component.Scriptable
+import com.example.captainjumperboy.math.Collision
 import java.sql.Time
 import java.time.LocalTime
 import kotlin.random.Random
@@ -25,6 +23,7 @@ class PlatformSpawner : Scriptable() {
             platform.transform.position.y = -i * 200F + startY
             platform.transform.scale.y = 0.1F
             platform.transform.scale.x = 0.7F
+            platform.addComponent(Collision.AABB(transform.position,transform.scale*0.5f))
             platform.transform.position.x = rng.nextFloat() * 1000F
             platforms.add(platform)
         }
@@ -39,7 +38,10 @@ class PlatformSpawner : Scriptable() {
     }
 
     override fun update() {
-
+        platforms.forEach{ plat->
+            val aabb = gameObject.getComponent<Collision.AABB>() ?: return
+            aabb.pos=plat.transform.position
+        }
     }
 
 }
