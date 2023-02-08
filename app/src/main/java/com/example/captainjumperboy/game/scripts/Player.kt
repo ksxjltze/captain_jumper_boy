@@ -43,7 +43,7 @@ class Player : Scriptable(), OnSensorDataChanged
         transform.position.x += velocity.x
         transform.position.y += velocity.y
 
-        aabb.pos=transform.position
+        //aabb.pos=transform.position
         velocity.y += 10F
 
 

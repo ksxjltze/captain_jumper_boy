@@ -40,8 +40,6 @@ class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback
         mediaplayer.isLooping = true
         mediaplayer.start()
         mediaplayer.setVolume(1f,1f)
-
-
     }
 
     /**
