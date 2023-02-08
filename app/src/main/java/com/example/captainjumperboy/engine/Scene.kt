@@ -2,6 +2,7 @@ package com.example.captainjumperboy.engine
 
 import android.graphics.Canvas
 import com.example.captainjumperboy.engine.component.Component
+import com.example.captainjumperboy.math.Collision
 import com.example.captainjumperboy.ui.GameView
 
 open class Scene(var view: GameView) {
@@ -56,6 +57,24 @@ open class Scene(var view: GameView) {
 
     fun update(){
         gameObjectList.forEach {gameObject ->  gameObject.update()}
+
+        //collision loop..need to destroy platforms out of viewport otherwise this will get slower..
+        gameObjectList.forEach {gameObject ->
+            if(gameObject.hasComponent<Collision.AABB>())
+            {
+                gameObjectList.forEach{gameObject2 ->
+                    if(gameObject!=gameObject2 && gameObject2.hasComponent<Collision.AABB>())//if does not equal itself and both objects has aabb,do checks
+                    {
+                        val aabb=gameObject.getComponent<Collision.AABB>()?:return
+                        val aabb2=gameObject2.getComponent<Collision.AABB>()?:return
+                        if(aabb.collidesWith(aabb2))
+                        {
+                            //i need a callback function here..
+                        }
+                    }
+                }
+            }
+        }
     }
 
     fun draw(canvas: Canvas){

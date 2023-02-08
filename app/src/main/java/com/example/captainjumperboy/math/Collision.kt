@@ -1,9 +1,11 @@
 package com.example.captainjumperboy.math
 
+import com.example.captainjumperboy.engine.component.Component
 import kotlin.math.abs
 
 class Collision {
-    class AABB(var pos: Vector2D, var halfSize: Vector2D) {
+    class AABB(var pos: Vector2D, var halfSize: Vector2D) : Component()
+    {
 
         //for collision detection
         fun collidesWith(other: AABB): Boolean {

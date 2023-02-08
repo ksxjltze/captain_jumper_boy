@@ -3,6 +3,7 @@ package com.example.captainjumperboy.game.scripts
 import com.example.captainjumperboy.engine.GameThread
 import com.example.captainjumperboy.engine.Sprite
 import com.example.captainjumperboy.engine.component.Scriptable
+import com.example.captainjumperboy.math.Collision
 import com.example.captainjumperboy.math.Vector2D
 import com.example.captainjumperboy.ui.MainActivity
 import com.example.captainjumperboy.ui.OnSensorDataChanged
@@ -13,7 +14,7 @@ class Player : Scriptable(), OnSensorDataChanged
 {
     var velocity = Vector2D()
     val jumpInterval = 2L
-
+    lateinit var aabb:Collision.AABB
     val scope = CoroutineScope(Dispatchers.Default)
     private lateinit var mainActivity: MainActivity
 
@@ -29,6 +30,8 @@ class Player : Scriptable(), OnSensorDataChanged
         val firstPlatform = spawner.platforms[0]
         transform.position.x = firstPlatform.transform.position.x
         transform.position.y = firstPlatform.transform.position.y - sprite.image.height * transform.scale.y / 2F
+
+        aabb=gameObject.getComponent<Collision.AABB>()?:return
     }
 
     fun jump(){
@@ -40,14 +43,10 @@ class Player : Scriptable(), OnSensorDataChanged
         transform.position.x += velocity.x
         transform.position.y += velocity.y
 
-//        scope.launch {
-//            while (true){
-//                jump()
-//                delay(jumpInterval * 100000)
-//            }
-//        }
-
+        aabb.pos=transform.position
         velocity.y += 10F
+
+
     }
 
     override fun onSensorDataChanged(x: Float, y: Float, z: Float) {

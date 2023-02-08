@@ -51,7 +51,13 @@ class GameObject {
         }
         return null
     }
-
+    inline fun <reified T> hasComponent() : Boolean{
+        componentList.forEach{component ->
+            if (component is T)
+                return true
+        }
+        return false
+    }
     inline fun <reified T> getScript() : T?{
         scriptList.forEach{script ->
             if (script is T)

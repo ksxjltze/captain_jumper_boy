@@ -32,34 +32,16 @@ class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback
 
     }
 
-//    /**
-//     * Android system calls onSensorChanged every time there’s a new sensor event.
-//     * @param event SensorEvent parameter gives a set of array of 3 values along x,y,z.
-//     */
-//    override fun onSensorChanged(event: SensorEvent?) {
-//        Log.d("GameView", "onSensorChanged()")
-//        //TODO "Not yet implemented"
-//    }
-//
-//    /**
-//     * Android system only calls onAccuracyChanged when there’s a change in accuracy.
-//     * @param sensor whose accuracy changed
-//     * @param accuracy the new accuracy value
-//     */
-//    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-//        Log.d("GameView", "onAccuracyChanged()")
-//        //TODO "Not Needed for us"
-//    }
-
     /**
      * Update function of the main GameView
      */
     fun update(){
         scene.update()
-
         mediaplayer.isLooping = true
         mediaplayer.start()
         mediaplayer.setVolume(1f,1f)
+
+
     }
 
     /**

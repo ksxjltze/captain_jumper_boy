@@ -20,6 +20,7 @@ class PlatformSpawner : Scriptable() {
         val startY = 1600F
         for (i in 0 until count){
             val platform = createObject()
+            platform.name="Platform"
             platform.addComponent(Sprite(birdBitmap))
             platform.transform.position.y = -i * 200F + startY
             platform.transform.scale.y = 0.1F

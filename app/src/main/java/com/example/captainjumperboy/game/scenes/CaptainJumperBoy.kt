@@ -7,6 +7,7 @@ import com.example.captainjumperboy.engine.Spritesheet
 import com.example.captainjumperboy.game.scripts.Keith
 import com.example.captainjumperboy.game.scripts.PlatformSpawner
 import com.example.captainjumperboy.game.scripts.Player
+import com.example.captainjumperboy.math.Collision
 import com.example.captainjumperboy.ui.GameView
 import com.example.captainjumperboy.ui.MainActivity
 
@@ -20,7 +21,9 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
         keithObject.addScript<Keith>()
 
         val playerObject = createObject()
+        playerObject.name="Player"
         playerObject.addComponent(Spritesheet(Assets.getBitmap(R.drawable.spritesheet_),2,4))
+        playerObject.addComponent(Collision.AABB(playerObject.transform.position,playerObject.transform.scale*0.5f))
         playerObject.addScript<Player>()
         playerObject.getScript<Player>()?.setMainActivity(this.view.context as MainActivity)
 
