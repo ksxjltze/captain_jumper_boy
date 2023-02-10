@@ -1,6 +1,7 @@
 package com.example.captainjumperboy.engine
 
 import android.graphics.Canvas
+import com.example.captainjumperboy.engine.assets.Assets
 import com.example.captainjumperboy.engine.component.Component
 import com.example.captainjumperboy.math.Collision
 import com.example.captainjumperboy.ui.GameView

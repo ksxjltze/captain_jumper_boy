@@ -4,17 +4,11 @@ package com.example.captainjumperboy.ui
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
-import android.hardware.Sensor
-import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
-import android.hardware.SensorManager
 import android.media.MediaPlayer
-import android.util.Log
 import android.view.SurfaceHolder
 import android.view.SurfaceView
-import androidx.core.content.ContextCompat
 import com.example.captainjumperboy.R
-import com.example.captainjumperboy.engine.Assets
+import com.example.captainjumperboy.engine.assets.Assets
 import com.example.captainjumperboy.engine.GameThread
 import com.example.captainjumperboy.game.scenes.CaptainJumperBoy
 

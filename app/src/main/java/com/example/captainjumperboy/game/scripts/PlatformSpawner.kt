@@ -2,9 +2,10 @@ package com.example.captainjumperboy.game.scripts
 
 import com.example.captainjumperboy.R
 import com.example.captainjumperboy.engine.*
+import com.example.captainjumperboy.engine.assets.Assets
+import com.example.captainjumperboy.engine.assets.Image
 import com.example.captainjumperboy.engine.component.Scriptable
 import com.example.captainjumperboy.math.Collision
-import java.sql.Time
 import java.time.LocalTime
 import kotlin.random.Random
 
@@ -13,13 +14,13 @@ class PlatformSpawner : Scriptable() {
     private val count = 10
 
     private fun spawn(){
-        val birdBitmap = Assets.getBitmap(R.drawable.bird)
+        val birdImage = Image(R.drawable.bird)
         val rng = Random(LocalTime.now().second)
         val startY = 1600F
         for (i in 0 until count){
             val platform = createObject()
             platform.name="Platform"
-            platform.addComponent(Sprite(birdBitmap))
+            platform.addComponent(Sprite(birdImage))
             platform.transform.position.y = -i * 200F + startY
 //            platform.transform.scale.y = 0.1F
 //            platform.transform.scale.x = 0.7F

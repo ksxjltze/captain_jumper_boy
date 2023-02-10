@@ -6,9 +6,11 @@ import android.graphics.drawable.AnimationDrawable
 import android.graphics.drawable.BitmapDrawable
 import androidx.core.graphics.withMatrix
 import androidx.core.view.ViewCompat
+import com.example.captainjumperboy.engine.assets.Assets
+import com.example.captainjumperboy.engine.assets.Image
 import com.example.captainjumperboy.engine.component.Component
 
-class SpriteSheet (private val image: Bitmap, rows: Int, cols: Int) : Component()
+class SpriteSheet (private val image: Image, rows: Int, cols: Int) : Component()
 {
     private val animation = AnimationDrawable()
     private var frameIndex = 0
@@ -22,7 +24,7 @@ class SpriteSheet (private val image: Bitmap, rows: Int, cols: Int) : Component(
     init {
         for (row in 0 until rows) {
             for (col in 0 until cols) {
-                frames.add(Bitmap.createBitmap(image, col * width, row * height, width, height))
+                frames.add(Bitmap.createBitmap(image.bitmap, col * width, row * height, width, height))
             }
         }
         for (frame in frames) {

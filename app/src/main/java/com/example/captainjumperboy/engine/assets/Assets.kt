@@ -1,6 +1,5 @@
-package com.example.captainjumperboy.engine
+package com.example.captainjumperboy.engine.assets
 
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.core.graphics.scale
@@ -14,7 +13,11 @@ class Assets {
         lateinit var view : GameView //this is probably bad?
 
         fun getBitmap(resourceId : Int) : Bitmap{
-            val bitmap = BitmapFactory.decodeResource(view.resources, resourceId)
+            return BitmapFactory.decodeResource(view.resources, resourceId)
+        }
+
+        fun getScaledBitmap(resourceId : Int) : Bitmap{
+            val bitmap = getBitmap(resourceId)
             return bitmap.scale(targetWidth, targetHeight)
         }
     }
