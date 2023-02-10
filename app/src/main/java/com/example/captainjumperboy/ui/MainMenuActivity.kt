@@ -23,7 +23,10 @@ class MainMenuActivity : AppCompatActivity() {
         }
 
         leaderboardBtn.setOnClickListener {
+            Toast.makeText(this, "Leaderboard!", Toast.LENGTH_SHORT).show()
             //Go to leaderboard
+            val intent = Intent(this, LeaderboardActivity::class.java)
+            startActivity(intent)
         }
 
     }
