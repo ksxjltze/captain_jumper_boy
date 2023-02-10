@@ -8,6 +8,9 @@ class Image(resourceId : Int, width : Int = Assets.targetWidth, height : Int = A
         bitmap = bitmap.scale(width, height)
     }
 
+    val originalWidth : Int
+    val originalHeight : Int
+
     var height = height
         set(value) {
             field = value
@@ -23,6 +26,8 @@ class Image(resourceId : Int, width : Int = Assets.targetWidth, height : Int = A
 
     init {
         bitmap = Assets.getBitmap(resourceId)
+        originalWidth = bitmap.width
+        originalHeight = bitmap.height
         refresh()
     }
 }

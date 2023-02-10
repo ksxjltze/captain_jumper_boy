@@ -15,10 +15,5 @@ class Assets {
         fun getBitmap(resourceId : Int) : Bitmap{
             return BitmapFactory.decodeResource(view.resources, resourceId)
         }
-
-        fun getScaledBitmap(resourceId : Int) : Bitmap{
-            val bitmap = getBitmap(resourceId)
-            return bitmap.scale(targetWidth, targetHeight)
-        }
     }
 }
