@@ -31,7 +31,7 @@ class Player : Scriptable(), OnSensorDataChanged,OnCollidedListener
         aabb= gameObject.getComponent<Collision.AABB>() as Collision.AABB
         val platformSpawner = findObject("spawner")
         val spawner = platformSpawner.getScript<PlatformSpawner>() ?: return
-        val sprite = gameObject.getComponent<Spritesheet>() ?: return
+        val sprite = gameObject.getComponent<SpriteSheet>() ?: return
 
        // val firstPlatform = spawner.platforms[8]
        // transform.position.x = firstPlatform.transform.position.x

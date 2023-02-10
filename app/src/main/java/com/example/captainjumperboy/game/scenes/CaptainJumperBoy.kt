@@ -3,7 +3,7 @@ package com.example.captainjumperboy.game.scenes
 import com.example.captainjumperboy.R
 import com.example.captainjumperboy.engine.Assets
 import com.example.captainjumperboy.engine.Scene
-import com.example.captainjumperboy.engine.Spritesheet
+import com.example.captainjumperboy.engine.SpriteSheet
 import com.example.captainjumperboy.game.scripts.Keith
 import com.example.captainjumperboy.game.scripts.PlatformSpawner
 import com.example.captainjumperboy.game.scripts.Player
@@ -22,7 +22,7 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
 
         val playerObject = createObject()
         playerObject.name="Player"
-        playerObject.addComponent(Spritesheet(Assets.getBitmap(R.drawable.spritesheet_),2,4))
+        playerObject.addComponent(SpriteSheet(Assets.getBitmap(R.drawable.spritesheet_),2,4))
         playerObject.addComponent(Collision.AABB(playerObject.transform.position,playerObject.transform.scale*0.5f))
         playerObject.addScript<Player>()
         playerObject.getScript<Player>()?.setMainActivity(this.view.context as MainActivity)
