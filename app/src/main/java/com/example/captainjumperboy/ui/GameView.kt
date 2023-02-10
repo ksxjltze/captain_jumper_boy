@@ -2,17 +2,18 @@ package com.example.captainjumperboy.ui
 
 
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.Canvas
 import android.graphics.Color
-import android.hardware.Sensor
-import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
-import android.hardware.SensorManager
+import android.graphics.Point
 import android.media.MediaPlayer
+import android.os.Build
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.SurfaceHolder
 import android.view.SurfaceView
-import androidx.core.content.ContextCompat
+import android.view.WindowManager
+import android.view.WindowMetrics
 import com.example.captainjumperboy.R
 import com.example.captainjumperboy.engine.Assets
 import com.example.captainjumperboy.engine.GameThread
@@ -25,7 +26,7 @@ import com.example.captainjumperboy.game.scenes.CaptainJumperBoy
  */
 class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback {
 
-    /** Creates a companion singleton GameThread that will run our game logic **/
+    /** Creates a static GameThread that will run our game logic **/
     companion object{
         private lateinit var thread: GameThread
     }
@@ -65,7 +66,12 @@ class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback
      * Override on surfaceCreated callback to initialise things
      * @param holder The SurfaceHolder that holds the canvas
      */
+
     override fun surfaceCreated(holder: SurfaceHolder) {
+
+        val windowSize = getWindowSize()
+        Log.d("GameView: ", "Width: ${windowSize.x}, Height: ${windowSize.y}")
+
         //Creates a GameThread
         thread = GameThread(holder, this)
 
@@ -98,6 +104,25 @@ class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback
             } catch (e: InterruptedException) {
                 e.printStackTrace()
             }
+        }
+    }
+    fun getWindowSize() : Point
+    {
+        //MODERN WAY
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val metrics: WindowMetrics = context.getSystemService(WindowManager::class.java).currentWindowMetrics
+            val screenWidth = metrics.bounds.width()
+            val screenHeight = metrics.bounds.height()
+            return Point(screenWidth, screenHeight)
+        }
+        else { //DEPRECATED WAY for API < 30
+            val display = context.getSystemService(WindowManager::class.java).defaultDisplay
+            val metrics = if (display != null) {
+                DisplayMetrics().also { display.getRealMetrics(it) }
+            } else {
+                Resources.getSystem().displayMetrics
+            }
+            return Point(metrics.widthPixels, metrics.heightPixels)
         }
     }
 }
