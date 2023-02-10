@@ -71,9 +71,9 @@ public abstract class LeaderboardRoomDatabase : RoomDatabase() {
         /**
          * For now we just populate it by clearing everything
          */
-        suspend fun populateDatabase(digitsDao: LeaderboardDao) {
+        suspend fun populateDatabase(leaderboardDao: LeaderboardDao) {
             //Starts the database empty!
-            digitsDao.deleteAll()
+            leaderboardDao.deleteAll()
             //TODO: Add some default leaderboard scores at the start if we want
         }
     }

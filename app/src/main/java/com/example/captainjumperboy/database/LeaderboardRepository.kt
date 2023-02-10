@@ -17,7 +17,7 @@ class LeaderboardRepository(private val leaderboardDao: LeaderboardDao) {
      * Room executes all queries on a separate thread. Observed Flow will
      * notify the observer when the data has changed.
      */
-    val allDigits: Flow<List<Leaderboard>> = leaderboardDao.getAll()
+    val allScores: Flow<List<Leaderboard>> = leaderboardDao.getAll()
 
     // By default Room runs suspend queries off the main thread, therefore, we don't need to
     // implement anything else to ensure we're not doing long running database work
@@ -25,8 +25,8 @@ class LeaderboardRepository(private val leaderboardDao: LeaderboardDao) {
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun insert(digits: Leaderboard) { //suspend tells the compiler that this needs to be called from a coroutine or suspending function.
-        leaderboardDao.insert(digits)
+    suspend fun insert(leaderboard: Leaderboard) { //suspend tells the compiler that this needs to be called from a coroutine or suspending function.
+        leaderboardDao.insert(leaderboard)
     }
 
     @Suppress("RedundantSuspendModifier")
