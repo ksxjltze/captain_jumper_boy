@@ -2,26 +2,29 @@ package com.example.captainjumperboy.engine
 
 import android.graphics.Canvas
 import com.example.captainjumperboy.engine.component.Component
-import com.example.captainjumperboy.math.Collision
 import com.example.captainjumperboy.ui.GameView
-
 
 interface OnCollidedListener {
     fun onCollided(file: GameObject)
 }
-open class Scene(var view: GameView) {
-    private var gameObjectList = ArrayList<GameObject>()
 
-    private var listener: OnCollidedListener? = null
+open class Scene(var view: GameView) {
+    protected var gameObjectList = ArrayList<GameObject>()
+
+    /** LISTENER FOR COLLISION EVENTS **/
+    protected var collisionListener: OnCollidedListener? = null
+    fun registerCollisionListener(listener: OnCollidedListener)//call function in gameobject
+    {
+        this.collisionListener = listener
+    }
 
     init {
         Assets.view = view
     }
 
-    fun registerListener(listener: OnCollidedListener)//call function in gameobject
-    {
-        this.listener = listener
-    }
+
+
+
     //get first inactive object, creates a new game object if none found
     fun createObject(name : String = "") : GameObject{
         return try {
@@ -65,33 +68,11 @@ open class Scene(var view: GameView) {
         }
     }
 
-    fun update(){
+    open fun update(){
         gameObjectList.forEach {gameObject ->  gameObject.update()}
-
-        //collision loop..need to destroy platforms out of viewport otherwise this will get slower..
-        gameObjectList.forEach {gameObject ->
-            if(gameObject.hasComponent<Collision.AABB>())
-            {
-                gameObjectList.forEach{gameObject2 ->
-                    if(gameObject.name!=gameObject2.name && gameObject2.hasComponent<Collision.AABB>())//if does not equal itself and both objects has aabb,do checks
-                    {
-                        val aabb=gameObject.getComponent<Collision.AABB>()?:return
-                        val aabb2=gameObject2.getComponent<Collision.AABB>()?:return
-                        if(aabb.collidesWith(aabb2))
-                        {
-                            listener?.onCollided(gameObject2)
-                        }
-                        else if(aabb2.collidesWith(aabb)){
-                            listener?.onCollided(gameObject)
-                        }
-
-                    }
-                }
-            }
-        }
     }
 
-    fun draw(canvas: Canvas){
+    open fun draw(canvas: Canvas){
         gameObjectList.forEach {gameObject ->  gameObject.draw(canvas)}
     }
 }
