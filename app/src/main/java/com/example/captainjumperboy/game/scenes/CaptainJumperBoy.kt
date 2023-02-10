@@ -18,8 +18,8 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
         val playerObject = createObject()
         playerObject.name="Player"
         playerObject.transform.position.x = 300F
-        playerObject.transform.scale.x = 0.2F
-        playerObject.transform.scale.y = 0.2F
+        playerObject.transform.scale.x = 1F
+        playerObject.transform.scale.y = 1F
         playerObject.addComponent(Spritesheet(Assets.getBitmap(R.drawable.spritesheet_),2,4))
         playerObject.addComponent(Collision.AABB(playerObject.transform.position,playerObject.transform.scale*0.5f))
         playerObject.addScript<Player>()

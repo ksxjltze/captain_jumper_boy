@@ -2,6 +2,7 @@ package com.example.captainjumperboy.engine
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Matrix
 import android.graphics.drawable.AnimationDrawable
 import android.graphics.drawable.BitmapDrawable
 import androidx.core.graphics.withMatrix
@@ -14,7 +15,8 @@ class Sprite(var image : Bitmap) : Component() {
         matrix.postConcat(Camera.transform.getMatrix()) //View * Model
 
         //apply transform and draw
-        canvas.withMatrix(matrix) {
+        canvas.withMatrix(matrix)
+        {
             canvas.drawBitmap(image, -image.width/2F, -image.height/2F, null) //draw centered in canvas to apply transform correctly
         }
 
@@ -30,10 +32,15 @@ class Spritesheet (val image: Bitmap, rows: Int, cols: Int) : Component()
     val height: Int = image.height / rows
     var timer: Float = 0f
 
+    //Scales all images imported to be a unit square of 100x100
     init {
         for (row in 0 until rows) {
             for (col in 0 until cols) {
-                frames.add(Bitmap.createBitmap(image, col * width, row * height, width, height))
+                val matrix = Matrix()
+                matrix.setScale(100F /width, 100F / height)
+                frames.add(
+                    Bitmap.createBitmap(image, col * width, row * height, width, height, matrix, true
+                    ))
             }
         }
         for (frame in frames) {
