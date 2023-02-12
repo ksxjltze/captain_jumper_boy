@@ -3,6 +3,7 @@ package com.example.captainjumperboy.game.scenes
 import com.example.captainjumperboy.R
 import com.example.captainjumperboy.engine.assets.Assets
 import com.example.captainjumperboy.engine.Scene
+import com.example.captainjumperboy.engine.Sprite
 import com.example.captainjumperboy.engine.SpriteSheet
 import com.example.captainjumperboy.engine.assets.Image
 import com.example.captainjumperboy.game.scripts.Keith
@@ -24,6 +25,7 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
         val playerObject = createObject()
         playerObject.name="Player"
         playerObject.addComponent(SpriteSheet(R.drawable.spritesheet_,2,4))
+        //playerObject.addComponent(Sprite(Image(R.drawable.spritesheet_)))
         playerObject.addComponent(Collision.AABB(playerObject.transform.position,playerObject.transform.scale*0.5f))
         playerObject.addScript<Player>()
         playerObject.getScript<Player>()?.setMainActivity(this.view.context as MainActivity)
