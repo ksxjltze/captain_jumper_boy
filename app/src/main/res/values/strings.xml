@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">Darrick Game</string>
+    <string name="app_name">Social Climber</string>
     <string name="darrick">Darrick so good</string>
     <string name="StartBtn">Start game</string>
+    <string name="leaderboard">Leaderboard</string>
+    <string name="clear">Clear</string>
 </resources>

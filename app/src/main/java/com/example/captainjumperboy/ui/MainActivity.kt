@@ -29,18 +29,18 @@ class MainActivity : Activity(), SensorEventListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //set fullscreen
+        /** Set fullscreen **/
         WindowCompat.setDecorFitsSystemWindows(window, false)
         val windowsInsetsController: WindowInsetsControllerCompat =
             WindowInsetsControllerCompat(window, window.decorView)
         windowsInsetsController.hide(WindowInsetsCompat.Type.systemBars())
 
+        /** Set GameView as our UI as we will be drawing on a Canvas not layouts **/
         setContentView(GameView(this))
 
-        /**
-         * Set up Sensors
-         */
-        // 1. Initializes SensorManager by getting reference of the sensor service
+        /** Set up Sensors */
+        //todo could move into separate class
+        //1. Initializes SensorManager by getting reference of the sensor service
         sensorManager = this.getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
         // 2. Registers sensor event callback to listen to changes in the accelerometer

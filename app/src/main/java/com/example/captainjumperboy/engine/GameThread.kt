@@ -19,7 +19,7 @@ class GameThread(private var surfaceHolder: SurfaceHolder, private var gameView:
     }
 
     /**
-     * Runs our game logic on a GameThread
+     * Runs our game logic and game loop on a GameThread
      */
     override fun run() {
         //variables for frame rate control
@@ -34,9 +34,7 @@ class GameThread(private var surfaceHolder: SurfaceHolder, private var gameView:
         while (running) {
             startTime = System.nanoTime()
             canvas = null
-
             //@todo game state manager?
-
             //update game logic and render to canvas
             try {
                 canvas = surfaceHolder.lockCanvas() //prevents more than 1 thread from drawing onto canvas in surface

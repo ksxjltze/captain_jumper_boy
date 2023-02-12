@@ -2,7 +2,6 @@ package com.example.captainjumperboy.engine.assets
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import androidx.core.graphics.scale
 import com.example.captainjumperboy.ui.GameView
 
 class Assets {

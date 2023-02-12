@@ -1,16 +1,22 @@
 package com.example.captainjumperboy.math
 
+import android.util.Log
 import com.example.captainjumperboy.engine.component.Component
 import kotlin.math.abs
 
 class Collision {
     class AABB(var pos: Vector2D, var halfSize: Vector2D) : Component()
     {
+        init {
+            Log.d("MainActivity: ", "Created AABB w/ pos = $pos and halfSize = $halfSize")
+        }
         var iscollided:Boolean=false
         //for collision detection
         fun collidesWith(other: AABB): Boolean {
+
             val distance = pos.add(other.pos.add(other.halfSize.add(halfSize.negate())))
             //if distance with other AABB is < halfSize = COLLIDE
+
             return abs(distance.x) <= (halfSize.x + other.halfSize.x) &&
                     abs(distance.y) <= (halfSize.y + other.halfSize.y)
         }

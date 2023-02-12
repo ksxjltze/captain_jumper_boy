@@ -1,8 +1,8 @@
 package com.example.captainjumperboy.game.scripts
 
 import com.example.captainjumperboy.R
-import com.example.captainjumperboy.engine.*
-import com.example.captainjumperboy.engine.assets.Assets
+import com.example.captainjumperboy.engine.GameObject
+import com.example.captainjumperboy.engine.Sprite
 import com.example.captainjumperboy.engine.assets.Image
 import com.example.captainjumperboy.engine.component.Scriptable
 import com.example.captainjumperboy.math.Collision
@@ -22,9 +22,9 @@ class PlatformSpawner : Scriptable() {
             platform.name="Platform"
             platform.addComponent(Sprite(birdImage))
             platform.transform.position.y = -i * 200F + startY
-//            platform.transform.scale.y = 0.1F
-//            platform.transform.scale.x = 0.7F
-            platform.addComponent(Collision.AABB(transform.position,transform.scale*0.5f))
+            platform.transform.scale.y = 1F
+            platform.transform.scale.x = 7F
+            platform.addComponent(Collision.AABB(platform.transform.position,platform.transform.scale*0.5f))
             platform.transform.position.x = rng.nextFloat() * 1000F
             platforms.add(platform)
         }

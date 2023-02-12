@@ -14,10 +14,18 @@ class MainMenuActivity : AppCompatActivity() {
         setContentView(R.layout.activity_mainmenu)
 
         val startbtn: Button = findViewById(R.id.playbtn)
+        val leaderboardBtn: Button = findViewById(R.id.leaderboardBtn)
 
         startbtn.setOnClickListener {
             Toast.makeText(this, "Game starting!", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
+        leaderboardBtn.setOnClickListener {
+            Toast.makeText(this, "Leaderboard!", Toast.LENGTH_SHORT).show()
+            //Go to leaderboard
+            val intent = Intent(this, LeaderboardActivity::class.java)
             startActivity(intent)
         }
 
