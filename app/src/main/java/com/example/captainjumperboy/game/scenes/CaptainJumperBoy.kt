@@ -28,7 +28,7 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
         playerObject.getScript<Player>()?.setScene(this)
     }
     override fun update() {
-        gameObjectList.forEach {gameObject ->  gameObject.update()}
+        super.update()
 
         //collision loop..need to destroy platforms out of viewport otherwise this will get slower..
         gameObjectList.forEach {gameObject ->
