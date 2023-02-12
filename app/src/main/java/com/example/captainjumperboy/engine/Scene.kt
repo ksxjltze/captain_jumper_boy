@@ -3,6 +3,8 @@ package com.example.captainjumperboy.engine
 import android.graphics.Canvas
 import com.example.captainjumperboy.engine.assets.Assets
 import com.example.captainjumperboy.engine.component.Component
+import com.example.captainjumperboy.math.Collision
+import com.example.captainjumperboy.math.Vector2D
 import com.example.captainjumperboy.ui.GameView
 
 interface OnCollidedListener {
@@ -22,9 +24,6 @@ open class Scene(var view: GameView) {
     init {
         Assets.view = view
     }
-
-
-
 
     //get first inactive object, creates a new game object if none found
     fun createObject(name : String = "") : GameObject{
@@ -75,5 +74,19 @@ open class Scene(var view: GameView) {
 
     open fun draw(canvas: Canvas){
         gameObjectList.forEach {gameObject ->  gameObject.draw(canvas)}
+        debugDrawColliders(canvas)
+    }
+
+    fun debugDrawColliders(canvas: Canvas){
+        for (gameObject in gameObjectList){
+            val aabb = gameObject.getComponent<Collision.AABB>() ?: continue
+            val min = Vector2D(aabb.pos.x - aabb.halfSize.x * Assets.targetWidth, aabb.pos.y - aabb.halfSize.y * Assets.targetHeight)
+            val max = Vector2D(aabb.pos.x + aabb.halfSize.x * Assets.targetWidth, aabb.pos.y + aabb.halfSize.y * Assets.targetHeight)
+
+            canvas.drawLine(min.x, min.y, max.x, min.y, Assets.GreenPaint)
+            canvas.drawLine(min.x, min.y, min.x, max.y, Assets.GreenPaint)
+            canvas.drawLine(min.x, max.y, max.x, max.y, Assets.GreenPaint)
+            canvas.drawLine(max.x, max.y, max.x, min.y, Assets.GreenPaint)
+        }
     }
 }
