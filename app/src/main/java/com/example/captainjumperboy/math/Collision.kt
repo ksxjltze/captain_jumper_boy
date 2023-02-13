@@ -1,35 +1,41 @@
 package com.example.captainjumperboy.math
 
 import android.util.Log
+import com.example.captainjumperboy.engine.assets.Assets
 import com.example.captainjumperboy.engine.component.Component
 import kotlin.math.abs
 
 class Collision {
     class AABB(var pos: Vector2D, var halfSize: Vector2D) : Component()
     {
+        var absoluteHalfSize : Vector2D
+
         init {
             Log.d("MainActivity: ", "Created AABB w/ pos = $pos and halfSize = $halfSize")
+            absoluteHalfSize = halfSize.times(Assets.targetHeight.toFloat())
         }
         var iscollided:Boolean=false
+
+
+
         //for collision detection
         fun collidesWith(other: AABB): Boolean {
-
-            val distance = pos.add(other.pos.add(other.halfSize.add(halfSize.negate())))
+            val distance = pos.sub(other.pos)
             //if distance with other AABB is < halfSize = COLLIDE
 
-            return abs(distance.x) <= (halfSize.x + other.halfSize.x) &&
-                    abs(distance.y) <= (halfSize.y + other.halfSize.y)
+            return abs(distance.x) <= (absoluteHalfSize.x + other.absoluteHalfSize.x) &&
+                    abs(distance.y) <= (absoluteHalfSize.y + other.absoluteHalfSize.y)
         }
 
         //for collision resolution between 2 AABBs
         fun resolveOverlap(other: AABB) {
             // get vector between the centers of the two rectangles
-            val distance = pos.add(other.pos.add(other.halfSize.add(halfSize.negate())))
+            val distance = pos.add(other.pos.add(other.absoluteHalfSize.add(absoluteHalfSize.negate())))
 
             // GET amount of overlap in the x and y axis
             val overlap = Vector2D(
-                (halfSize.x + other.halfSize.x) - abs(distance.x),
-                (halfSize.y + other.halfSize.y) - abs(distance.y)
+                (absoluteHalfSize.x + other.absoluteHalfSize.x) - abs(distance.x),
+                (absoluteHalfSize.y + other.absoluteHalfSize.y) - abs(distance.y)
             )
 
             //RESOLUTION IDEA: offset the position by overlap amount
