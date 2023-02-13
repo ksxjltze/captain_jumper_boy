@@ -13,6 +13,7 @@ import kotlinx.coroutines.Dispatchers
 class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
 {
     var velocity = Vector2D()
+    var Isjump:Boolean=false
     val jumpInterval = 2L
     lateinit var aabb:Collision.AABB
     val scope = CoroutineScope(Dispatchers.Default)
@@ -51,7 +52,8 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         transform.position.x += velocity.x
         transform.position.y += velocity.y
 
-        if (Scene.touchEvent) {
+        if (Scene.touchEvent && !Isjump) {
+            Isjump=true
             jump()
             Scene.touchEvent = false
         }
@@ -77,6 +79,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         {
             Log.d("MainActivity","Player Collided w/ Platform")
             velocity.y = 0.0F
+            Isjump=false
         }
         else
             return
