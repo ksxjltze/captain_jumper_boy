@@ -1,6 +1,7 @@
 package com.example.captainjumperboy.game.scripts
 
 import android.util.Log
+import android.view.WindowManager
 import com.example.captainjumperboy.engine.*
 import com.example.captainjumperboy.engine.component.Scriptable
 import com.example.captainjumperboy.math.Collision
@@ -14,9 +15,8 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
 {
     var velocity = Vector2D()
     var Isjump:Boolean=false
-    val jumpInterval = 2L
+
     lateinit var aabb:Collision.AABB
-    val scope = CoroutineScope(Dispatchers.Default)
     private lateinit var mainActivity: MainActivity
     private lateinit var scene:Scene
 
@@ -27,6 +27,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
     }
     fun setMainActivity(mainActivity: MainActivity) {
         this.mainActivity = mainActivity
+
         this.mainActivity.setSensorDataChangedListener(this)
     }
     override fun start() {
@@ -47,11 +48,23 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
     }
 
     override fun update() {
+        val Width=scene.view.windowWidth.toFloat()
         val dt = GameThread.deltaTime
         aabb.pos = transform.position
         transform.position.x += velocity.x
         transform.position.y += velocity.y
-
+        if(transform.position.x>= Width)
+        {
+            transform.position.x=0.0f
+        }
+        else if(transform.position.x<=0.0f)
+        {
+            transform.position.x=Width
+        }
+//        else if(transform.position.x<= -(Width as Float)/2.0f)
+//        {
+//            transform.position.x=(Width as Float)/2.0f
+//        }
         if (Scene.touchEvent && !Isjump) {
             Isjump=true
             jump()
