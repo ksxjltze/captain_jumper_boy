@@ -4,4 +4,7 @@
     <string name="StartBtn">Start game</string>
     <string name="leaderboard">Leaderboard</string>
     <string name="clear">Clear</string>
+    <string name="number">%1$d</string>
+    <string name="name">%1$s</string>
+    <string name="score">%1$d</string>
 </resources>
