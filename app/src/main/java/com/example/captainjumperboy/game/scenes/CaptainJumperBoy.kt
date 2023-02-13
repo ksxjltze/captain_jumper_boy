@@ -1,6 +1,7 @@
 package com.example.captainjumperboy.game.scenes
 
 import com.example.captainjumperboy.R
+import com.example.captainjumperboy.engine.GameObject
 import com.example.captainjumperboy.engine.Scene
 import com.example.captainjumperboy.engine.SpriteSheet
 import com.example.captainjumperboy.game.scripts.PlatformSpawner
@@ -11,12 +12,12 @@ import com.example.captainjumperboy.ui.MainActivity
 
 
 class CaptainJumperBoy(view : GameView) : Scene(view){
-
+    private var playerObject : GameObject
     init {
         val platformSpawner = createObject("spawner")
         platformSpawner.addScript<PlatformSpawner>()
 
-        val playerObject = createObject()
+        playerObject = createObject()
         playerObject.name="Player"
         playerObject.transform.position.x = 300F
         playerObject.transform.scale.x = 1F

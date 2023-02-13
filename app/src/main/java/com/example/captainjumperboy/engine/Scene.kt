@@ -21,6 +21,12 @@ open class Scene(var view: GameView) {
         this.collisionListener = listener
     }
 
+    /** FOR Touch Control EVENTS **/
+    companion object {
+        var touchEvent : Boolean = false
+        var touchPos : Vector2D = Vector2D(0.0F,0.0F)
+    }
+
     init {
         Assets.view = view
     }

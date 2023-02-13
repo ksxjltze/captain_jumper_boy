@@ -10,32 +10,40 @@ import android.media.MediaPlayer
 import android.os.Build
 import android.util.DisplayMetrics
 import android.util.Log
-import android.view.SurfaceHolder
-import android.view.SurfaceView
-import android.view.WindowManager
-import android.view.WindowMetrics
+import android.view.*
 import com.example.captainjumperboy.R
 import com.example.captainjumperboy.engine.GameThread
+import com.example.captainjumperboy.engine.Scene
 import com.example.captainjumperboy.engine.assets.Assets
 import com.example.captainjumperboy.game.scenes.CaptainJumperBoy
+import com.example.captainjumperboy.math.Vector2D
 
 /**
  * This class will inherit SurfaceView in order to draw our Game on a Canvas and
  * not layouts. The SurfaceView contains a SurfaceHolder and we override callbacks to
  * do things when surface has been created/destroyed/etc.
  */
-class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback {
+class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback, View.OnTouchListener {
 
     /** Creates a static GameThread that will run our game logic **/
     companion object{
         private lateinit var thread: GameThread
+        private var debugControls : Boolean = true
+
+        var windowWidth = 0
+        var windowHeight = 0
     }
+
     /** Creates a CaptainJumperBoy GameScene (contains the main logic of the scene) **/
     private var scene = CaptainJumperBoy(this)
     val mediaplayer = MediaPlayer.create(Assets.view.context, R.raw.bgm)
     init { //constructor
         holder.addCallback(this) //enables callback events to intercept events
+        if (debugControls)
+            setOnTouchListener(this)
         focusable = FOCUSABLE
+
+        getWindowSize() //update windowWidth & windowHeight
     }
 
     /**
@@ -69,8 +77,7 @@ class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback
 
     override fun surfaceCreated(holder: SurfaceHolder) {
 
-        val windowSize = getWindowSize()
-        Log.d("GameView: ", "Width: ${windowSize.x}, Height: ${windowSize.y}")
+        Log.d("GameView: ", "Width: ${windowWidth}, Height: ${windowHeight}")
 
         //Creates a GameThread
         thread = GameThread(holder, this)
@@ -106,14 +113,13 @@ class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback
             }
         }
     }
-    fun getWindowSize() : Point
+    private fun getWindowSize()
     {
         //MODERN WAY
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             val metrics: WindowMetrics = context.getSystemService(WindowManager::class.java).currentWindowMetrics
-            val screenWidth = metrics.bounds.width()
-            val screenHeight = metrics.bounds.height()
-            return Point(screenWidth, screenHeight)
+            windowWidth = metrics.bounds.width()
+            windowHeight = metrics.bounds.height()
         }
         else { //DEPRECATED WAY for API < 30
             val display = context.getSystemService(WindowManager::class.java).defaultDisplay
@@ -122,7 +128,18 @@ class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback
             } else {
                 Resources.getSystem().displayMetrics
             }
-            return Point(metrics.widthPixels, metrics.heightPixels)
+            windowWidth = metrics.widthPixels
+            windowHeight = metrics.heightPixels
         }
+    }
+
+
+    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+        if (event != null) {
+            Scene.touchEvent = true
+            Scene.touchPos = Vector2D(event.x, event.y) //send to scene
+            return true
+        }
+        return false
     }
 }

@@ -51,7 +51,11 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         transform.position.x += velocity.x
         transform.position.y += velocity.y
 
-        velocity.y += 0.5F
+        if (Scene.touchEvent) {
+            jump()
+            Scene.touchEvent = false
+        }
+        else velocity.y += 0.5F
     }
 
     override fun onSensorDataChanged(x: Float, y: Float, z: Float) {
