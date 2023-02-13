@@ -51,7 +51,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         transform.position.x += velocity.x
         transform.position.y += velocity.y
 
-        velocity.y += 0.5F
+        velocity.y += 0.1F
     }
 
     override fun onSensorDataChanged(x: Float, y: Float, z: Float) {

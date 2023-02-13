@@ -1,8 +1,11 @@
 package com.example.captainjumperboy.math
 
+import android.R.bool
 import android.util.Log
+import com.example.captainjumperboy.engine.assets.Assets
 import com.example.captainjumperboy.engine.component.Component
 import kotlin.math.abs
+
 
 class Collision {
     class AABB(var pos: Vector2D, var halfSize: Vector2D) : Component()
@@ -14,11 +17,13 @@ class Collision {
         //for collision detection
         fun collidesWith(other: AABB): Boolean {
 
-            val distance = pos.add(other.pos.add(other.halfSize.add(halfSize.negate())))
-            //if distance with other AABB is < halfSize = COLLIDE
-
-            return abs(distance.x) <= (halfSize.x + other.halfSize.x) &&
-                    abs(distance.y) <= (halfSize.y + other.halfSize.y)
+            val amin = Vector2D(pos.x - halfSize.x * Assets.targetWidth, pos.y - halfSize.y * Assets.targetHeight)
+            val bmin = Vector2D(other.pos.x - other.halfSize.x * Assets.targetWidth, other.pos.y - other.halfSize.y * Assets.targetHeight)
+            val amax = Vector2D(pos.x + halfSize.x * Assets.targetWidth, pos.y + halfSize.y * Assets.targetHeight)
+            val bmax = Vector2D(other.pos.x + other.halfSize.x * Assets.targetWidth, other.pos.y + other.halfSize.y * Assets.targetHeight)
+            val xOverlap: Boolean = bmin.x <= amax.x && amin.x <= bmax.x
+            val yOverlap: Boolean = bmin.y <= amax.y && amin.y <= bmax.y
+            return xOverlap && yOverlap;
         }
 
         //for collision resolution between 2 AABBs
