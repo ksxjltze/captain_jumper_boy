@@ -112,6 +112,7 @@ class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback
                 e.printStackTrace()
             }
         }
+        mediaplayer.stop()
     }
     private fun getWindowSize()
     {

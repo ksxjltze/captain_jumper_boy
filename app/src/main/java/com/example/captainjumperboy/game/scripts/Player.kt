@@ -1,8 +1,11 @@
 package com.example.captainjumperboy.game.scripts
 
+import android.media.MediaPlayer
 import android.util.Log
 import android.view.WindowManager
+import com.example.captainjumperboy.R
 import com.example.captainjumperboy.engine.*
+import com.example.captainjumperboy.engine.assets.Assets
 import com.example.captainjumperboy.engine.component.Scriptable
 import com.example.captainjumperboy.math.Collision
 import com.example.captainjumperboy.math.Vector2D
@@ -15,10 +18,12 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
 {
     var velocity = Vector2D()
     var Isjump:Boolean=false
+    var firsttouch:Boolean=false
 
     lateinit var aabb:Collision.AABB
     private lateinit var mainActivity: MainActivity
     private lateinit var scene:Scene
+    val mediaplayer = MediaPlayer.create(Assets.view.context, R.raw.jump)
 
     fun setScene(s:Scene)
     {
@@ -35,8 +40,9 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         val platformSpawner = findObject("spawner")
         val spawner = platformSpawner.getScript<PlatformSpawner>() ?: return
         val sprite = gameObject.getComponent<SpriteSheet>() ?: return
-
-       val firstPlatform = spawner.platforms[5]
+        mediaplayer.isLooping = false
+        mediaplayer.setVolume(10f,10f)
+        val firstPlatform = spawner.platforms[5]
        // transform.position.x = firstPlatform.transform.position.x
        transform.position.y = firstPlatform.transform.position.y +transform.position.y
 
@@ -61,12 +67,9 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         {
             transform.position.x=Width
         }
-//        else if(transform.position.x<= -(Width as Float)/2.0f)
-//        {
-//            transform.position.x=(Width as Float)/2.0f
-//        }
         if (Scene.touchEvent && !Isjump) {
             Isjump=true
+            firsttouch=true
             jump()
             Scene.touchEvent = false
         }
@@ -97,6 +100,14 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
             velocity.y = 0.0F //collision resolution
             Isjump=false
             Scene.touchEvent = false
+
+            if(firsttouch)
+            {
+
+                mediaplayer.seekTo(0);
+                mediaplayer.start();
+                firsttouch=false
+            }
         }
         else
             return
