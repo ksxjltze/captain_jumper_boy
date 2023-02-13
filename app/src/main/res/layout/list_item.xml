@@ -9,7 +9,7 @@
     app:layout_constraintTop_toTopOf="parent">
 
     <TextView
-        android:id="@+id/number"
+        android:id="@+id/leaderboardNumber"
         android:layout_width="60dp"
         android:layout_height="24dp"
         android:textAlignment="center"
@@ -18,7 +18,7 @@
         tools:text="1." />
 
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/leaderboardName"
         android:layout_width="250dp"
         android:layout_height="24dp"
         android:textAlignment="center"
@@ -27,7 +27,7 @@
         tools:text="Bryan Koh" />
 
     <TextView
-        android:id="@+id/score"
+        android:id="@+id/leaderboardScore"
         android:layout_width="100dp"
         android:layout_height="24dp"
         android:textAlignment="center"
