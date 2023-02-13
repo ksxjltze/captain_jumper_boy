@@ -43,7 +43,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
 
     fun jump(){
         val dt = GameThread.deltaTime
-        velocity.y = -15F ;
+        velocity.y = -16F ;
     }
 
     override fun update() {
@@ -52,7 +52,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         transform.position.x += velocity.x
         transform.position.y += velocity.y
 
-        if (Scene.touchEvent) {
+        if (Scene.touchEvent && !Isjump) {
             Isjump=true
             jump()
             Scene.touchEvent = false
@@ -76,13 +76,14 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         }
         playerBottom = transform.position.y + aabb.absoluteHalfSize.y
         if(obj.name=="Platform" && velocity.y>0 &&
-            ((playerBottom) <= platformTop + 20F)) //only collide if its going down
+            ((playerBottom) <= platformTop + velocity.y)) //only collide if its going down
         {
             //val overlap = platformAABB?.let { aabb.getOverlap(it) }
             Log.d("MainActivity","Player Collided w/ Platform")
-            transform.position.y -= 5F
+            transform.position.y -= velocity.y
             velocity.y = 0.0F //collision resolution
-            //Isjump=false
+            Isjump=false
+            Scene.touchEvent = false
         }
         else
             return
