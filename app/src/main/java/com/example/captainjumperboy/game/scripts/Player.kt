@@ -64,7 +64,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         if(obj.name=="Platform" && velocity.y>0)//only collide if its going down
         {
             Log.d("MainActivity","Player Collided w/ Platform")
-            jump()
+            velocity.y = 0.0F
         }
         else
             return
