@@ -29,6 +29,17 @@ class Collision {
                     abs(distance.y) <= (absoluteHalfSize.y + other.absoluteHalfSize.y)
         }
 
+//        fun getOverlap(other: AABB) : Vector2D {
+//            // get vector between the centers of the two rectangles
+//            val distance = pos.add(other.pos.add(other.absoluteHalfSize.add(absoluteHalfSize.negate())))
+//
+//            // GET amount of overlap in the x and y axis
+//            return Vector2D(
+//                (absoluteHalfSize.x + other.absoluteHalfSize.x) - abs(distance.x),
+//                (absoluteHalfSize.y + other.absoluteHalfSize.y) - abs(distance.y)
+//            )
+//        }
+
         //for collision resolution between 2 AABBs
         fun resolveOverlap(other: AABB) {
             // get vector between the centers of the two rectangles

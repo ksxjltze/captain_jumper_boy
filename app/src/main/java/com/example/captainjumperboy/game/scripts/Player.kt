@@ -52,7 +52,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         transform.position.x += velocity.x
         transform.position.y += velocity.y
 
-        if (Scene.touchEvent && !Isjump) {
+        if (Scene.touchEvent) {
             Isjump=true
             jump()
             Scene.touchEvent = false
@@ -68,18 +68,21 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
     override fun onCollided(obj: GameObject) {
         Log.d("MainActivity","Player Collided")
         val platformAABB = obj.getComponent<Collision.AABB>()
-        var platformHeight = 0.0F
+        var platformTop = 0.0F
+        var playerBottom = 0.0F
         if (platformAABB != null)
         {
-            platformHeight = platformAABB.absoluteHalfSize.y + platformAABB.pos.y
+            platformTop = platformAABB.pos.y - platformAABB.absoluteHalfSize.y
         }
-
+        playerBottom = transform.position.y + aabb.absoluteHalfSize.y
         if(obj.name=="Platform" && velocity.y>0 &&
-            transform.position.y < platformHeight) //only collide if its going down
+            ((playerBottom) <= platformTop + 20F)) //only collide if its going down
         {
+            //val overlap = platformAABB?.let { aabb.getOverlap(it) }
             Log.d("MainActivity","Player Collided w/ Platform")
-            velocity.y = 0.0F
-            Isjump=false
+            transform.position.y -= 5F
+            velocity.y = 0.0F //collision resolution
+            //Isjump=false
         }
         else
             return
