@@ -42,7 +42,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
 
     fun jump(){
         val dt = GameThread.deltaTime
-        velocity.y = -10F ;
+        velocity.y = -15F ;
     }
 
     override fun update() {
@@ -61,7 +61,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
 
     override fun onCollided(obj: GameObject) {
         Log.d("MainActivity","Player Collided")
-        if(obj.name=="Platform")
+        if(obj.name=="Platform" && velocity.y>0)//only collide if its going down
         {
             Log.d("MainActivity","Player Collided w/ Platform")
             jump()

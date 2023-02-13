@@ -22,7 +22,7 @@ class PlatformSpawner : Scriptable() {
             platform.name="Platform"
             platform.addComponent(Sprite(birdImage))
             platform.transform.position.y = -i * 200F + startY
-            platform.transform.scale.y = 1F
+            platform.transform.scale.y = 0.5F
             platform.transform.scale.x = 7F
             platform.addComponent(Collision.AABB(platform.transform.position,platform.transform.scale*0.5f))
             platform.transform.position.x = rng.nextFloat() * 1000F
