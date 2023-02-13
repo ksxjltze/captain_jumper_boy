@@ -34,9 +34,9 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         val spawner = platformSpawner.getScript<PlatformSpawner>() ?: return
         val sprite = gameObject.getComponent<SpriteSheet>() ?: return
 
-       // val firstPlatform = spawner.platforms[8]
+       val firstPlatform = spawner.platforms[5]
        // transform.position.x = firstPlatform.transform.position.x
-       // transform.position.y = firstPlatform.transform.position.y - sprite.image.height * transform.scale.y / 2F
+       transform.position.y = firstPlatform.transform.position.y +transform.position.y
 
     }
 
@@ -51,10 +51,11 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         transform.position.x += velocity.x
         transform.position.y += velocity.y
 
-        velocity.y += 0.1F
+        velocity.y += 0.5F
     }
 
     override fun onSensorDataChanged(x: Float, y: Float, z: Float) {
+        velocity.x -=x
         //todo...
     }
 

@@ -24,7 +24,9 @@ class MainActivity : Activity(), SensorEventListener {
     private lateinit var sensorManager: SensorManager
     private lateinit var accelerometer: Sensor
     private var sensorDataChangedListener: OnSensorDataChanged? = null
-
+    var currentX = 0f
+    var currentY = 0f
+    var currentZ = 0f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,17 +79,14 @@ class MainActivity : Activity(), SensorEventListener {
             val x = event.values[0]
             val y = event.values[1]
             val z = event.values[2]
+            val deltaX = x - currentX
+            val deltaY = y - currentY
+            val deltaZ = z - currentZ
 
-            //TODO Use this to control the character?
-            {
-            val sides = event.values[0]
-            val upDown = event.values[1]
-
-            val rotationZX = upDown * 3f
-            val rotationRight = sides * 3f
-            val rotationLeft = -sides * 3f
-            }
-            sensorDataChangedListener?.onSensorDataChanged(x, y, z)
+            currentX = x
+            currentY = y
+            currentZ = z
+            sensorDataChangedListener?.onSensorDataChanged(deltaX, deltaY, deltaZ)
         }
     }
 
