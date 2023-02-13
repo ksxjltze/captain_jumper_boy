@@ -65,7 +65,15 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
 
     override fun onCollided(obj: GameObject) {
         Log.d("MainActivity","Player Collided")
-        if(obj.name=="Platform" && velocity.y>0)//only collide if its going down
+        val platformAABB = obj.getComponent<Collision.AABB>()
+        var platformHeight = 0.0F
+        if (platformAABB != null)
+        {
+            platformHeight = platformAABB.absoluteHalfSize.y + platformAABB.pos.y
+        }
+
+        if(obj.name=="Platform" && velocity.y>0 &&
+            transform.position.y < platformHeight) //only collide if its going down
         {
             Log.d("MainActivity","Player Collided w/ Platform")
             velocity.y = 0.0F
@@ -74,3 +82,4 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
             return
     }
 }
+
