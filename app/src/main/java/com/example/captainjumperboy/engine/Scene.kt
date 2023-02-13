@@ -80,8 +80,8 @@ open class Scene(var view: GameView) {
     fun debugDrawColliders(canvas: Canvas){
         for (gameObject in gameObjectList){
             val aabb = gameObject.getComponent<Collision.AABB>() ?: continue
-            val min = Vector2D(aabb.pos.x - aabb.halfSize.x * Assets.targetWidth, aabb.pos.y - aabb.halfSize.y * Assets.targetHeight)
-            val max = Vector2D(aabb.pos.x + aabb.halfSize.x * Assets.targetWidth, aabb.pos.y + aabb.halfSize.y * Assets.targetHeight)
+            val min = Vector2D(aabb.pos.x - aabb.absoluteHalfSize.x * Assets.targetWidth, aabb.pos.y - aabb.absoluteHalfSize.y * Assets.targetHeight)
+            val max = Vector2D(aabb.pos.x + aabb.absoluteHalfSize.x * Assets.targetWidth, aabb.pos.y + aabb.absoluteHalfSize.y * Assets.targetHeight)
 
             canvas.drawLine(min.x, min.y, max.x, min.y, Assets.GreenPaint)
             canvas.drawLine(min.x, min.y, min.x, max.y, Assets.GreenPaint)
