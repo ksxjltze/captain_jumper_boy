@@ -2,6 +2,7 @@ package com.example.captainjumperboy.engine.component
 
 import android.graphics.Canvas
 import com.example.captainjumperboy.engine.GameObject
+import com.example.captainjumperboy.engine.Renderer
 import com.example.captainjumperboy.engine.Scene
 import com.example.captainjumperboy.math.Transform
 
@@ -21,6 +22,7 @@ open class Component : Updatable, Renderable {
     }
 
     override fun draw(canvas: Canvas) {}
+    override fun draw(renderer: Renderer){}
     override fun update() {}
 
     fun destroy(){

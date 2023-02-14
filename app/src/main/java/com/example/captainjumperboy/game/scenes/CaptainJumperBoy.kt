@@ -1,12 +1,12 @@
 package com.example.captainjumperboy.game.scenes
 
 import com.example.captainjumperboy.R
-import com.example.captainjumperboy.engine.GameObject
-import com.example.captainjumperboy.engine.Scene
-import com.example.captainjumperboy.engine.SpriteSheet
+import com.example.captainjumperboy.engine.*
+import com.example.captainjumperboy.engine.assets.Image
 import com.example.captainjumperboy.game.scripts.PlatformSpawner
 import com.example.captainjumperboy.game.scripts.Player
 import com.example.captainjumperboy.math.Collision
+import com.example.captainjumperboy.math.Vector2D
 import com.example.captainjumperboy.ui.GameView
 import com.example.captainjumperboy.ui.MainActivity
 
@@ -16,6 +16,17 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
     init {
         val platformSpawner = createObject("spawner")
         platformSpawner.addScript<PlatformSpawner>()
+
+        //test background/foreground
+        val background = createObject()
+        background.apply {
+            name = "Background"
+            addComponent(Sprite(Image(R.drawable.matt_big)).apply { layer = Layer.UI })
+            transform.apply {
+                scale = Vector2D(10F, 10F)
+                position = Vector2D(500F, 600F)
+            }
+        }
 
         playerObject = createObject()
         playerObject.name="Player"
