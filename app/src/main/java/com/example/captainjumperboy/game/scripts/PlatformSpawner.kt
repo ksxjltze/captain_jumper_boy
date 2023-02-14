@@ -17,6 +17,7 @@ import kotlin.random.Random
 
 class PlatformSpawner : Scriptable() {
     val platforms = ArrayList<GameObject>()
+    var Highscore:Int=0
     private val count = 15
     private val rng = Random(LocalTime.now().second)
 
@@ -26,7 +27,7 @@ class PlatformSpawner : Scriptable() {
     }
 
     private fun spawn(){
-        val birdImage = Image(R.drawable.bird)
+        val birdImage = Image(R.drawable.broken)
         val rng = Random(LocalTime.now().second)
         val startY = 2000
         //val startY = 2980
@@ -36,7 +37,7 @@ class PlatformSpawner : Scriptable() {
             platform.name="Platform"
             platform.addComponent(Sprite(birdImage))
             platform.transform.scale.y = 0.5F
-            platform.transform.scale.x = 7F
+            platform.transform.scale.x = 5F
             platform.transform.position.y = -i * 250F + startY
             platform.addComponent(Collision.AABB(platform.transform.position,platform.transform.scale*0.5f))
             platform.transform.position.x = GetRandomPosX()
@@ -72,6 +73,8 @@ class PlatformSpawner : Scriptable() {
                 val halfScaleY = plat.transform.scale.y / 2.0f * Assets.targetHeight
                 plat.transform.position.y = Camera.transform.position.y - halfScaleY
                 plat.transform.position.x = GetRandomPosX()
+                aabb.pos=plat.transform.position
+                Highscore+=100
             }
         }
     }

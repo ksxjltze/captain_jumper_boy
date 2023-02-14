@@ -6,6 +6,7 @@ import com.example.captainjumperboy.engine.*
 import com.example.captainjumperboy.engine.assets.Assets
 import com.example.captainjumperboy.engine.assets.Image
 import com.example.captainjumperboy.game.scripts.Background
+import com.example.captainjumperboy.game.scripts.Highscore
 import com.example.captainjumperboy.game.scripts.PlatformSpawner
 import com.example.captainjumperboy.game.scripts.Player
 import com.example.captainjumperboy.math.Collision
@@ -15,7 +16,7 @@ import com.example.captainjumperboy.ui.MainActivity
 
 class CaptainJumperBoy(view : GameView) : Scene(view){
     private var playerObject : GameObject
-    private var cameraSpeed = 50.0F
+    private var cameraSpeed = 2.0F
     init {
         val BG = createObject("background")
         val mainmenu = Image(R.drawable.mainmenu)
@@ -36,11 +37,20 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
         playerObject.addScript<Player>()
         playerObject.getScript<Player>()?.setMainActivity(this.view.context as MainActivity)
         playerObject.getScript<Player>()?.setScene(this)
+
+//        var text = createObject()
+//        text.name="Highscore"
+//        text.transform.position.x = 300F
+//        text.transform.scale.x = 1.5F
+//        text.transform.scale.y = 1.5F
+//        text.addComponent(Text())
+//        text.addScript<Highscore>()
+
     }
     override fun update() {
         super.update()
-        if (playerObject.getScript<Player>()?.start == true)
-            Camera.transform.position.y += GameThread.deltaTime * cameraSpeed
+//        if (playerObject.getScript<Player>()?.start == true)
+//            Camera.transform.position.y += GameThread.deltaTime * cameraSpeed
         //collision loop..need to destroy platforms out of viewport otherwise this will get slower..
         gameObjectList.forEach {gameObject ->
             if(gameObject.hasComponent<Collision.AABB>())

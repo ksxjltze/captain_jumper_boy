@@ -40,6 +40,6 @@ class Background : Scriptable() {
        // Does not work well because camera is tied to players position, and that
        // is not the center of the screen
 
-       transform.position.y = initialPosition - Camera.transform.position.y
+       transform.position.y = Camera.transform.position.y+initialPosition-5//magic number
     }
 }

@@ -39,7 +39,7 @@ class SpriteSheet (resourceId : Int, rows: Int, cols: Int) : Component()
         val frame = animation.getFrame(frameIndex)
 
         val matrix = transform.getMatrix()
-        matrix.postConcat(Camera.transform.getMatrix()) //View * Model
+        matrix.postConcat(Camera.transform.getViewMatrix()) //View * Model
         canvas.withMatrix(matrix) {
             val xOffset = -Assets.targetWidth/2
             val yOffset = -Assets.targetHeight/2
