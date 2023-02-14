@@ -40,7 +40,7 @@ class PlatformSpawner : Scriptable() {
             platform.transform.scale.x = 5F
             platform.transform.position.y = -i * 250F + startY
             platform.addComponent(Collision.AABB(platform.transform.position,platform.transform.scale*0.5f))
-            platform.transform.position.x = GetRandomPosX()
+            platform.transform.position.x = GetRandomPosX()+(platform.transform.scale.x*0.5f)
             if (i == 0)
             {
                 platform.transform.scale.y = 0.5F
@@ -71,8 +71,9 @@ class PlatformSpawner : Scriptable() {
             if(distanceToBottom < 0.0f)
             {
                 val halfScaleY = plat.transform.scale.y / 2.0f * Assets.targetHeight
-                plat.transform.position.y = Camera.transform.position.y - halfScaleY
-                plat.transform.position.x = GetRandomPosX()
+                plat.transform.position.y = Camera.transform.position.y - halfScaleY-20F
+                plat.transform.position.x = GetRandomPosX()+(plat.transform.scale.x*0.5f)
+                plat.transform.scale.x = 5F
                 aabb.pos=plat.transform.position
                 Highscore+=100
             }

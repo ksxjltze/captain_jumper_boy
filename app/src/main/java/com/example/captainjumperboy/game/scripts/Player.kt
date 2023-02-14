@@ -53,7 +53,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
     fun jump(){
         start = true
         val dt = GameThread.deltaTime
-        velocity.y = -16F ;
+        velocity.y = -20F ;
     }
 
     override fun update() {
