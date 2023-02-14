@@ -6,6 +6,8 @@ import com.example.captainjumperboy.engine.assets.Image
 import com.example.captainjumperboy.engine.component.Component
 
 class Sprite(var image : Image) : Component() {
+
+    var layer : Layer = Layer.FOREGROUND
     override fun draw(canvas: Canvas){
         val matrix = transform.getMatrix()
         matrix.postConcat(Camera.transform.getMatrix()) //View * Model

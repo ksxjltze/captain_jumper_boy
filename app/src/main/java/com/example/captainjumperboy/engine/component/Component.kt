@@ -6,11 +6,6 @@ import com.example.captainjumperboy.engine.Scene
 import com.example.captainjumperboy.math.Transform
 
 open class Component : Updatable, Renderable {
-    companion object{ //laziness
-        //assumes that only one scene can exist at a time
-        lateinit var scene : Scene
-    }
-
     lateinit var gameObject : GameObject
     var transform: Transform
         get() = gameObject.transform
@@ -18,11 +13,11 @@ open class Component : Updatable, Renderable {
 
     //gets an available object from the scene and calls start() on it
     fun createObject() : GameObject{
-        return scene.spawnObject()
+        return Scene.activeScene!!.spawnObject()
     }
 
     fun findObject(name : String) : GameObject{
-        return scene.findObject(name)
+        return Scene.activeScene!!.findObject(name)
     }
 
     override fun draw(canvas: Canvas) {}
