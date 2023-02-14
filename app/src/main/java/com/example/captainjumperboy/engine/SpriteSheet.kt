@@ -19,7 +19,7 @@ class SpriteSheet (resourceId : Int, rows: Int, cols: Int) : Component()
     private val width: Int = image.width / cols
     private val height: Int = image.height / rows
 
-    private var timer: Float = 0f
+    private var timer: Double = 0.0
 
     init {
         for (row in 0 until rows) {
@@ -32,6 +32,7 @@ class SpriteSheet (resourceId : Int, rows: Int, cols: Int) : Component()
         }
         animation.isOneShot = false
         animation.start()
+
     }
 
     override fun draw(renderer: Renderer){
@@ -53,15 +54,20 @@ class SpriteSheet (resourceId : Int, rows: Int, cols: Int) : Component()
         }
 
         if (animation.isRunning) {
-            timer += 0.5f //@todo: proper timer increment (using dt or something)
-            if(timer >= 2f)
+
+            val now = System.nanoTime()
+            val dt = (now - lastTime) / 1.0e9 // Convert nanoseconds to seconds
+            lastTime = now
+            timer += dt
+
+            if(timer >= 0.1)
             {
                 frameIndex++
                 if (frameIndex >= animation.numberOfFrames) {
                     frameIndex = 0
                 }
                 ViewCompat.postInvalidateOnAnimation(Assets.view)
-                timer = 0f
+                timer = 0.0
             }
 
         }
@@ -76,5 +82,9 @@ class SpriteSheet (resourceId : Int, rows: Int, cols: Int) : Component()
     fun stop()
     {
         animation.stop()
+    }
+
+    companion object {
+        private var lastTime = System.nanoTime()
     }
 }
