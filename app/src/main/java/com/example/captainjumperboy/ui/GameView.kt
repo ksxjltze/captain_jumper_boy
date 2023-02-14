@@ -30,11 +30,10 @@ class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback
     companion object{
         private lateinit var thread: GameThread
         private var debugControls : Boolean = true
-
-
+        public var windowWidth = 0
+        public var windowHeight = 0
     }
-    public var windowWidth = 0
-    public var windowHeight = 0
+    
     /** Creates a CaptainJumperBoy GameScene (contains the main logic of the scene) **/
     private var scene = CaptainJumperBoy(this)
     val mediaplayer = MediaPlayer.create(Assets.view.context, R.raw.bgm2)

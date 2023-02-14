@@ -1,9 +1,7 @@
 package com.example.captainjumperboy.game.scenes
 
 import com.example.captainjumperboy.R
-import com.example.captainjumperboy.engine.GameObject
-import com.example.captainjumperboy.engine.Scene
-import com.example.captainjumperboy.engine.SpriteSheet
+import com.example.captainjumperboy.engine.*
 import com.example.captainjumperboy.game.scripts.Background
 import com.example.captainjumperboy.game.scripts.PlatformSpawner
 import com.example.captainjumperboy.game.scripts.Player
@@ -14,6 +12,7 @@ import com.example.captainjumperboy.ui.MainActivity
 
 class CaptainJumperBoy(view : GameView) : Scene(view){
     private var playerObject : GameObject
+    private var cameraSpeed = 50.0F
     init {
         val BG = createObject("background")
         BG.addComponent(SpriteSheet(R.drawable.spritesheet_mainmenu,1,3))
@@ -26,9 +25,9 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
         playerObject = createObject()
         playerObject.name="Player"
         playerObject.transform.position.x = 300F
-        playerObject.transform.scale.x = 1F
-        playerObject.transform.scale.y = 1F
-        playerObject.addComponent(SpriteSheet(R.drawable.spritesheet_,2,4))
+        playerObject.transform.scale.x = 1.5F
+        playerObject.transform.scale.y = 1.5F
+        playerObject.addComponent(SpriteSheet(R.drawable.player,1,3))
         playerObject.addComponent(Collision.AABB(playerObject.transform.position,playerObject.transform.scale*0.5f))
         playerObject.addScript<Player>()
         playerObject.getScript<Player>()?.setMainActivity(this.view.context as MainActivity)
@@ -36,7 +35,8 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
     }
     override fun update() {
         super.update()
-
+        if (playerObject.getScript<Player>()?.start == true)
+            Camera.transform.position.y += GameThread.deltaTime * cameraSpeed
         //collision loop..need to destroy platforms out of viewport otherwise this will get slower..
         gameObjectList.forEach {gameObject ->
             if(gameObject.hasComponent<Collision.AABB>())

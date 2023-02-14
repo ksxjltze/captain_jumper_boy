@@ -10,6 +10,7 @@ import com.example.captainjumperboy.engine.assets.Assets
 import com.example.captainjumperboy.engine.assets.Image
 import com.example.captainjumperboy.engine.component.Scriptable
 import com.example.captainjumperboy.math.Collision
+import com.example.captainjumperboy.ui.GameView
 import java.time.LocalTime
 import kotlin.math.abs
 import kotlin.random.Random
@@ -39,6 +40,12 @@ class PlatformSpawner : Scriptable() {
             platform.transform.position.y = -i * 250F + startY
             platform.addComponent(Collision.AABB(platform.transform.position,platform.transform.scale*0.5f))
             platform.transform.position.x = GetRandomPosX()
+            if (i == 0)
+            {
+                platform.transform.scale.y = 0.5F
+                platform.transform.scale.x = 12F
+                platform.transform.position.x = GameView.windowWidth / 2.0F
+            }
             platforms.add(platform)
         }
     }
