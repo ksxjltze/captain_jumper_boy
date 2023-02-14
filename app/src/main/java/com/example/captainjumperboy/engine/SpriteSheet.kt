@@ -34,6 +34,10 @@ class SpriteSheet (resourceId : Int, rows: Int, cols: Int) : Component()
         animation.start()
     }
 
+    override fun draw(renderer: Renderer){
+        renderer.enqueue(this)
+    }
+
     override fun draw(canvas: Canvas) {
         //super.draw(canvas)
         val frame = animation.getFrame(frameIndex)

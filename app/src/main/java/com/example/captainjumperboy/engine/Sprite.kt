@@ -6,10 +6,18 @@ import com.example.captainjumperboy.engine.assets.Image
 import com.example.captainjumperboy.engine.component.Component
 
 class Sprite(var image : Image) : Component() {
+    override fun draw(canvas: Canvas) {
+        val matrix = transform.getMatrix()
+        matrix.postConcat(Camera.transform.getViewMatrix()) //View * Model
 
-    var layer : Layer = Layer.FOREGROUND
-    override fun draw(renderer: Renderer){ //delegate drawing to renderer (for layer sorting)
-        renderer.enqueueSprite(this)
+        //apply transform and draw
+        canvas.withMatrix(matrix) {
+            canvas.drawBitmap(image.bitmap, -image.width/2F, -image.height/2F, null) //draw centered in canvas to apply transform correctly
+        }
+    }
+
+    override fun draw(renderer: Renderer){
+        renderer.enqueue(this)
     }
 }
 

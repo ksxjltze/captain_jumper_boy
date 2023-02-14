@@ -2,35 +2,29 @@ package com.example.captainjumperboy.engine
 
 import android.graphics.Canvas
 import androidx.core.graphics.withMatrix
+import com.example.captainjumperboy.engine.component.Renderable
 import java.util.LinkedList
 import java.util.PriorityQueue
 
 class Renderer {
-    private val compareBySpriteLayer : Comparator<Sprite> = compareByDescending { it.layer }
-    private val renderQueue : PriorityQueue<Sprite> = PriorityQueue<Sprite>(compareBySpriteLayer) //queue interface backed by a linked list, sorted by sprite layer
+    private val compareByLayer : Comparator<Renderable> = compareByDescending { it.layer }
+    private val renderQueue : PriorityQueue<Renderable> = PriorityQueue<Renderable>(compareByLayer) //queue interface backed by a linked list, sorted by sprite layer
 
-    fun enqueueSprite(sprite: Sprite){
-        renderQueue.add(sprite)
+    fun enqueue(renderable: Renderable){
+        renderQueue.add(renderable)
     }
 
     fun draw(canvas: Canvas){
-        drawSprites(canvas)
+        while (renderQueue.isNotEmpty()){
+            val renderable = renderQueue.peek()
+            renderable?.draw(canvas)
+            renderQueue.remove()
+        }
     }
 
-    fun drawSprites(canvas: Canvas){ //flush sprite queue and render
-        while (renderQueue.isNotEmpty()){
-            val sprite = renderQueue.peek()
-            sprite?.apply {
-                val matrix = transform.getMatrix()
-                matrix.postConcat(Camera.transform.getViewMatrix()) //View * Model
+    private fun drawSprite(sprite: Sprite,  canvas: Canvas){ //flush sprite queue and render
+        sprite.apply {
 
-                //apply transform and draw
-                canvas.withMatrix(matrix) {
-                    canvas.drawBitmap(image.bitmap, -image.width/2F, -image.height/2F, null) //draw centered in canvas to apply transform correctly
-                }
-            }
-
-            renderQueue.remove()
         }
 
     }
