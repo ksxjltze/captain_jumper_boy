@@ -12,6 +12,7 @@ import android.util.DisplayMetrics
 import android.util.Log
 import android.view.*
 import com.example.captainjumperboy.R
+import com.example.captainjumperboy.engine.Camera
 import com.example.captainjumperboy.engine.GameThread
 import com.example.captainjumperboy.engine.Scene
 import com.example.captainjumperboy.engine.assets.Assets
@@ -43,6 +44,7 @@ class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback
         focusable = FOCUSABLE
 
         getWindowSize() //update windowWidth & windowHeight
+        Camera.screenHeight = windowHeight.toFloat()
     }
 
     /**
@@ -128,6 +130,7 @@ class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback
             } else {
                 Resources.getSystem().displayMetrics
             }
+
             windowWidth = metrics.widthPixels
             windowHeight = metrics.heightPixels
         }

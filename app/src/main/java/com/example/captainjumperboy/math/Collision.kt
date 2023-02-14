@@ -19,7 +19,6 @@ class Collision {
         var iscollided:Boolean=false
 
 
-
         //for collision detection
         fun collidesWith(other: AABB): Boolean {
             val distance = pos.sub(other.pos)

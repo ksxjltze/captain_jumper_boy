@@ -8,7 +8,7 @@ import com.example.captainjumperboy.engine.component.Component
 class Sprite(var image : Image) : Component() {
     override fun draw(canvas: Canvas){
         val matrix = transform.getMatrix()
-        matrix.postConcat(Camera.transform.getMatrix()) //View * Model
+        matrix.postConcat(Camera.transform.getViewMatrix()) //View * Model
 
         //apply transform and draw
         canvas.withMatrix(matrix) {

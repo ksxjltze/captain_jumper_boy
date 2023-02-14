@@ -3,6 +3,7 @@ package com.example.captainjumperboy.game.scripts
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.example.captainjumperboy.R
 import com.example.captainjumperboy.engine.Camera
 import com.example.captainjumperboy.engine.Scene
@@ -13,7 +14,7 @@ import com.example.captainjumperboy.ui.GameView
 
 class Background : Scriptable() {
     private lateinit var scene: Scene
-
+    private var initialPosition = 0.0f
     fun setScene(s: Scene)
     {
         this.scene=s
@@ -27,10 +28,18 @@ class Background : Scriptable() {
         transform.scale.x =Width/100.0f
         transform.scale.y = Height/100.0f
         transform.rotation = 0F
+        initialPosition = transform.position.y
     }
 
-//    override fun update() {
-//        Camera.transform.position.y += 1
-//        transform.position.y += 1
-//    }
+   override fun update() {
+       /*
+        Camera.transform.position.y += 1
+        transform.position.y += 1
+        */
+
+       // Does not work well because camera is tied to players position, and that
+       // is not the center of the screen
+
+       transform.position.y = initialPosition - Camera.transform.position.y
+    }
 }
