@@ -9,6 +9,7 @@ import com.example.captainjumperboy.engine.assets.Assets
 import com.example.captainjumperboy.engine.component.Scriptable
 import com.example.captainjumperboy.math.Collision
 import com.example.captainjumperboy.math.Vector2D
+import com.example.captainjumperboy.ui.GameView
 import com.example.captainjumperboy.ui.MainActivity
 import com.example.captainjumperboy.ui.OnSensorDataChanged
 import kotlinx.coroutines.CoroutineScope
@@ -19,11 +20,12 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
     var velocity = Vector2D()
     var Isjump:Boolean=false
     var firsttouch:Boolean=false
+    var start : Boolean = false
 
     lateinit var aabb:Collision.AABB
     private lateinit var mainActivity: MainActivity
     private lateinit var scene:Scene
-    val mediaplayer = MediaPlayer.create(Assets.view.context, R.raw.jump)
+    val mediaplayer = MediaPlayer.create(Assets.view.context, R.raw.jump2)
 
     fun setScene(s:Scene)
     {
@@ -42,19 +44,20 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         val sprite = gameObject.getComponent<SpriteSheet>() ?: return
         mediaplayer.isLooping = false
         mediaplayer.setVolume(10f,10f)
-        val firstPlatform = spawner.platforms[5]
-       // transform.position.x = firstPlatform.transform.position.x
-       transform.position.y = firstPlatform.transform.position.y +transform.position.y
+        val firstPlatform = spawner.platforms[0]
+        transform.position.x = GameView.windowWidth / 2.0F
+        transform.position.y = firstPlatform.transform.position.y - 100.0F
 
     }
 
     fun jump(){
+        start = true
         val dt = GameThread.deltaTime
-        velocity.y = -16F ;
+        velocity.y = -20F ;
     }
 
     override fun update() {
-        val Width=scene.view.windowWidth.toFloat()
+        val Width = GameView.windowWidth.toFloat()
         val dt = GameThread.deltaTime
         aabb.pos = transform.position
         transform.position.x += velocity.x
@@ -67,6 +70,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         {
             transform.position.x=Width
         }
+        Camera.transform.position.y -= 2.0f//camera movement
         if (Scene.touchEvent && !Isjump) {
             Isjump=true
             firsttouch=true
@@ -82,7 +86,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
     }
 
     override fun onCollided(obj: GameObject) {
-        Log.d("MainActivity","Player Collided")
+        //Log.d("MainActivity","Player Collided")
         val platformAABB = obj.getComponent<Collision.AABB>()
         var platformTop = 0.0F
         var playerBottom = 0.0F
@@ -95,7 +99,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
             ((playerBottom) <= platformTop + velocity.y)) //only collide if its going down
         {
             //val overlap = platformAABB?.let { aabb.getOverlap(it) }
-            Log.d("MainActivity","Player Collided w/ Platform")
+            //Log.d("MainActivity","Player Collided w/ Platform")
             transform.position.y -= velocity.y
             velocity.y = 0.0F //collision resolution
             Isjump=false

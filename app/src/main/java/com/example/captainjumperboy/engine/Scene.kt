@@ -1,6 +1,7 @@
 package com.example.captainjumperboy.engine
 
 import android.graphics.Canvas
+import androidx.core.graphics.withMatrix
 import com.example.captainjumperboy.engine.assets.Assets
 import com.example.captainjumperboy.engine.component.Component
 import com.example.captainjumperboy.math.Collision
@@ -93,14 +94,17 @@ open class Scene(var view: GameView) {
 
     fun debugDrawColliders(canvas: Canvas){
         for (gameObject in gameObjectList){
+
             val aabb = gameObject.getComponent<Collision.AABB>() ?: continue
             val min = Vector2D(aabb.pos.x - aabb.absoluteHalfSize.x , aabb.pos.y - aabb.absoluteHalfSize.y )
             val max = Vector2D(aabb.pos.x + aabb.absoluteHalfSize.x , aabb.pos.y + aabb.absoluteHalfSize.y )
 
-            canvas.drawLine(min.x, min.y, max.x, min.y, Assets.GreenPaint)
-            canvas.drawLine(min.x, min.y, min.x, max.y, Assets.GreenPaint)
-            canvas.drawLine(min.x, max.y, max.x, max.y, Assets.GreenPaint)
-            canvas.drawLine(max.x, max.y, max.x, min.y, Assets.GreenPaint)
+            //apply transform and draw
+            canvas.withMatrix(Camera.transform.getViewMatrix()) {
+                canvas.drawLine(min.x, min.y, max.x, min.y, Assets.GreenPaint)
+                canvas.drawLine(min.x, min.y, min.x, max.y, Assets.GreenPaint)
+                canvas.drawLine(min.x, max.y, max.x, max.y, Assets.GreenPaint)
+                canvas.drawLine(max.x, max.y, max.x, min.y, Assets.GreenPaint) }
         }
     }
 }

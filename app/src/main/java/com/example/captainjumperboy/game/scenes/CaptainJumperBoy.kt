@@ -1,8 +1,11 @@
 package com.example.captainjumperboy.game.scenes
 
+import android.content.res.Resources
 import com.example.captainjumperboy.R
 import com.example.captainjumperboy.engine.*
 import com.example.captainjumperboy.engine.assets.Image
+import com.example.captainjumperboy.game.scripts.Background
+import com.example.captainjumperboy.game.scripts.Highscore
 import com.example.captainjumperboy.game.scripts.PlatformSpawner
 import com.example.captainjumperboy.game.scripts.Player
 import com.example.captainjumperboy.math.Collision
@@ -13,14 +16,21 @@ import com.example.captainjumperboy.ui.MainActivity
 
 class CaptainJumperBoy(view : GameView) : Scene(view){
     private var playerObject : GameObject
+    private var cameraSpeed = 2.0F
     init {
+        val BG = createObject("background")
+        val mainmenu = Image(R.drawable.mainmenu)
+        BG.addComponent(Sprite(mainmenu).apply { layer = Layer.BACKGROUND })
+        BG.addScript<Background>()
+        BG.getScript<Background>()?.setScene(this)
+
         val platformSpawner = createObject("spawner")
         platformSpawner.addScript<PlatformSpawner>()
 
         //test background/foreground
         val background = createObject()
         background.apply {
-            name = "Background"
+            name = "Background2"
             addComponent(Sprite(Image(R.drawable.matt_big)).apply { layer = Layer.UI })
             transform.apply {
                 scale = Vector2D(10F, 10F)
@@ -31,17 +41,24 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
         playerObject = createObject()
         playerObject.name="Player"
         playerObject.transform.position.x = 300F
-        playerObject.transform.scale.x = 1F
-        playerObject.transform.scale.y = 1F
-        playerObject.addComponent(SpriteSheet(R.drawable.spritesheet_,2,4))
+        playerObject.transform.scale.x = 1.5F
+        playerObject.transform.scale.y = 1.5F
+        playerObject.addComponent(SpriteSheet(R.drawable.player,1,3))
         playerObject.addComponent(Collision.AABB(playerObject.transform.position,playerObject.transform.scale*0.5f))
         playerObject.addScript<Player>()
         playerObject.getScript<Player>()?.setMainActivity(this.view.context as MainActivity)
         playerObject.getScript<Player>()?.setScene(this)
+
+        var text = createObject()
+        text.name="Highscore"
+        text.addComponent(Text())
+        text.addScript<Highscore>()
+        text.getScript<Highscore>()?.setScene(this)
     }
     override fun update() {
         super.update()
-
+//        if (playerObject.getScript<Player>()?.start == true)
+//            Camera.transform.position.y += GameThread.deltaTime * cameraSpeed
         //collision loop..need to destroy platforms out of viewport otherwise this will get slower..
         gameObjectList.forEach {gameObject ->
             if(gameObject.hasComponent<Collision.AABB>())

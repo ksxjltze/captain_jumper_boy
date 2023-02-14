@@ -22,7 +22,7 @@ class Renderer {
             val sprite = renderQueue.peek()
             sprite?.apply {
                 val matrix = transform.getMatrix()
-                matrix.postConcat(Camera.transform.getMatrix()) //View * Model
+                matrix.postConcat(Camera.transform.getViewMatrix()) //View * Model
 
                 //apply transform and draw
                 canvas.withMatrix(matrix) {

@@ -1,7 +1,10 @@
 <resources>
-    <string name="app_name">Social Climber</string>
+    <string name="app_name">CaptainJumperBoy</string>
     <string name="darrick">Darrick so good</string>
     <string name="StartBtn">Start game</string>
     <string name="leaderboard">Leaderboard</string>
     <string name="clear">Clear</string>
+    <string name="idString">%1$d</string>
+    <string name="nameString">%1$s</string>
+    <string name="scoreString">%1$d</string>
 </resources>

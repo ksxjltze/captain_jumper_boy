@@ -12,6 +12,7 @@ import android.util.DisplayMetrics
 import android.util.Log
 import android.view.*
 import com.example.captainjumperboy.R
+import com.example.captainjumperboy.engine.Camera
 import com.example.captainjumperboy.engine.GameThread
 import com.example.captainjumperboy.engine.Scene
 import com.example.captainjumperboy.engine.assets.Assets
@@ -29,14 +30,13 @@ class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback
     companion object{
         private lateinit var thread: GameThread
         private var debugControls : Boolean = true
-
-
+        public var windowWidth = 0
+        public var windowHeight = 0
     }
-    public var windowWidth = 0
-    public var windowHeight = 0
+    
     /** Creates a CaptainJumperBoy GameScene (contains the main logic of the scene) **/
     private var scene = CaptainJumperBoy(this)
-    val mediaplayer = MediaPlayer.create(Assets.view.context, R.raw.bgm)
+    val mediaplayer = MediaPlayer.create(Assets.view.context, R.raw.bgm2)
     init { //constructor
         holder.addCallback(this) //enables callback events to intercept events
         if (debugControls)
@@ -44,6 +44,7 @@ class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback
         focusable = FOCUSABLE
 
         getWindowSize() //update windowWidth & windowHeight
+        Camera.screenHeight = windowHeight.toFloat()
     }
 
     /**
@@ -129,6 +130,7 @@ class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback
             } else {
                 Resources.getSystem().displayMetrics
             }
+
             windowWidth = metrics.widthPixels
             windowHeight = metrics.heightPixels
         }

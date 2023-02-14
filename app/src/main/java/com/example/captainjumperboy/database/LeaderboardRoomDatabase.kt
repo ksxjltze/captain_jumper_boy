@@ -1,6 +1,7 @@
 package com.example.captainjumperboy.database
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -63,7 +64,11 @@ public abstract class LeaderboardRoomDatabase : RoomDatabase() {
             super.onCreate(db)
             INSTANCE?.let { database ->
                 scope.launch {
-                    populateDatabase(database.leaderboardDao())
+                    //populateDatabase(database.leaderboardDao())
+                    Log.d("LeaderboardDatabase", "POPULATE DATABASE")
+                    database.leaderboardDao().insert(Leaderboard(1, "Bryan Koh", 9999))
+                    database.leaderboardDao().insert(Leaderboard(2, "Darrick", 9999))
+                    database.leaderboardDao().insert(Leaderboard(3, "LJK Algorithm", 9999))
                 }
             }
         }
@@ -74,7 +79,9 @@ public abstract class LeaderboardRoomDatabase : RoomDatabase() {
         suspend fun populateDatabase(leaderboardDao: LeaderboardDao) {
             //Starts the database empty!
             leaderboardDao.deleteAll()
+
             //TODO: Add some default leaderboard scores at the start if we want
+
         }
     }
 

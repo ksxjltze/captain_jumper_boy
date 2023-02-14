@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="409dp"
+    android:layout_height="24dp"
+    android:orientation="horizontal"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <TextView
+        android:id="@+id/leaderboardNumber"
+        android:layout_width="60dp"
+        android:layout_height="24dp"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        tools:text="1." />
+
+    <TextView
+        android:id="@+id/leaderboardName"
+        android:layout_width="250dp"
+        android:layout_height="24dp"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        tools:text="Bryan Koh" />
+
+    <TextView
+        android:id="@+id/leaderboardScore"
+        android:layout_width="100dp"
+        android:layout_height="24dp"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        tools:text="99999" />
+
+
+</LinearLayout>
