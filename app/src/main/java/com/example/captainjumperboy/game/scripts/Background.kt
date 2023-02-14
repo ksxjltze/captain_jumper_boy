@@ -8,6 +8,7 @@ import com.example.captainjumperboy.engine.Camera
 import com.example.captainjumperboy.engine.Scene
 import com.example.captainjumperboy.engine.assets.Assets
 import com.example.captainjumperboy.engine.component.Scriptable
+import com.example.captainjumperboy.ui.GameView
 
 
 class Background : Scriptable() {
@@ -18,8 +19,8 @@ class Background : Scriptable() {
         this.scene=s
     }
     override fun start() {
-        val Width=scene.view.windowWidth.toFloat()
-        val Height=scene.view.windowHeight.toFloat()
+        val Width= GameView.windowWidth.toFloat()
+        val Height= GameView.windowHeight.toFloat()
 
         transform.position.x = Width/2.0f
         transform.position.y = Height/2.0f

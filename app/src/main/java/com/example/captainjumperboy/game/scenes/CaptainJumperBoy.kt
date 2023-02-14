@@ -25,7 +25,6 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
 
         playerObject = createObject()
         playerObject.name="Player"
-        playerObject.transform.position.x = 300F
         playerObject.transform.scale.x = 1F
         playerObject.transform.scale.y = 1F
         playerObject.addComponent(SpriteSheet(R.drawable.spritesheet_,2,4))

@@ -9,6 +9,7 @@ import com.example.captainjumperboy.engine.assets.Assets
 import com.example.captainjumperboy.engine.component.Scriptable
 import com.example.captainjumperboy.math.Collision
 import com.example.captainjumperboy.math.Vector2D
+import com.example.captainjumperboy.ui.GameView
 import com.example.captainjumperboy.ui.MainActivity
 import com.example.captainjumperboy.ui.OnSensorDataChanged
 import kotlinx.coroutines.CoroutineScope
@@ -42,9 +43,9 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         val sprite = gameObject.getComponent<SpriteSheet>() ?: return
         mediaplayer.isLooping = false
         mediaplayer.setVolume(10f,10f)
-        val firstPlatform = spawner.platforms[5]
-       // transform.position.x = firstPlatform.transform.position.x
-       transform.position.y = firstPlatform.transform.position.y +transform.position.y
+        val firstPlatform = spawner.platforms[0]
+        transform.position.x = GameView.windowWidth / 2.0F
+        transform.position.y = firstPlatform.transform.position.y - 100.0F
 
     }
 
@@ -54,7 +55,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
     }
 
     override fun update() {
-        val Width=scene.view.windowWidth.toFloat()
+        val Width = GameView.windowWidth.toFloat()
         val dt = GameThread.deltaTime
         aabb.pos = transform.position
         transform.position.x += velocity.x

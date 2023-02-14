@@ -6,6 +6,7 @@ import com.example.captainjumperboy.engine.Sprite
 import com.example.captainjumperboy.engine.assets.Image
 import com.example.captainjumperboy.engine.component.Scriptable
 import com.example.captainjumperboy.math.Collision
+import com.example.captainjumperboy.ui.GameView
 import java.time.LocalTime
 import kotlin.random.Random
 
@@ -16,16 +17,22 @@ class PlatformSpawner : Scriptable() {
     private fun spawn(){
         val birdImage = Image(R.drawable.broken)
         val rng = Random(LocalTime.now().second)
-        val startY = 2000F
+        val startY = GameView.windowHeight - 250.0F
         for (i in 0 until count){
             val platform = createObject()
             platform.name="Platform"
             platform.addComponent(Sprite(birdImage))
             platform.transform.position.y = -i * 250F + startY
             platform.transform.scale.y = 0.5F
-            platform.transform.scale.x = 7F
-            platform.addComponent(Collision.AABB(platform.transform.position,platform.transform.scale*0.5f))
+            platform.transform.scale.x = 6F
             platform.transform.position.x = rng.nextFloat() * 1000F
+            if (i == 0)
+            {
+                platform.transform.scale.y = 0.5F
+                platform.transform.scale.x = 12F
+                platform.transform.position.x = GameView.windowWidth / 2.0F
+            }
+            platform.addComponent(Collision.AABB(platform.transform.position,platform.transform.scale*0.5f))
             platforms.add(platform)
         }
     }
