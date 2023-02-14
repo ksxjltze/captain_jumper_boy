@@ -59,6 +59,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         aabb.pos = transform.position
         transform.position.x += velocity.x
         transform.position.y += velocity.y
+
         if(transform.position.x>= Width)
         {
             transform.position.x=0.0f
