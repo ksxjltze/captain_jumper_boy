@@ -17,7 +17,10 @@ class Collision {
             absoluteHalfSize = halfSize.times(Assets.targetHeight.toFloat())
         }
         var iscollided:Boolean=false
-
+        fun RecalculateHalfSize(halfSize: Vector2D)
+        {
+            absoluteHalfSize = halfSize.times(Assets.targetHeight.toFloat())
+        }
 
         //for collision detection
         fun collidesWith(other: AABB): Boolean {

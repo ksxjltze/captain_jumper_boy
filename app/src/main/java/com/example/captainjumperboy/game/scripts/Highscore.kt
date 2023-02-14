@@ -35,6 +35,9 @@ class Highscore : Scriptable() {
     }
 
     override fun update() {
+        val platformSpawner = findObject("spawner")
+        val text:Text = gameObject.getComponent<Text>() ?: return
+        text.str="HIGHSCORE "+platformSpawner.getScript<PlatformSpawner>()?.Highscore
         transform.position.y = initialPosition+Camera.transform.position.y//magic number
     }
 }

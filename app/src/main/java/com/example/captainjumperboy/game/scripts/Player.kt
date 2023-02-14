@@ -70,7 +70,6 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         {
             transform.position.x=Width
         }
-        Camera.transform.position.y -= 2.0f//camera movement
         if (Scene.touchEvent && !Isjump) {
             Isjump=true
             firsttouch=true
@@ -78,6 +77,12 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
             Scene.touchEvent = false
         }
         else velocity.y += 0.5F
+        if(transform.position.y<100f)
+        {
+            Camera.transform.position.y -= 4.0f
+        }
+        else
+        Camera.transform.position.y -= 2.0f//camera movement
     }
 
     override fun onSensorDataChanged(x: Float, y: Float, z: Float) {
