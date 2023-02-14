@@ -31,7 +31,7 @@ class SpriteSheet (resourceId : Int, rows: Int, cols: Int) : Component()
             animation.addFrame(BitmapDrawable(Assets.view.resources, frame), 100)
         }
         animation.isOneShot = false
-        animation.start()
+
 
     }
 
@@ -76,7 +76,7 @@ class SpriteSheet (resourceId : Int, rows: Int, cols: Int) : Component()
 
     fun start()
     {
-
+        animation.start()
     }
 
     fun stop()
