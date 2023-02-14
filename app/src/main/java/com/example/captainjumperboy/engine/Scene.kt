@@ -14,6 +14,7 @@ interface OnCollidedListener {
 
 open class Scene(var view: GameView) {
     protected var gameObjectList = ArrayList<GameObject>()
+    val renderer = Renderer()
 
     /** LISTENER FOR COLLISION EVENTS **/
     protected var collisionListener: OnCollidedListener? = null
@@ -26,6 +27,10 @@ open class Scene(var view: GameView) {
     companion object {
         var touchEvent : Boolean = false
         var touchPos : Vector2D = Vector2D(0.0F,0.0F)
+
+        //
+        lateinit var activeScene : Scene
+            private set
     }
 
     init {
@@ -62,14 +67,15 @@ open class Scene(var view: GameView) {
     }
 
     fun startEarly(){
-        Component.scene = this
+        activeScene = this
         for (i in 0 until gameObjectList.count()){
             gameObjectList[i].startEarly()
         }
     }
 
     fun start(){
-        Component.scene = this
+        activeScene = this //kinda redundant (already set in startEarly)
+
         for (i in 0 until gameObjectList.count()){
             gameObjectList[i].start()
         }
@@ -81,6 +87,8 @@ open class Scene(var view: GameView) {
 
     open fun draw(canvas: Canvas){
         gameObjectList.forEach {gameObject ->  gameObject.draw(canvas)}
+        gameObjectList.forEach {gameObject ->  gameObject.draw(renderer)}
+        renderer.draw(canvas)
         debugDrawColliders(canvas)
     }
 
