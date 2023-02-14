@@ -24,9 +24,10 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
 
         playerObject = createObject()
         playerObject.name="Player"
-        playerObject.transform.scale.x = 1F
-        playerObject.transform.scale.y = 1F
-        playerObject.addComponent(SpriteSheet(R.drawable.spritesheet_,2,4))
+        playerObject.transform.position.x = 300F
+        playerObject.transform.scale.x = 1.5F
+        playerObject.transform.scale.y = 1.5F
+        playerObject.addComponent(SpriteSheet(R.drawable.player,1,3))
         playerObject.addComponent(Collision.AABB(playerObject.transform.position,playerObject.transform.scale*0.5f))
         playerObject.addScript<Player>()
         playerObject.getScript<Player>()?.setMainActivity(this.view.context as MainActivity)
