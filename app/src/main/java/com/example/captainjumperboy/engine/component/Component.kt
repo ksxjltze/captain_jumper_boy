@@ -2,11 +2,14 @@ package com.example.captainjumperboy.engine.component
 
 import android.graphics.Canvas
 import com.example.captainjumperboy.engine.GameObject
+import com.example.captainjumperboy.engine.Layer
 import com.example.captainjumperboy.engine.Renderer
 import com.example.captainjumperboy.engine.Scene
 import com.example.captainjumperboy.math.Transform
 
 open class Component : Updatable, Renderable {
+    override var layer = Layer.FOREGROUND
+
     lateinit var gameObject : GameObject
     var transform: Transform
         get() = gameObject.transform

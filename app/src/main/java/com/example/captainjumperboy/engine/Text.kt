@@ -11,6 +11,7 @@ import com.example.captainjumperboy.engine.component.Component
 import com.example.captainjumperboy.math.Vector2D
 
 class Text(var paint : Paint=Paint() ,var pos:Vector2D=Vector2D(),var str:String="Some Test",var textcolor:Int=Color.RED) : Component() {
+    override var layer = Layer.UI
     override fun draw(canvas: Canvas){
         val matrix = transform.getMatrix()
         matrix.postConcat(Camera.transform.getViewMatrix()) //View * Model
@@ -23,5 +24,9 @@ class Text(var paint : Paint=Paint() ,var pos:Vector2D=Vector2D(),var str:String
             canvas.drawText(str, pos.x, pos.y, paint);
         }
 
+    }
+
+    override fun draw(renderer: Renderer){
+        renderer.enqueue(this)
     }
 }
