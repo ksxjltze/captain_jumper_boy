@@ -28,8 +28,15 @@ class Background : Scriptable() {
         transform.rotation = 0F
     }
 
-//    override fun update() {
-//        Camera.transform.position.y += 1
-//        transform.position.y += 1
-//    }
+   override fun update() {
+       /*
+        Camera.transform.position.y += 1
+        transform.position.y += 1
+        */
+
+       // Does not work well because camera is tied to players position, and that
+       // is not the center of the screen
+       transform.position.y = -Camera.transform.position.y
+        // + 200.0f// magic number to fit bg to screen
+    }
 }

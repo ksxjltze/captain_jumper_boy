@@ -42,10 +42,10 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         val sprite = gameObject.getComponent<SpriteSheet>() ?: return
         mediaplayer.isLooping = false
         mediaplayer.setVolume(10f,10f)
-        val firstPlatform = spawner.platforms[5]
-       // transform.position.x = firstPlatform.transform.position.x
+        //val firstPlatform = spawner.platforms[5]
+        val firstPlatform = spawner.platforms[0] // Remove
+       transform.position.x = firstPlatform.transform.position.x
        transform.position.y = firstPlatform.transform.position.y +transform.position.y
-
     }
 
     fun jump(){
@@ -56,6 +56,8 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
     override fun update() {
         val Width=scene.view.windowWidth.toFloat()
         val dt = GameThread.deltaTime
+
+        velocity.y = 0.0F // Remove
         aabb.pos = transform.position
         transform.position.x += velocity.x
         transform.position.y += velocity.y
@@ -67,13 +69,17 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         {
             transform.position.x=Width
         }
+
+        //Camera.transform.position.y = transform.position.y
+        Camera.transform.position.y -= 50.0f
+
         if (Scene.touchEvent && !Isjump) {
             Isjump=true
             firsttouch=true
             jump()
             Scene.touchEvent = false
         }
-        else velocity.y += 0.5F
+        //else velocity.y += 0.5F // Remove
     }
 
     override fun onSensorDataChanged(x: Float, y: Float, z: Float) {
@@ -82,6 +88,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
     }
 
     override fun onCollided(obj: GameObject) {
+        return // Remove
         Log.d("MainActivity","Player Collided")
         val platformAABB = obj.getComponent<Collision.AABB>()
         var platformTop = 0.0F
@@ -98,12 +105,12 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
             Log.d("MainActivity","Player Collided w/ Platform")
             transform.position.y -= velocity.y
             velocity.y = 0.0F //collision resolution
+
             Isjump=false
             Scene.touchEvent = false
 
             if(firsttouch)
             {
-
                 mediaplayer.seekTo(0);
                 mediaplayer.start();
                 firsttouch=false
