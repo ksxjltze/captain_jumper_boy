@@ -39,7 +39,6 @@ class PlatformSpawner : Scriptable() {
             platform.transform.scale.y = 0.5F
             platform.transform.scale.x = 5F
             platform.transform.position.y = -i * 250F + startY
-            platform.addComponent(Collision.AABB(platform.transform.position,platform.transform.scale*0.5f))
             platform.transform.position.x = GetRandomPosX()+(platform.transform.scale.x*0.5f)
             if (i == 0)
             {
@@ -47,6 +46,7 @@ class PlatformSpawner : Scriptable() {
                 platform.transform.scale.x = 12F
                 platform.transform.position.x = GameView.windowWidth / 2.0F
             }
+            platform.addComponent(Collision.AABB(platform.transform.position,platform.transform.scale*0.5f))
             platforms.add(platform)
         }
     }
