@@ -14,7 +14,7 @@ class PlatformSpawner : Scriptable() {
     private val count = 10
 
     private fun spawn(){
-        val birdImage = Image(R.drawable.bird)
+        val birdImage = Image(R.drawable.broken)
         val rng = Random(LocalTime.now().second)
         val startY = 2000F
         for (i in 0 until count){

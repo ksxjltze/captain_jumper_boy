@@ -23,7 +23,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
     lateinit var aabb:Collision.AABB
     private lateinit var mainActivity: MainActivity
     private lateinit var scene:Scene
-    val mediaplayer = MediaPlayer.create(Assets.view.context, R.raw.jump)
+    val mediaplayer = MediaPlayer.create(Assets.view.context, R.raw.jump2)
 
     fun setScene(s:Scene)
     {
