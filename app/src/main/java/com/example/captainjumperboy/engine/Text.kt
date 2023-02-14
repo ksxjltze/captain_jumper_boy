@@ -10,16 +10,15 @@ import com.example.captainjumperboy.engine.assets.Image
 import com.example.captainjumperboy.engine.component.Component
 import com.example.captainjumperboy.math.Vector2D
 
-class Text(var paint : Paint=Paint() ,var pos:Vector2D=Vector2D(),var str:String="Some Test",var textcolor:Int=Color.BLACK) : Component() {
+class Text(var paint : Paint=Paint() ,var pos:Vector2D=Vector2D(),var str:String="Some Test",var textcolor:Int=Color.RED) : Component() {
     override fun draw(canvas: Canvas){
         val matrix = transform.getMatrix()
         matrix.postConcat(Camera.transform.getViewMatrix()) //View * Model
 
         //apply transform and draw
         canvas.withMatrix(matrix) {
-//            paint.setColor(Color.WHITE);
-//            paint.setStyle(Paint.Style.FILL);
-            canvas.drawPaint(paint);
+            //canvas.drawPaint(paint);
+            paint.textAlign = Paint.Align.CENTER
             paint.setColor(textcolor);
             canvas.drawText(str, pos.x, pos.y, paint);
         }

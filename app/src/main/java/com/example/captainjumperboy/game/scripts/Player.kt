@@ -70,7 +70,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         {
             transform.position.x=Width
         }
-        Camera.transform.position.y -= 2.0f
+        Camera.transform.position.y -= 2.0f//camera movement
         if (Scene.touchEvent && !Isjump) {
             Isjump=true
             firsttouch=true

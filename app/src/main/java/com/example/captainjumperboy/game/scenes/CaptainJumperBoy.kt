@@ -38,13 +38,10 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
         playerObject.getScript<Player>()?.setMainActivity(this.view.context as MainActivity)
         playerObject.getScript<Player>()?.setScene(this)
 
-//        var text = createObject()
-//        text.name="Highscore"
-//        text.transform.position.x = 300F
-//        text.transform.scale.x = 1.5F
-//        text.transform.scale.y = 1.5F
-//        text.addComponent(Text())
-//        text.addScript<Highscore>()
+        var text = createObject()
+        text.name="Highscore"
+        text.addComponent(Text())
+        text.addScript<Highscore>()
 
     }
     override fun update() {
