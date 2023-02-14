@@ -34,7 +34,8 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
     }
     override fun update() {
         super.update()
-        Camera.transform.position.y += GameThread.deltaTime * cameraSpeed
+        if (playerObject.getScript<Player>()?.start == true)
+            Camera.transform.position.y += GameThread.deltaTime * cameraSpeed
         //collision loop..need to destroy platforms out of viewport otherwise this will get slower..
         gameObjectList.forEach {gameObject ->
             if(gameObject.hasComponent<Collision.AABB>())

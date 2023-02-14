@@ -20,6 +20,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
     var velocity = Vector2D()
     var Isjump:Boolean=false
     var firsttouch:Boolean=false
+    var start : Boolean = false
 
     lateinit var aabb:Collision.AABB
     private lateinit var mainActivity: MainActivity
@@ -50,6 +51,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
     }
 
     fun jump(){
+        start = true
         val dt = GameThread.deltaTime
         velocity.y = -16F ;
     }
