@@ -42,7 +42,7 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
         text.name="Highscore"
         text.addComponent(Text())
         text.addScript<Highscore>()
-
+        text.getScript<Highscore>()?.setScene(this)
     }
     override fun update() {
         super.update()
