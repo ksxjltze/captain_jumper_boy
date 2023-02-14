@@ -36,7 +36,7 @@ class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback
     public var windowHeight = 0
     /** Creates a CaptainJumperBoy GameScene (contains the main logic of the scene) **/
     private var scene = CaptainJumperBoy(this)
-    val mediaplayer = MediaPlayer.create(Assets.view.context, R.raw.bgm)
+    val mediaplayer = MediaPlayer.create(Assets.view.context, R.raw.bgm2)
     init { //constructor
         holder.addCallback(this) //enables callback events to intercept events
         if (debugControls)
