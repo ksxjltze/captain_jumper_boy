@@ -20,21 +20,24 @@ class Highscore : Scriptable() {
         this.scene=s
     }
     override fun start() {
-        val Width= GameView.windowWidth.toFloat()
+        val width= GameView.windowWidth.toFloat()
         val Height= GameView.windowHeight.toFloat()
-        transform.position.x = Width/2.0f
+        transform.position.x = width/2.0f
         transform.position.y = 100f
         transform.scale.x = 20F
         transform.scale.y = 20F
         transform.rotation = 0F
         val text:Text = gameObject.getComponent<Text>() ?: return
-        text.paint.setTextSize(5F);
         text.str="HIGHSCORE"
         text.textcolor=Color.RED
         initialPosition = transform.position.y
     }
 
     override fun update() {
+        val platformSpawner = findObject("spawner")
+        val text:Text = gameObject.getComponent<Text>() ?: return
+        val score: Int? =platformSpawner.getScript<PlatformSpawner>()?.Highscore
+        text.str="HIGHSCORE: "+score
         transform.position.y = initialPosition+Camera.transform.position.y//magic number
     }
 }
