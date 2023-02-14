@@ -42,8 +42,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         val sprite = gameObject.getComponent<SpriteSheet>() ?: return
         mediaplayer.isLooping = false
         mediaplayer.setVolume(10f,10f)
-        //val firstPlatform = spawner.platforms[5]
-        val firstPlatform = spawner.platforms[0] // Remove
+        val firstPlatform = spawner.platforms[5]
        transform.position.x = firstPlatform.transform.position.x
        transform.position.y = firstPlatform.transform.position.y +transform.position.y
     }
@@ -57,7 +56,6 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         val Width=scene.view.windowWidth.toFloat()
         val dt = GameThread.deltaTime
 
-        velocity.y = 0.0F // Remove
         aabb.pos = transform.position
         transform.position.x += velocity.x
         transform.position.y += velocity.y
@@ -70,8 +68,9 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
             transform.position.x=Width
         }
 
+        // Not always true temp only
         //Camera.transform.position.y = transform.position.y
-        Camera.transform.position.y -= 50.0f
+        Camera.transform.position.y -= 10.0f
 
         if (Scene.touchEvent && !Isjump) {
             Isjump=true

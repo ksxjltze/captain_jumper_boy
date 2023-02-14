@@ -27,8 +27,8 @@ class PlatformSpawner : Scriptable() {
     private fun spawn(){
         val birdImage = Image(R.drawable.bird)
         val rng = Random(LocalTime.now().second)
-        //val startY = 2980
         val startY = 2000
+        //val startY = 2980
         // Usuable screen height is about 2980
         for (i in 0 until count){
             val platform = createObject()
