@@ -2,6 +2,7 @@ package com.example.captainjumperboy.ui
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -40,5 +41,10 @@ class LeaderboardActivity : AppCompatActivity() {
             // Update the cached copy of the digits in the adapter.
             scores?.let { adapter.submitList(it) }
         })
+
+        val clearBtn = findViewById<Button>(R.id.clearBtn)
+        clearBtn.setOnClickListener {
+            viewModel.deleteAll()
+        }
     }
 }
