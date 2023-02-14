@@ -27,16 +27,16 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
         val platformSpawner = createObject("spawner")
         platformSpawner.addScript<PlatformSpawner>()
 
-        //test background/foreground
-        val background = createObject()
-        background.apply {
-            name = "Background2"
-            addComponent(Sprite(Image(R.drawable.matt_big)).apply { layer = Layer.UI })
-            transform.apply {
-                scale = Vector2D(10F, 10F)
-                position = Vector2D(500F, 600F)
-            }
-        }
+//        //test background/foreground
+//        val background = createObject()
+//        background.apply {
+//            name = "Background2"
+//            addComponent(Sprite(Image(R.drawable.matt_big)).apply { layer = Layer.UI })
+//            transform.apply {
+//                scale = Vector2D(10F, 10F)
+//                position = Vector2D(500F, 600F)
+//            }
+//        }
 
         playerObject = createObject()
         playerObject.name="Player"
@@ -54,6 +54,17 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
         text.addComponent(Text())
         text.addScript<Highscore>()
         text.getScript<Highscore>()?.setScene(this)
+        val width= GameView.windowWidth.toFloat()
+        val tutorialtext = createObject()
+        tutorialtext.apply {
+            name = "Background2"
+            addComponent(Text(Vector2D(),"Tap to jump and tilt to move, don't fall",5F))
+            transform.apply {
+                scale = Vector2D(10F, 15F)
+                position = Vector2D(500f, 800f)
+            }
+        }
+
     }
     override fun update() {
         super.update()

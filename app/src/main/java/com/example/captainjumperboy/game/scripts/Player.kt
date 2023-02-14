@@ -1,5 +1,6 @@
 package com.example.captainjumperboy.game.scripts
 
+import android.annotation.SuppressLint
 import android.media.MediaPlayer
 import android.util.Log
 import android.view.WindowManager
@@ -54,8 +55,17 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         start = true
         val dt = GameThread.deltaTime
         velocity.y = -20F ;
+
+        if(firsttouch)
+        {
+
+            mediaplayer.seekTo(0);
+            mediaplayer.start();
+            firsttouch=false
+        }
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override fun update() {
         val Width = GameView.windowWidth.toFloat()
         val dt = GameThread.deltaTime
@@ -79,7 +89,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         else velocity.y += 0.5F
         if(transform.position.y<100f)
         {
-            Camera.transform.position.y -= 4.0f
+            Camera.transform.position.y -= 3.0f
         }
         else
         Camera.transform.position.y -= 2.0f//camera movement
@@ -109,14 +119,6 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
             velocity.y = 0.0F //collision resolution
             Isjump=false
             Scene.touchEvent = false
-
-            if(firsttouch)
-            {
-
-                mediaplayer.seekTo(0);
-                mediaplayer.start();
-                firsttouch=false
-            }
         }
         else
             return
