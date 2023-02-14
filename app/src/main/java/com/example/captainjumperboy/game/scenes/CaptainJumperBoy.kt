@@ -3,13 +3,13 @@ package com.example.captainjumperboy.game.scenes
 import android.content.res.Resources
 import com.example.captainjumperboy.R
 import com.example.captainjumperboy.engine.*
-import com.example.captainjumperboy.engine.assets.Assets
 import com.example.captainjumperboy.engine.assets.Image
 import com.example.captainjumperboy.game.scripts.Background
 import com.example.captainjumperboy.game.scripts.Highscore
 import com.example.captainjumperboy.game.scripts.PlatformSpawner
 import com.example.captainjumperboy.game.scripts.Player
 import com.example.captainjumperboy.math.Collision
+import com.example.captainjumperboy.math.Vector2D
 import com.example.captainjumperboy.ui.GameView
 import com.example.captainjumperboy.ui.MainActivity
 
@@ -20,12 +20,23 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
     init {
         val BG = createObject("background")
         val mainmenu = Image(R.drawable.mainmenu)
-        BG.addComponent(Sprite(mainmenu))
+        BG.addComponent(Sprite(mainmenu).apply { layer = Layer.BACKGROUND })
         BG.addScript<Background>()
         BG.getScript<Background>()?.setScene(this)
 
         val platformSpawner = createObject("spawner")
         platformSpawner.addScript<PlatformSpawner>()
+
+        //test background/foreground
+        val background = createObject()
+        background.apply {
+            name = "Background2"
+            addComponent(Sprite(Image(R.drawable.matt_big)).apply { layer = Layer.UI })
+            transform.apply {
+                scale = Vector2D(10F, 10F)
+                position = Vector2D(500F, 600F)
+            }
+        }
 
         playerObject = createObject()
         playerObject.name="Player"

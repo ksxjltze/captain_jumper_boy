@@ -35,6 +35,12 @@ class GameObject {
         }
     }
 
+    fun draw(renderer: Renderer){
+        for (component in componentList){
+            component.draw(renderer)
+        }
+    }
+
     fun addComponent(component: Component){
         component.gameObject = this
         componentList.add(component)
