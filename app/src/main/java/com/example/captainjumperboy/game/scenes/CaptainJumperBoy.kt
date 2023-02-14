@@ -1,9 +1,7 @@
 package com.example.captainjumperboy.game.scenes
 
 import com.example.captainjumperboy.R
-import com.example.captainjumperboy.engine.GameObject
-import com.example.captainjumperboy.engine.Scene
-import com.example.captainjumperboy.engine.SpriteSheet
+import com.example.captainjumperboy.engine.*
 import com.example.captainjumperboy.game.scripts.Background
 import com.example.captainjumperboy.game.scripts.PlatformSpawner
 import com.example.captainjumperboy.game.scripts.Player
@@ -14,6 +12,7 @@ import com.example.captainjumperboy.ui.MainActivity
 
 class CaptainJumperBoy(view : GameView) : Scene(view){
     private var playerObject : GameObject
+    private var cameraSpeed = 50.0F
     init {
         val BG = createObject("background")
         BG.addComponent(SpriteSheet(R.drawable.spritesheet_mainmenu,1,3))
@@ -35,7 +34,7 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
     }
     override fun update() {
         super.update()
-
+        Camera.transform.position.y += GameThread.deltaTime * cameraSpeed
         //collision loop..need to destroy platforms out of viewport otherwise this will get slower..
         gameObjectList.forEach {gameObject ->
             if(gameObject.hasComponent<Collision.AABB>())

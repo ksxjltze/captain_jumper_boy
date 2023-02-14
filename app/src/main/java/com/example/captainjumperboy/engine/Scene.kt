@@ -80,7 +80,7 @@ open class Scene(var view: GameView) {
 
     open fun draw(canvas: Canvas){
         gameObjectList.forEach {gameObject ->  gameObject.draw(canvas)}
-        debugDrawColliders(canvas)
+        //debugDrawColliders(canvas)
     }
 
     fun debugDrawColliders(canvas: Canvas){
