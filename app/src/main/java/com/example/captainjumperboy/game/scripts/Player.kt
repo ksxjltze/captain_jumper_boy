@@ -82,7 +82,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
     }
 
     override fun onCollided(obj: GameObject) {
-        Log.d("MainActivity","Player Collided")
+        //Log.d("MainActivity","Player Collided")
         val platformAABB = obj.getComponent<Collision.AABB>()
         var platformTop = 0.0F
         var playerBottom = 0.0F
@@ -95,7 +95,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
             ((playerBottom) <= platformTop + velocity.y)) //only collide if its going down
         {
             //val overlap = platformAABB?.let { aabb.getOverlap(it) }
-            Log.d("MainActivity","Player Collided w/ Platform")
+            //Log.d("MainActivity","Player Collided w/ Platform")
             transform.position.y -= velocity.y
             velocity.y = 0.0F //collision resolution
             Isjump=false

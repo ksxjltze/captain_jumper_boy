@@ -13,7 +13,7 @@ class Collision {
         var absoluteHalfSize : Vector2D
 
         init {
-            Log.d("MainActivity: ", "Created AABB w/ pos = $pos and halfSize = $halfSize")
+            //Log.d("MainActivity: ", "Created AABB w/ pos = $pos and halfSize = $halfSize")
             absoluteHalfSize = halfSize.times(Assets.targetHeight.toFloat())
         }
         var iscollided:Boolean=false
