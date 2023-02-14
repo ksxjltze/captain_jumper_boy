@@ -1,7 +1,10 @@
 package com.example.captainjumperboy.game.scenes
 
+import android.content.res.Resources
 import com.example.captainjumperboy.R
 import com.example.captainjumperboy.engine.*
+import com.example.captainjumperboy.engine.assets.Assets
+import com.example.captainjumperboy.engine.assets.Image
 import com.example.captainjumperboy.game.scripts.Background
 import com.example.captainjumperboy.game.scripts.PlatformSpawner
 import com.example.captainjumperboy.game.scripts.Player
@@ -15,7 +18,8 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
     private var cameraSpeed = 50.0F
     init {
         val BG = createObject("background")
-        BG.addComponent(SpriteSheet(R.drawable.spritesheet_mainmenu,1,3))
+        val mainmenu = Image(R.drawable.mainmenu)
+        BG.addComponent(Sprite(mainmenu))
         BG.addScript<Background>()
         BG.getScript<Background>()?.setScene(this)
 
