@@ -68,6 +68,16 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
 
     @SuppressLint("SuspiciousIndentation")
     override fun update() {
+        val distance = abs(Camera.transform.position.y - transform.position.y)
+        val distanceToBottom = Camera.screenHeight - distance
+
+        if(distanceToBottom < 0.0f)
+        {
+            isdead=true
+        }
+
+        if(isdead)return
+
         val Width = GameView.windowWidth.toFloat()
         val dt = GameThread.deltaTime
         aabb.pos = transform.position
@@ -94,18 +104,10 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         }
         else
         Camera.transform.position.y -= 2.0f//camera movement
-
-        val distance = abs(Camera.transform.position.y - transform.position.y)
-        val distanceToBottom = Camera.screenHeight - distance
-
-        if(distanceToBottom < 0.0f)
-        {
-            isdead=true
-        }
     }
 
     override fun onSensorDataChanged(x: Float, y: Float, z: Float) {
-        velocity.x -=x
+        velocity.x -=(x*1.5f)
     }
 
     override fun onCollided(obj: GameObject) {

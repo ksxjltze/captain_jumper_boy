@@ -23,7 +23,7 @@ class Image(resourceId : Int, width : Int = Assets.targetWidth, height : Int = A
             field = value
             refresh()
         }
-    var Alpha = 100
+    var Alpha = 255
         set(value) {
             field = value
             paint.alpha=Alpha

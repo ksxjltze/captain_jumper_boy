@@ -68,6 +68,7 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
         gameover.apply {
             name = "gameover"
             addComponent(Sprite(Image(R.drawable.gameover)).apply { layer = Layer.UI })
+
             addScript<Gameover>()
         }
         gameover.getScript<Gameover>()?.setScene(this)
