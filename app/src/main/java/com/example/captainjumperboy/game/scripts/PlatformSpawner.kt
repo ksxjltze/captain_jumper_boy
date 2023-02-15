@@ -61,6 +61,11 @@ class PlatformSpawner : Scriptable() {
 
     override fun update() {
 
+        val player = findObject("Player")
+        val playerscript = player.getScript<Player>() ?: return
+        if(playerscript.isdead) {
+            return
+        }
         platforms.forEach{ plat->
             val aabb = plat.getComponent<Collision.AABB>() ?: return
             aabb.pos=plat.transform.position

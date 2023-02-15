@@ -15,6 +15,7 @@ import com.example.captainjumperboy.ui.MainActivity
 import com.example.captainjumperboy.ui.OnSensorDataChanged
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import java.lang.Math.abs
 
 class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
 {
@@ -22,7 +23,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
     var Isjump:Boolean=false
     var firsttouch:Boolean=false
     var start : Boolean = false
-
+    var isdead:Boolean=false
     lateinit var aabb:Collision.AABB
     private lateinit var mainActivity: MainActivity
     private lateinit var scene:Scene
@@ -48,7 +49,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         val firstPlatform = spawner.platforms[0]
         transform.position.x = GameView.windowWidth / 2.0F
         transform.position.y = firstPlatform.transform.position.y - 100.0F
-
+        isdead=false
     }
 
     fun jump(){
@@ -67,6 +68,16 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
 
     @SuppressLint("SuspiciousIndentation")
     override fun update() {
+        val distance = abs(Camera.transform.position.y - transform.position.y)
+        val distanceToBottom = Camera.screenHeight - distance
+
+        if(distanceToBottom < 0.0f)
+        {
+            isdead=true
+        }
+
+        if(isdead)return
+
         val Width = GameView.windowWidth.toFloat()
         val dt = GameThread.deltaTime
         aabb.pos = transform.position
@@ -96,8 +107,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
     }
 
     override fun onSensorDataChanged(x: Float, y: Float, z: Float) {
-        velocity.x -=x
-        //todo...
+        velocity.x -=(x*1.5f)
     }
 
     override fun onCollided(obj: GameObject) {
