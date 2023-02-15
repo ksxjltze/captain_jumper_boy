@@ -4,10 +4,7 @@ import android.content.res.Resources
 import com.example.captainjumperboy.R
 import com.example.captainjumperboy.engine.*
 import com.example.captainjumperboy.engine.assets.Image
-import com.example.captainjumperboy.game.scripts.Background
-import com.example.captainjumperboy.game.scripts.Highscore
-import com.example.captainjumperboy.game.scripts.PlatformSpawner
-import com.example.captainjumperboy.game.scripts.Player
+import com.example.captainjumperboy.game.scripts.*
 import com.example.captainjumperboy.math.Collision
 import com.example.captainjumperboy.math.Vector2D
 import com.example.captainjumperboy.ui.GameView
@@ -54,7 +51,8 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
         text.addComponent(Text())
         text.addScript<Highscore>()
         text.getScript<Highscore>()?.setScene(this)
-        val width= GameView.windowWidth.toFloat()
+        //val width= GameView.windowWidth.toFloat()
+
         val tutorialtext = createObject()
         tutorialtext.apply {
             name = "Background2"
@@ -65,6 +63,14 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
             }
         }
 
+
+        val gameover = createObject()
+        gameover.apply {
+            name = "gameover"
+            addComponent(Sprite(Image(R.drawable.gameover)).apply { layer = Layer.UI })
+            addScript<Gameover>()
+        }
+        gameover.getScript<Gameover>()?.setScene(this)
     }
     override fun update() {
         super.update()
