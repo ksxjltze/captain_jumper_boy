@@ -42,6 +42,7 @@ class PauseController : Scriptable() {
             if (Input.touchEvent && pauseButtonAABB.isPointInside(Input.touchPos)){
                 isPaused = true
                 pauseMenu.active = true
+                pauseButton.visible = false
             }
             return
         }
@@ -61,6 +62,7 @@ class PauseController : Scriptable() {
             if (unpause){
                 isPaused = false
                 pauseMenu.active = false
+                pauseButton.visible = true
             }
 
             Scene.activeScene.paused = isPaused

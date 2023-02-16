@@ -19,6 +19,8 @@ class GameObject {
                 return parent.active && field
             return field
         }
+    var visible = true
+
     var name : String = "GameObject"
     var transform = Transform()
 
@@ -49,7 +51,7 @@ class GameObject {
     }
 
     fun draw(canvas: Canvas){
-        if (!active)
+        if (!active || !visible)
             return
 
         for (component in componentList){
@@ -58,7 +60,7 @@ class GameObject {
     }
 
     fun draw(renderer: Renderer){
-        if (!active)
+        if (!active || !visible)
             return
 
         for (component in componentList){

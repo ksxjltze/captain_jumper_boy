@@ -6,7 +6,6 @@ import com.example.captainjumperboy.engine.Renderer
 
 interface Renderable {
     var layer : Layer
-
     fun draw(canvas: Canvas)
     fun draw(renderer: Renderer)
 }
