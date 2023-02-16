@@ -45,6 +45,7 @@ class FirebaseUIActivity : AppCompatActivity() {
         val signInIntent = AuthUI.getInstance()
                 .createSignInIntentBuilder()
                 .setAvailableProviders(providers)
+                .setLogo(R.drawable.captain_jumper) // Set logo drawable
                 .setIsSmartLockEnabled(false) //sign in error happens wihtout this
                 .build()
         signInLauncher.launch(signInIntent)
