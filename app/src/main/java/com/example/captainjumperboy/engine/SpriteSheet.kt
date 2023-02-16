@@ -61,11 +61,15 @@ class SpriteSheet (resourceId : Int, rows: Int, cols: Int) : Component()
 
             val frameDuration = animation.getDuration(frameIndex) //presumably in millis
 
-            if(timer >= 0.1)
+            if(timer >= frameInterval)
             {
                 frameIndex++
                 if (frameIndex >= animation.numberOfFrames) {
                     frameIndex = 0
+                    if(animation.isOneShot)
+                    {
+                        animation.stop()
+                    }
                 }
                 ViewCompat.postInvalidateOnAnimation(Assets.view)
                 timer = 0.0
@@ -85,7 +89,17 @@ class SpriteSheet (resourceId : Int, rows: Int, cols: Int) : Component()
         animation.stop()
     }
 
-    companion object {
-        private var lastTime = System.nanoTime()
+    fun playOnce()
+    {
+        animation.isOneShot = true
     }
+
+    fun playLoop()
+    {
+        animation.isOneShot = false
+    }
+
+//    companion object {
+//        private var lastTime = System.nanoTime()
+//    }
 }
