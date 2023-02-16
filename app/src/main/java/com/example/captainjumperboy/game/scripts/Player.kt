@@ -95,7 +95,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
             Isjump=true
             firsttouch=true
             jump()
-            Input.touchEvent = false
+//            Input.touchEvent = false
         }
         else velocity.y += 0.5F
         if(transform.position.y<100f)
@@ -128,7 +128,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
             transform.position.y -= velocity.y
             velocity.y = 0.0F //collision resolution
             Isjump=false
-            Input.touchEvent = false
+//            Input.touchEvent = false
         }
         else
             return

@@ -23,6 +23,11 @@ class GameObject {
         scriptList.forEach{scriptable -> scriptable.start() }
     }
 
+    fun pausedUpdate(){
+        componentList.forEach{component -> component.pausedUpdate() }
+        scriptList.forEach{scriptable -> scriptable.pausedUpdate() }
+    }
+
     fun update(){
         for (component in componentList){
             component.update()

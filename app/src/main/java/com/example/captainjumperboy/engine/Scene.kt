@@ -15,6 +15,7 @@ interface OnCollidedListener {
 open class Scene(var view: GameView) {
     protected var gameObjectList = ArrayList<GameObject>()
     val renderer = Renderer()
+    var paused = false
 
     /** LISTENER FOR COLLISION EVENTS **/
     protected var collisionListener: OnCollidedListener? = null
@@ -78,7 +79,10 @@ open class Scene(var view: GameView) {
     }
 
     open fun update(){
-        gameObjectList.forEach {gameObject ->  gameObject.update()}
+        gameObjectList.forEach {gameObject ->  gameObject.pausedUpdate()}
+
+        if (!paused)
+            gameObjectList.forEach {gameObject ->  gameObject.update()}
     }
 
     open fun draw(canvas: Canvas){

@@ -39,7 +39,13 @@ class GameThread(private var surfaceHolder: SurfaceHolder, private var gameView:
             try {
                 canvas = surfaceHolder.lockCanvas() //prevents more than 1 thread from drawing onto canvas in surface
                 synchronized(surfaceHolder) {
+                    //UPDATE
                     gameView.update()
+
+                    //RESET INPUT
+                    Input.touchEvent = false
+
+                    //RENDER
                     gameView.draw(canvas)
                 }
             }

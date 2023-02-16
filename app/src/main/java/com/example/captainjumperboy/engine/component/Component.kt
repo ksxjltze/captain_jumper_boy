@@ -28,6 +28,8 @@ open class Component : Updatable, Renderable {
     override fun draw(renderer: Renderer){}
     override fun update() {}
 
+    open fun pausedUpdate(){}
+
     fun destroy(){
         gameObject.destroyComponent(this)
     }

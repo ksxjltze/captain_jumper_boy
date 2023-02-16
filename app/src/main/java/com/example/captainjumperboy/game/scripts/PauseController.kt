@@ -5,6 +5,7 @@ import android.util.Log
 import com.example.captainjumperboy.engine.GameObject
 import com.example.captainjumperboy.engine.GameThread
 import com.example.captainjumperboy.engine.Input
+import com.example.captainjumperboy.engine.Scene
 import com.example.captainjumperboy.engine.component.Scriptable
 import com.example.captainjumperboy.math.Collision
 
@@ -19,7 +20,7 @@ class PauseController : Scriptable() {
         pauseButtonAABB = pauseButton.getComponentForced<Collision.AABB>()
     }
 
-    override fun update() {
+    override fun pausedUpdate() {
         //not paused, check for button press
         if (!isPaused){
             //pause button was pressed
@@ -30,12 +31,13 @@ class PauseController : Scriptable() {
             return
         }
 
-        Log.i("GAME", "GAME IS PAUSED")
+        if (Input.touchEvent){
+            isPaused = false
+        }
 
         //paused
         //todo: pause menu
-        //test
-        GameThread.deltaTime = 0F
+        Scene.activeScene.paused = isPaused
 
     }
 
