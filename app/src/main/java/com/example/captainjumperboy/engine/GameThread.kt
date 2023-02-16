@@ -1,18 +1,29 @@
 package com.example.captainjumperboy.engine
 
+import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
 import android.graphics.Canvas
 import android.view.SurfaceHolder
 import com.example.captainjumperboy.math.Transform
 import com.example.captainjumperboy.ui.GameView
+import com.example.captainjumperboy.ui.MainMenuActivity
 
 class GameThread(private var surfaceHolder: SurfaceHolder, private var gameView: GameView) : Thread() {
     private var running : Boolean = false
+    private var isExit = false
     private var targetFPS : Long = 60
     private var averageFPS : Long = 0
 
     companion object{
         private var canvas : Canvas? = null
+        lateinit var game : GameThread
         var deltaTime : Float = 0F
+
+        fun exit(){
+            game.setRunning(false)
+            game.isExit = true
+        }
+
     }
 
     fun setRunning(isRunning: Boolean) {
@@ -32,6 +43,7 @@ class GameThread(private var surfaceHolder: SurfaceHolder, private var gameView:
         val targetTime: Long = 1000 / targetFPS
 
         Camera.transform = Transform()
+        game = this
 
         //main game loop
         while (running) {
@@ -82,5 +94,8 @@ class GameThread(private var surfaceHolder: SurfaceHolder, private var gameView:
                 totalTime = 0
             }
         }
+
+        if (isExit)
+            gameView.context.startActivity(Intent(gameView.context, MainMenuActivity::class.java).setFlags(FLAG_ACTIVITY_CLEAR_TOP))
     }
 }

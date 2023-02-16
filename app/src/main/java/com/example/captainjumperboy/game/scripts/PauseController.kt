@@ -8,6 +8,7 @@ import com.example.captainjumperboy.engine.Input
 import com.example.captainjumperboy.engine.Scene
 import com.example.captainjumperboy.engine.component.Scriptable
 import com.example.captainjumperboy.math.Collision
+import com.example.captainjumperboy.ui.GameView
 
 class PauseController : Scriptable() {
     private lateinit var pauseButton : GameObject
@@ -57,6 +58,7 @@ class PauseController : Scriptable() {
             }
             else if(quitButtonAABB.isPointInside(Input.touchPos)){
                 unpause = true
+                GameThread.exit()
             }
 
             if (unpause){
