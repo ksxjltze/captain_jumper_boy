@@ -14,14 +14,14 @@ class SpriteSheet (resourceId : Int, rows: Int, cols: Int) : Component()
     private val animation = AnimationDrawable()
     private var frameIndex = 0
     private val frames = ArrayList<Bitmap>()
-
+    private var isInit = false
     private val image = Assets.getBitmap(resourceId)
     private val width: Int = image.width / cols
     private val height: Int = image.height / rows
 
+    private val frameInterval = 0.2
     private var duration = 100
     private var timer: Double = 0.0
-    private var playOnAwake = true
 
     init {
         for (row in 0 until rows) {
@@ -32,11 +32,10 @@ class SpriteSheet (resourceId : Int, rows: Int, cols: Int) : Component()
         for (frame in frames) {
             animation.addFrame(BitmapDrawable(Assets.view.resources, frame), duration)
         }
-        animation.isOneShot = false
+        animation.isOneShot = true
+        isInit = true
 
-        //temp, for testing @todo: maybe remove
-        if (playOnAwake)
-            animation.start()
+
     }
 
     override fun draw(renderer: Renderer){
@@ -44,6 +43,7 @@ class SpriteSheet (resourceId : Int, rows: Int, cols: Int) : Component()
     }
 
     override fun draw(canvas: Canvas) {
+        //super.draw(canvas)
         val frame = animation.getFrame(frameIndex)
 
         val matrix = transform.getMatrix()
@@ -61,18 +61,15 @@ class SpriteSheet (resourceId : Int, rows: Int, cols: Int) : Component()
 
             val frameDuration = animation.getDuration(frameIndex) //presumably in millis
 
-//            won't be as consistent as using global dt
-//            val now = System.nanoTime()
-//            val dt = (now - lastTime) / 1.0e9 // Convert nanoseconds to seconds
-//            lastTime = now
-//            timer += dt
-//            if(timer >= 0.1)
-
-            if (timer >= frameDuration / 1000F) //convert millis into seconds
+            if(timer >= frameInterval)
             {
                 frameIndex++
                 if (frameIndex >= animation.numberOfFrames) {
                     frameIndex = 0
+                    if(animation.isOneShot)
+                    {
+                        animation.stop()
+                    }
                 }
                 ViewCompat.postInvalidateOnAnimation(Assets.view)
                 timer = 0.0
@@ -90,6 +87,16 @@ class SpriteSheet (resourceId : Int, rows: Int, cols: Int) : Component()
     fun stop()
     {
         animation.stop()
+    }
+
+    fun playOnce()
+    {
+        animation.isOneShot = true
+    }
+
+    fun playLoop()
+    {
+        animation.isOneShot = false
     }
 
 //    companion object {
