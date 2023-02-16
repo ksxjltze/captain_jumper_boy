@@ -4,15 +4,23 @@ import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
 import android.graphics.Canvas
 import android.view.SurfaceHolder
+import com.example.captainjumperboy.GameApplication
+import com.example.captainjumperboy.database.leaderboard.Leaderboard
 import com.example.captainjumperboy.math.Transform
 import com.example.captainjumperboy.ui.GameView
 import com.example.captainjumperboy.ui.MainMenuActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class GameThread(private var surfaceHolder: SurfaceHolder, private var gameView: GameView) : Thread() {
     private var running : Boolean = false
     private var isExit = false
     private var targetFPS : Long = 60
     private var averageFPS : Long = 0
+
+    private var scope = CoroutineScope(Dispatchers.IO)
 
     companion object{
         private var canvas : Canvas? = null
@@ -22,6 +30,14 @@ class GameThread(private var surfaceHolder: SurfaceHolder, private var gameView:
         fun exit(){
             game.setRunning(false)
             game.isExit = true
+        }
+
+        fun saveScoreLocal(score : Int){
+            val leaderboard = Leaderboard(0, "score", score)
+            game.scope.launch {
+                (game.gameView.context.applicationContext as GameApplication)
+                    .repository.insert(leaderboard)
+            }
         }
 
     }

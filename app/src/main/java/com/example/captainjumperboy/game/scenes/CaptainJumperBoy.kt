@@ -60,9 +60,8 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
         val tutorialtext = createObject()
         tutorialtext.apply {
             name = "Background2"
-            val text = Text(Vector2D(),"Tap to jump and tilt to move, don't fall",5F)
-            text.useWorldPos = true
-            addComponent(text)
+            addComponent(Text(Vector2D(),"Tap to jump and tilt to move, don't fall",5F)
+                .apply { useWorldPos = true })
             transform.apply {
                 scale = Vector2D(10F, 15F)
                 position = Vector2D(500f, 800f)
@@ -83,6 +82,7 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
         val gameManager = createObject("GameManager")
         gameManager.apply {
             addScript<PauseController>()
+            addScript<ScoreManager>()
         }
 
         //PAUSE BUTTON

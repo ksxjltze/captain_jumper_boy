@@ -13,8 +13,12 @@ import com.example.captainjumperboy.ui.GameView
 class Gameover : Scriptable() {
     private lateinit var scene: Scene
     private var initialPosition = 0.0f
+
     var playonce:Boolean=true
     val mediaplayer = MediaPlayer.create(Assets.view.context, R.raw.dead)
+
+    private lateinit var scoreManager: ScoreManager
+
     fun setScene(s: Scene)
     {
         this.scene=s
@@ -34,6 +38,8 @@ class Gameover : Scriptable() {
         initialPosition = transform.position.y
         val sprite = gameObject.getComponent<Sprite>() ?: return
         sprite.image.Alpha=0
+
+        scoreManager = findObject("GameManager").getScript<ScoreManager>()!!
     }
 
     override fun update() {
@@ -52,7 +58,7 @@ class Gameover : Scriptable() {
         {
             if(playonce)//play this audio once
             {
-
+                GameThread.saveScoreLocal(scoreManager.score)
                 mediaplayer.seekTo(0);
                 mediaplayer.start();
                 playonce=false

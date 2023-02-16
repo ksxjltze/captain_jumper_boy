@@ -17,10 +17,12 @@ import kotlin.random.Random
 
 class PlatformSpawner : Scriptable() {
     val platforms = ArrayList<GameObject>()
-    var Highscore:Int=0
 
     private val count = 15
     private val rng = Random(LocalTime.now().second)
+
+    //score manager
+    private lateinit var scoreManager : ScoreManager
 
     //spawner variables
     private var spawnCounter = 0 //used to set new spawn position after initial spawning
@@ -68,7 +70,7 @@ class PlatformSpawner : Scriptable() {
     }
 
     override fun start() {
-
+        scoreManager = findObject("GameManager").getScript<ScoreManager>()!!
     }
 
     override fun update() {
@@ -101,7 +103,9 @@ class PlatformSpawner : Scriptable() {
                 //MOVED TO CaptainJumperBoy UPDATE (UPDATE ALL AABBs)
 //                aabb.pos=plat.transform.position
 //                aabb.RecalculateHalfSize(plat.transform.scale*0.5f)
-                Highscore+=100
+                //Highscore+=100
+
+                scoreManager.incrementScore()
             }
         }
     }

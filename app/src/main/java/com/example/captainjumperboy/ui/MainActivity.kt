@@ -11,7 +11,11 @@ import android.util.Log
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import com.example.captainjumperboy.GameApplication
+import com.example.captainjumperboy.viewmodel.LeaderboardViewModel
+import com.example.captainjumperboy.viewmodel.LeaderboardViewModelFactory
 import kotlin.math.atan2
+import androidx.activity.viewModels
 
 interface OnSensorDataChanged {
     fun onSensorDataChanged(x: Float, y: Float, z: Float)
