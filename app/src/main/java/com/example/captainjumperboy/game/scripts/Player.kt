@@ -84,7 +84,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
 
         val Width = GameView.windowWidth.toFloat()
         val dt = GameThread.deltaTime
-        aabb.pos = transform.position
+//        aabb.pos = transform.position //MOVED TO CaptainJumperBoy UPDATE
         transform.position.x += velocity.x
         transform.position.y += velocity.y
         if(transform.position.x>= Width)
@@ -95,11 +95,11 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         {
             transform.position.x=Width
         }
-        if (Scene.touchEvent && !Isjump) {
+        if (Input.touchEvent && !Isjump) {
             Isjump=true
             firsttouch=true
             jump()
-            Scene.touchEvent = false
+            Input.touchEvent = false
         }
         else velocity.y += 0.5F
         if(transform.position.y<100f)
@@ -132,7 +132,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
             transform.position.y -= velocity.y
             velocity.y = 0.0F //collision resolution
             Isjump=false
-            Scene.touchEvent = false
+            Input.touchEvent = false
         }
         else
             return

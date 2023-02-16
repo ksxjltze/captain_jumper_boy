@@ -4,12 +4,10 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.AnimationDrawable
 import android.graphics.drawable.BitmapDrawable
-import android.util.Log
 import androidx.core.graphics.withMatrix
 import androidx.core.view.ViewCompat
 import com.example.captainjumperboy.engine.assets.Assets
 import com.example.captainjumperboy.engine.component.Component
-import kotlin.math.log
 
 class SpriteSheet (resourceId : Int, rows: Int, cols: Int) : Component()
 {
@@ -22,6 +20,7 @@ class SpriteSheet (resourceId : Int, rows: Int, cols: Int) : Component()
     private val height: Int = image.height / rows
 
     private val frameInterval = 0.2
+    private var duration = 100
     private var timer: Double = 0.0
 
     init {
@@ -31,10 +30,12 @@ class SpriteSheet (resourceId : Int, rows: Int, cols: Int) : Component()
             }
         }
         for (frame in frames) {
-            animation.addFrame(BitmapDrawable(Assets.view.resources, frame), 100)
+            animation.addFrame(BitmapDrawable(Assets.view.resources, frame), duration)
         }
-        isInit = true
         animation.isOneShot = true
+        isInit = true
+
+
     }
 
     override fun draw(renderer: Renderer){
@@ -43,42 +44,33 @@ class SpriteSheet (resourceId : Int, rows: Int, cols: Int) : Component()
 
     override fun draw(canvas: Canvas) {
         //super.draw(canvas)
-        if(isInit)
-        {
-            val frame = animation.getFrame(frameIndex)
+        val frame = animation.getFrame(frameIndex)
 
-            val matrix = transform.getMatrix()
-            matrix.postConcat(Camera.transform.getViewMatrix()) //View * Model
-            canvas.withMatrix(matrix) {
-                val xOffset = -Assets.targetWidth/2
-                val yOffset = -Assets.targetHeight/2
-                frame.bounds.set(xOffset, yOffset, Assets.targetWidth + xOffset, Assets.targetHeight + yOffset) //kinda scuffed, @todo: maybe find a better method
-                //frame.bounds.set(0, 0, Assets.targetWidth, Assets.targetHeight)
-                frame.draw(canvas)
-            }
+        val matrix = transform.getMatrix()
+        matrix.postConcat(Camera.transform.getViewMatrix()) //View * Model
+        canvas.withMatrix(matrix) {
+            val xOffset = -Assets.targetWidth/2
+            val yOffset = -Assets.targetHeight/2
+            frame.bounds.set(xOffset, yOffset, Assets.targetWidth + xOffset, Assets.targetHeight + yOffset) //kinda scuffed, @todo: maybe find a better method
+            //frame.bounds.set(0, 0, Assets.targetWidth, Assets.targetHeight)
+            frame.draw(canvas)
+        }
 
-            if (animation.isRunning) {
+        if (animation.isRunning) {
+            timer += GameThread.deltaTime
 
-                val now = System.nanoTime()
-                val dt = (now - lastTime) / 1.0e9 // Convert nanoseconds to seconds
-                lastTime = now
-                timer += dt
+            val frameDuration = animation.getDuration(frameIndex) //presumably in millis
 
-                if(timer >= frameInterval)
-                {
-                    frameIndex++
-                    if (frameIndex >= animation.numberOfFrames) {
-                        frameIndex = 0
-                        if(animation.isOneShot)
-                        {
-                            animation.stop()
-                        }
-                    }
-                    ViewCompat.postInvalidateOnAnimation(Assets.view)
-                    timer = 0.0
+            if(timer >= 0.1)
+            {
+                frameIndex++
+                if (frameIndex >= animation.numberOfFrames) {
+                    frameIndex = 0
                 }
-
+                ViewCompat.postInvalidateOnAnimation(Assets.view)
+                timer = 0.0
             }
+
         }
 
     }
@@ -92,17 +84,6 @@ class SpriteSheet (resourceId : Int, rows: Int, cols: Int) : Component()
     {
         animation.stop()
     }
-
-    fun playonLoop()
-    {
-        animation.isOneShot = false
-    }
-
-    fun playOnce()
-    {
-        animation.isOneShot = true
-    }
-
 
     companion object {
         private var lastTime = System.nanoTime()
