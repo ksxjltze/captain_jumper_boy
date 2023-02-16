@@ -28,6 +28,8 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
     private lateinit var mainActivity: MainActivity
     private lateinit var scene:Scene
     val mediaplayer = MediaPlayer.create(Assets.view.context, R.raw.jump2)
+    //private var spritesheet = gameObject.getComponent<SpriteSheet>()
+    private lateinit var anim : SpriteSheet
 
     fun setScene(s:Scene)
     {
@@ -43,13 +45,13 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         aabb= gameObject.getComponent<Collision.AABB>() as Collision.AABB
         val platformSpawner = findObject("spawner")
         val spawner = platformSpawner.getScript<PlatformSpawner>() ?: return
-        val sprite = gameObject.getComponent<SpriteSheet>() ?: return
         mediaplayer.isLooping = false
         mediaplayer.setVolume(10f,10f)
         val firstPlatform = spawner.platforms[0]
         transform.position.x = GameView.windowWidth / 2.0F
         transform.position.y = firstPlatform.transform.position.y - 100.0F
         isdead=false
+        anim = gameObject.getComponent<SpriteSheet>() ?: return
     }
 
     fun jump(){
@@ -59,7 +61,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
 
         if(firsttouch)
         {
-
+            anim.start()
             mediaplayer.seekTo(0);
             mediaplayer.start();
             firsttouch=false
