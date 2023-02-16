@@ -20,6 +20,7 @@ class SpriteSheet (resourceId : Int, rows: Int, cols: Int) : Component()
     private val height: Int = image.height / rows
 
     private var timer: Float = 0f
+    private var duration = 100
 
     init {
         for (row in 0 until rows) {
@@ -28,7 +29,7 @@ class SpriteSheet (resourceId : Int, rows: Int, cols: Int) : Component()
             }
         }
         for (frame in frames) {
-            animation.addFrame(BitmapDrawable(Assets.view.resources, frame), 100)
+            animation.addFrame(BitmapDrawable(Assets.view.resources, frame), duration)
         }
         animation.isOneShot = false
         animation.start()
@@ -39,7 +40,6 @@ class SpriteSheet (resourceId : Int, rows: Int, cols: Int) : Component()
     }
 
     override fun draw(canvas: Canvas) {
-        //super.draw(canvas)
         val frame = animation.getFrame(frameIndex)
 
         val matrix = transform.getMatrix()
@@ -53,8 +53,10 @@ class SpriteSheet (resourceId : Int, rows: Int, cols: Int) : Component()
         }
 
         if (animation.isRunning) {
-            timer += 0.5f //@todo: proper timer increment (using dt or something)
-            if(timer >= 2f)
+            timer += GameThread.deltaTime
+
+            val frameDuration = animation.getDuration(frameIndex) //presumably in millis
+            if(timer >= frameDuration / 1000F)
             {
                 frameIndex++
                 if (frameIndex >= animation.numberOfFrames) {
