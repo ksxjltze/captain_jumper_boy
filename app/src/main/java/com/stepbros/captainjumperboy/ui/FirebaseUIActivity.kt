@@ -10,6 +10,7 @@ import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.ActionCodeSettings
 import com.google.firebase.auth.FirebaseAuth
+import com.stepbros.captainjumperboy.GameApplication
 import com.stepbros.captainjumperboy.R
 
 class FirebaseUIActivity : AppCompatActivity() {
@@ -35,7 +36,8 @@ class FirebaseUIActivity : AppCompatActivity() {
         // Choose authentication providers
         val providers = arrayListOf(
                 AuthUI.IdpConfig.EmailBuilder().build(),
-                AuthUI.IdpConfig.AnonymousBuilder().build())
+                AuthUI.IdpConfig.AnonymousBuilder().build(),
+                AuthUI.IdpConfig.GoogleBuilder().build())
 //                AuthUI.IdpConfig.PhoneBuilder().build(),
 //                AuthUI.IdpConfig.GoogleBuilder().build(),
 //                AuthUI.IdpConfig.FacebookBuilder().build(),
@@ -57,7 +59,7 @@ class FirebaseUIActivity : AppCompatActivity() {
         val response = result.idpResponse
         if (result.resultCode == RESULT_OK) {
             // Successfully signed in
-            val user = FirebaseAuth.getInstance().currentUser
+            (application as GameApplication).user = FirebaseAuth.getInstance().currentUser!!
             startActivity(Intent(this, MainMenuActivity::class.java))
             // ...
         } else {

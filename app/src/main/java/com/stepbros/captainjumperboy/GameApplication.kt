@@ -1,6 +1,8 @@
 package com.stepbros.captainjumperboy
 
 import android.app.Application
+import com.firebase.ui.auth.data.model.User
+import com.google.firebase.auth.FirebaseUser
 import com.stepbros.captainjumperboy.database.LeaderboardRepository
 import com.stepbros.captainjumperboy.database.LeaderboardRoomDatabase
 import kotlinx.coroutines.CoroutineScope
@@ -14,6 +16,7 @@ class GameApplication : Application() {
 
     // No need to cancel this scope as it'll be torn down with the process
     val applicationScope = CoroutineScope(SupervisorJob())
+    lateinit var user : FirebaseUser
 
     /**
      * Initialise database and repository by lazy (only when they are needed)
