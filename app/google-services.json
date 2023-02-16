@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "578851262528",
+    "project_id": "captain-jumper-boy",
+    "storage_bucket": "captain-jumper-boy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:578851262528:android:1baf0cb47b64991e088fa5",
+        "android_client_info": {
+          "package_name": "com.stepbros.captainjumperboy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "578851262528-hpd645pn178oog9mf6dh3k0d42a9lc7c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUtsxYaODo9YC7j4rLFXbTezFtXWapP24"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "578851262528-hpd645pn178oog9mf6dh3k0d42a9lc7c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
