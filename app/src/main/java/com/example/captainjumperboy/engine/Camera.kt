@@ -7,7 +7,7 @@ import com.example.captainjumperboy.math.Vector2D
 class Camera {
     //lazy code, maybe keith do
     companion object{
-        val transform = Transform()
+        var transform = Transform()
         var screenHeight = 0F
     }
 

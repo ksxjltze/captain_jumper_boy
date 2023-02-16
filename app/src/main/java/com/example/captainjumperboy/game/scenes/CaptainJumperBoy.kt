@@ -1,6 +1,7 @@
 package com.example.captainjumperboy.game.scenes
 
 import android.content.res.Resources
+import android.util.Log
 import com.example.captainjumperboy.R
 import com.example.captainjumperboy.engine.*
 import com.example.captainjumperboy.engine.assets.Image
@@ -15,6 +16,9 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
     private var playerObject : GameObject
     private var cameraSpeed = 2.0F
     init {
+        gameObjectList.clear()
+        paused = false
+
         val BG = createObject("background")
         val mainmenu = Image(R.drawable.mainmenu)
         BG.addComponent(Sprite(mainmenu).apply { layer = Layer.BACKGROUND })

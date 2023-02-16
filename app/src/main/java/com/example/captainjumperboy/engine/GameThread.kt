@@ -2,6 +2,7 @@ package com.example.captainjumperboy.engine
 
 import android.graphics.Canvas
 import android.view.SurfaceHolder
+import com.example.captainjumperboy.math.Transform
 import com.example.captainjumperboy.ui.GameView
 
 class GameThread(private var surfaceHolder: SurfaceHolder, private var gameView: GameView) : Thread() {
@@ -29,6 +30,8 @@ class GameThread(private var surfaceHolder: SurfaceHolder, private var gameView:
         var totalTime: Long = 0
         var frameCount = 0
         val targetTime: Long = 1000 / targetFPS
+
+        Camera.transform = Transform()
 
         //main game loop
         while (running) {

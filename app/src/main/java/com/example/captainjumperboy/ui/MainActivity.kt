@@ -7,6 +7,7 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
+import android.util.Log
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -72,6 +73,10 @@ class MainActivity : Activity(), SensorEventListener {
     override fun onPause() {
         super.onPause()
         sensorManager.unregisterListener(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
