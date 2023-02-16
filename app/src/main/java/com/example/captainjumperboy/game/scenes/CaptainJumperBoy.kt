@@ -94,6 +94,18 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
             addComponent(Sprite(Image(R.drawable.captain_jumper)).apply { layer = Layer.UI })
             addComponent(UIRect(transform.position, transform.scale * 0.5F))
         }
+
+        //PAUSE MENU
+        val pauseMenu = createObject("PauseMenu")
+        pauseMenu.apply {
+            transform.apply {
+                position.x = 500F
+                position.y = 1000F
+                scale = Vector2D(5F, 12F)
+            }
+
+            addComponent(Sprite(Image(R.drawable.bird)).apply { layer = Layer.UI })
+        }
     }
     override fun update() {
         super.update()

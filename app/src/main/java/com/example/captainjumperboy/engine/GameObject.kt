@@ -24,11 +24,17 @@ class GameObject {
     }
 
     fun pausedUpdate(){
+        if (!active)
+            return
+
         componentList.forEach{component -> component.pausedUpdate() }
         scriptList.forEach{scriptable -> scriptable.pausedUpdate() }
     }
 
     fun update(){
+        if (!active)
+            return
+
         for (component in componentList){
             component.update()
         }
@@ -37,12 +43,18 @@ class GameObject {
     }
 
     fun draw(canvas: Canvas){
+        if (!active)
+            return
+
         for (component in componentList){
             component.draw(canvas)
         }
     }
 
     fun draw(renderer: Renderer){
+        if (!active)
+            return
+
         for (component in componentList){
             component.draw(renderer)
         }

@@ -12,12 +12,16 @@ import com.example.captainjumperboy.math.Collision
 class PauseController : Scriptable() {
     private lateinit var pauseButton : GameObject
     private lateinit var pauseButtonAABB : Collision.AABB
+    private lateinit var pauseMenu : GameObject
 
     var isPaused = false
 
     override fun start() {
         pauseButton = findObject("PauseButton")
         pauseButtonAABB = pauseButton.getComponentForced<Collision.AABB>()
+
+        pauseMenu = findObject("PauseMenu")
+        pauseMenu.active = false
     }
 
     override fun pausedUpdate() {
@@ -26,13 +30,9 @@ class PauseController : Scriptable() {
             //pause button was pressed
             if (Input.touchEvent && pauseButtonAABB.isPointInside(Input.touchPos)){
                 isPaused = true
-                Log.i("GAME", "PAUSE BUTTON PRESSED")
+                pauseMenu.active = true
             }
             return
-        }
-
-        if (Input.touchEvent){
-            isPaused = false
         }
 
         //paused
