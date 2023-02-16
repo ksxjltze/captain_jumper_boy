@@ -9,6 +9,7 @@ import androidx.core.graphics.withMatrix
 import androidx.core.view.ViewCompat
 import com.example.captainjumperboy.engine.assets.Assets
 import com.example.captainjumperboy.engine.component.Component
+import kotlin.math.log
 
 class SpriteSheet (resourceId : Int, rows: Int, cols: Int) : Component()
 {
@@ -20,6 +21,7 @@ class SpriteSheet (resourceId : Int, rows: Int, cols: Int) : Component()
     private val width: Int = image.width / cols
     private val height: Int = image.height / rows
 
+    private val frameInterval = 0.2
     private var timer: Double = 0.0
 
     init {
@@ -32,6 +34,7 @@ class SpriteSheet (resourceId : Int, rows: Int, cols: Int) : Component()
             animation.addFrame(BitmapDrawable(Assets.view.resources, frame), 100)
         }
         isInit = true
+        animation.isOneShot = true
     }
 
     override fun draw(renderer: Renderer){
@@ -61,11 +64,15 @@ class SpriteSheet (resourceId : Int, rows: Int, cols: Int) : Component()
                 lastTime = now
                 timer += dt
 
-                if(timer >= 0.1)
+                if(timer >= frameInterval)
                 {
                     frameIndex++
                     if (frameIndex >= animation.numberOfFrames) {
                         frameIndex = 0
+                        if(animation.isOneShot)
+                        {
+                            animation.stop()
+                        }
                     }
                     ViewCompat.postInvalidateOnAnimation(Assets.view)
                     timer = 0.0

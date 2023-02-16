@@ -62,10 +62,12 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         if(firsttouch)
         {
             anim.start()
+            anim.playOnce()
             mediaplayer.seekTo(0);
             mediaplayer.start();
             firsttouch=false
         }
+
     }
 
     @SuppressLint("SuspiciousIndentation")
