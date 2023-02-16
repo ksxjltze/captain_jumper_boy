@@ -142,42 +142,5 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
 //        if (playerObject.getScript<Player>()?.start == true)
 //            Camera.transform.position.y += GameThread.deltaTime * cameraSpeed
         //collision loop..need to destroy platforms out of viewport otherwise this will get slower..
-
-        //why did we not do this in the first place??
-        //UPDATE ALL AABBs (if autoRescale)
-        gameObjectList.forEach {gameObject ->
-            if(gameObject.hasComponent<Collision.AABB>())
-            {
-                val aabb = gameObject.getComponent<Collision.AABB>()?:return
-                with(gameObject.transform){
-                    aabb.pos = position
-
-                    if (aabb.autoRescale)
-                        aabb.RecalculateHalfSize(scale * 0.5f)
-                }
-            }
-        }
-
-        //CHECK COLLISION
-        gameObjectList.forEach {gameObject ->
-            if(gameObject.hasComponent<Collision.AABB>())
-            {
-                gameObjectList.forEach{gameObject2 ->
-                    if(gameObject.name!=gameObject2.name && gameObject2.hasComponent<Collision.AABB>())//if does not equal itself and both objects has aabb,do checks
-                    {
-                        val aabb=gameObject.getComponent<Collision.AABB>()?:return
-                        val aabb2=gameObject2.getComponent<Collision.AABB>()?:return
-                        if(aabb.collidesWith(aabb2))
-                        {
-                            collisionListener?.onCollided(gameObject2)
-                        }
-                        else if(aabb2.collidesWith(aabb)){
-                            collisionListener?.onCollided(gameObject)
-                        }
-
-                    }
-                }
-            }
-        }
     }
 }

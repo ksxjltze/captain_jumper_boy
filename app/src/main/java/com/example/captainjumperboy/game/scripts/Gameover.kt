@@ -45,7 +45,7 @@ class Gameover : Scriptable() {
         // Does not work well because camera is tied to players position, and that
         // is not the center of the screen
 
-        transform.position.y = Camera.transform.position.y+initialPosition-5//magic number
+        //transform.position.y = Camera.transform.position.y+initialPosition-5//magic number
         val player = findObject("Player")
         val playerscript = player.getScript<Player>() ?: return
         if(playerscript.isdead)
