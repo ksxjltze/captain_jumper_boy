@@ -1,10 +1,12 @@
 package com.example.captainjumperboy.engine
 
+import android.content.res.Resources.NotFoundException
 import android.graphics.Canvas
 import com.example.captainjumperboy.engine.component.Component
 import com.example.captainjumperboy.engine.component.Scriptable
 import com.example.captainjumperboy.math.Transform
 import kotlin.reflect.KClass
+import kotlin.reflect.typeOf
 
 class GameObject {
     var componentList = ArrayList<Component>()
@@ -48,6 +50,16 @@ class GameObject {
 
     fun destroyComponent(component: Component){
         componentList.remove(component)
+    }
+
+    //Get a component without the null nonsense, throws an exception if not found
+    inline fun <reified T> getComponentForced() : T{
+        componentList.forEach{component ->
+            if (component is T)
+                return component
+        }
+
+        throw NotFoundException("Failed to find component of type ${typeOf<T>()}")
     }
 
     inline fun <reified T> getComponent() : T?{

@@ -23,12 +23,8 @@ open class Scene(var view: GameView) {
         this.collisionListener = listener
     }
 
-    /** FOR Touch Control EVENTS **/
+    //TOUCH CONTROL EVENTS MOVED TO Input.kt
     companion object {
-        var touchEvent : Boolean = false
-        var touchPos : Vector2D = Vector2D(0.0F,0.0F)
-
-        //
         lateinit var activeScene : Scene
             private set
     }
@@ -88,7 +84,7 @@ open class Scene(var view: GameView) {
     open fun draw(canvas: Canvas){
         gameObjectList.forEach {gameObject ->  gameObject.draw(renderer)}
         renderer.draw(canvas)
-        //debugDrawColliders(canvas)
+        debugDrawColliders(canvas)
     }
 
     fun debugDrawColliders(canvas: Canvas){
@@ -98,12 +94,21 @@ open class Scene(var view: GameView) {
             val min = Vector2D(aabb.pos.x - aabb.absoluteHalfSize.x , aabb.pos.y - aabb.absoluteHalfSize.y )
             val max = Vector2D(aabb.pos.x + aabb.absoluteHalfSize.x , aabb.pos.y + aabb.absoluteHalfSize.y )
 
+            //DRAW UI RECT WITHOUT CAMERA MATRIX
+            if (aabb is UIRect){
+                canvas.drawLine(min.x, min.y, max.x, min.y, Assets.DebugPaint)
+                canvas.drawLine(min.x, min.y, min.x, max.y, Assets.DebugPaint)
+                canvas.drawLine(min.x, max.y, max.x, max.y, Assets.DebugPaint)
+                canvas.drawLine(max.x, max.y, max.x, min.y, Assets.DebugPaint)
+                continue
+            }
+
             //apply transform and draw
             canvas.withMatrix(Camera.transform.getViewMatrix()) {
-                canvas.drawLine(min.x, min.y, max.x, min.y, Assets.GreenPaint)
-                canvas.drawLine(min.x, min.y, min.x, max.y, Assets.GreenPaint)
-                canvas.drawLine(min.x, max.y, max.x, max.y, Assets.GreenPaint)
-                canvas.drawLine(max.x, max.y, max.x, min.y, Assets.GreenPaint) }
+                canvas.drawLine(min.x, min.y, max.x, min.y, Assets.DebugPaint)
+                canvas.drawLine(min.x, min.y, min.x, max.y, Assets.DebugPaint)
+                canvas.drawLine(min.x, max.y, max.x, max.y, Assets.DebugPaint)
+                canvas.drawLine(max.x, max.y, max.x, min.y, Assets.DebugPaint) }
         }
     }
 }

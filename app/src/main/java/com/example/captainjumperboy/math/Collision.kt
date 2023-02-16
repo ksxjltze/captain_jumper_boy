@@ -8,9 +8,10 @@ import kotlin.math.abs
 
 
 class Collision {
-    class AABB(var pos: Vector2D, var halfSize: Vector2D) : Component()
+    open class AABB(var pos: Vector2D, var halfSize: Vector2D) : Component()
     {
         var absoluteHalfSize : Vector2D
+        var autoRescale = true //SEE SCENE UPDATE
 
         init {
             //Log.d("MainActivity: ", "Created AABB w/ pos = $pos and halfSize = $halfSize")
@@ -29,6 +30,11 @@ class Collision {
 
             return abs(distance.x) <= (absoluteHalfSize.x + other.absoluteHalfSize.x) &&
                     abs(distance.y) <= (absoluteHalfSize.y + other.absoluteHalfSize.y)
+        }
+
+        fun isPointInside(point : Vector2D) : Boolean{
+            val distance = pos.sub(point)
+            return abs(distance.x) <= absoluteHalfSize.x && abs(distance.y) <= absoluteHalfSize.y
         }
 
 //        fun getOverlap(other: AABB) : Vector2D {

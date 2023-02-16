@@ -14,16 +14,27 @@ class Text(var pos:Vector2D=Vector2D(),var str:String="Some Test",var size:Float
     override var layer = Layer.UI
     var paint : Paint=Paint()
     var textcolor:Int=Color.RED
+    var useWorldPos = false
+
     override fun draw(canvas: Canvas){
         val matrix = transform.getMatrix()
-        matrix.postConcat(Camera.transform.getViewMatrix()) //View * Model
+        paint.setTextSize(size);
+        paint.textAlign = Paint.Align.CENTER
+        paint.setColor(textcolor);
 
+        //without camera
+        if (!useWorldPos){
+            canvas.withMatrix(matrix) {
+                //canvas.drawPaint(paint);
+                canvas.drawText(str, pos.x, pos.y, paint);
+            }
+            return
+        }
+
+        matrix.postConcat(Camera.transform.getViewMatrix()) //View * Model
         //apply transform and draw
         canvas.withMatrix(matrix) {
             //canvas.drawPaint(paint);
-            paint.setTextSize(size);
-            paint.textAlign = Paint.Align.CENTER
-            paint.setColor(textcolor);
             canvas.drawText(str, pos.x, pos.y, paint);
         }
 

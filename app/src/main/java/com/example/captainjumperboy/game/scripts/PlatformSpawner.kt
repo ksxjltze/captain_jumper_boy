@@ -98,8 +98,9 @@ class PlatformSpawner : Scriptable() {
                 plat.transform.position.x = GetRandomPosX() + (plat.transform.scale.x * 0.5f)
                 plat.transform.scale.x = 5F
 
-                aabb.pos=plat.transform.position
-                aabb.RecalculateHalfSize(plat.transform.scale*0.5f)
+                //MOVED TO CaptainJumperBoy UPDATE (UPDATE ALL AABBs)
+//                aabb.pos=plat.transform.position
+//                aabb.RecalculateHalfSize(plat.transform.scale*0.5f)
                 Highscore+=100
             }
         }

@@ -41,7 +41,7 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
         playerObject.transform.scale.x = 1.5F
         playerObject.transform.scale.y = 1.5F
         playerObject.addComponent(SpriteSheet(R.drawable.spritesheet_player,1,15))
-        playerObject.addComponent(Collision.AABB(playerObject.transform.position,playerObject.transform.scale*0.5f))
+        playerObject.addComponent(Collision.AABB(playerObject.transform.position,playerObject.transform.scale*0.5f).apply { autoRescale = false })
         playerObject.addScript<Player>()
         playerObject.getScript<Player>()?.setMainActivity(this.view.context as MainActivity)
         playerObject.getScript<Player>()?.setScene(this)
@@ -56,7 +56,9 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
         val tutorialtext = createObject()
         tutorialtext.apply {
             name = "Background2"
-            addComponent(Text(Vector2D(),"Tap to jump and tilt to move, don't fall",5F))
+            val text = Text(Vector2D(),"Tap to jump and tilt to move, don't fall",5F)
+            text.useWorldPos = true
+            addComponent(text)
             transform.apply {
                 scale = Vector2D(10F, 15F)
                 position = Vector2D(500f, 800f)
@@ -72,12 +74,49 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
             addScript<Gameover>()
         }
         gameover.getScript<Gameover>()?.setScene(this)
+
+        //GAME MANAGER
+        val gameManager = createObject("GameManager")
+        gameManager.apply {
+            addScript<PauseController>()
+        }
+
+        //PAUSE BUTTON
+        val pauseButton = createObject("PauseButton")
+        pauseButton.apply {
+            transform.apply {
+                position.x = 800F
+                position.y = 200F
+                scale.x = 5F
+                scale.y = 5F
+            }
+
+            addComponent(Sprite(Image(R.drawable.captain_jumper)).apply { layer = Layer.UI })
+            addComponent(UIRect(transform.position, transform.scale * 0.5F))
+        }
     }
     override fun update() {
         super.update()
 //        if (playerObject.getScript<Player>()?.start == true)
 //            Camera.transform.position.y += GameThread.deltaTime * cameraSpeed
         //collision loop..need to destroy platforms out of viewport otherwise this will get slower..
+
+        //why did we not do this in the first place??
+        //UPDATE ALL AABBs (if autoRescale)
+        gameObjectList.forEach {gameObject ->
+            if(gameObject.hasComponent<Collision.AABB>())
+            {
+                val aabb = gameObject.getComponent<Collision.AABB>()?:return
+                with(gameObject.transform){
+                    aabb.pos = position
+
+                    if (aabb.autoRescale)
+                        aabb.RecalculateHalfSize(scale * 0.5f)
+                }
+            }
+        }
+
+        //CHECK COLLISION
         gameObjectList.forEach {gameObject ->
             if(gameObject.hasComponent<Collision.AABB>())
             {

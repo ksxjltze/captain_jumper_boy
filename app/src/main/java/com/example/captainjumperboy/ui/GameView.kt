@@ -14,6 +14,7 @@ import android.view.*
 import com.example.captainjumperboy.R
 import com.example.captainjumperboy.engine.Camera
 import com.example.captainjumperboy.engine.GameThread
+import com.example.captainjumperboy.engine.Input
 import com.example.captainjumperboy.engine.Scene
 import com.example.captainjumperboy.engine.assets.Assets
 import com.example.captainjumperboy.game.scenes.CaptainJumperBoy
@@ -139,8 +140,8 @@ class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback
 
     override fun onTouch(v: View?, event: MotionEvent?): Boolean {
         if (event != null) {
-            Scene.touchEvent = true
-            Scene.touchPos = Vector2D(event.x, event.y) //send to scene
+            Input.touchEvent = true
+            Input.touchPos = Vector2D(event.x, event.y) //send to scene
             return true
         }
         return false
