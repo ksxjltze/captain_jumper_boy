@@ -26,6 +26,8 @@ class PlatformSpawner : Scriptable() {
     private var spawnCounter = 0 //used to set new spawn position after initial spawning
     private val platformDistance = 250F //y distance
     private val startY = 2000
+    //val startY = 2980
+    // Usuable screen height is about 2980
 
     private fun GetRandomPosX() : Float
     {
@@ -36,8 +38,7 @@ class PlatformSpawner : Scriptable() {
     private fun spawn(){
         val birdImage = Image(R.drawable.broken)
         val rng = Random(LocalTime.now().second)
-        //val startY = 2980
-        // Usuable screen height is about 2980
+
         for (i in 0 until count){
             val platform = createObject()
             platform.name="Platform"
@@ -71,6 +72,13 @@ class PlatformSpawner : Scriptable() {
     }
 
     override fun update() {
+
+        val player = findObject("Player")
+        val playerscript = player.getScript<Player>() ?: return
+        if(playerscript.isdead) {
+            return
+        }
+
         platforms.forEach{ plat->
             val aabb = plat.getComponent<Collision.AABB>() ?: return
             aabb.pos = plat.transform.position
@@ -89,10 +97,10 @@ class PlatformSpawner : Scriptable() {
 
                 plat.transform.position.x = GetRandomPosX() + (plat.transform.scale.x * 0.5f)
                 plat.transform.scale.x = 5F
-                aabb.halfSize = plat.transform.scale * 0.5f
-                aabb.pos = plat.transform.position
 
-                Highscore += 100
+                aabb.pos=plat.transform.position
+                aabb.RecalculateHalfSize(plat.transform.scale*0.5f)
+                Highscore+=100
             }
         }
     }

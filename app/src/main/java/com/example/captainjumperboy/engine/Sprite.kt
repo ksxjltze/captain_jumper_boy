@@ -12,7 +12,7 @@ class Sprite(var image : Image) : Component() {
 
         //apply transform and draw
         canvas.withMatrix(matrix) {
-            canvas.drawBitmap(image.bitmap, -image.width/2F, -image.height/2F, null) //draw centered in canvas to apply transform correctly
+            canvas.drawBitmap(image.bitmap, -image.width/2F, -image.height/2F, image.paint) //draw centered in canvas to apply transform correctly
         }
     }
 

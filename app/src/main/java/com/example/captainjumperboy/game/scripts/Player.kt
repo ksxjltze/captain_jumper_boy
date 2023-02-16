@@ -1,5 +1,6 @@
 package com.example.captainjumperboy.game.scripts
 
+import android.annotation.SuppressLint
 import android.media.MediaPlayer
 import android.util.Log
 import android.view.WindowManager
@@ -14,6 +15,7 @@ import com.example.captainjumperboy.ui.MainActivity
 import com.example.captainjumperboy.ui.OnSensorDataChanged
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import java.lang.Math.abs
 
 class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
 {
@@ -21,7 +23,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
     var Isjump:Boolean=false
     var firsttouch:Boolean=false
     var start : Boolean = false
-
+    var isdead:Boolean=false
     lateinit var aabb:Collision.AABB
     private lateinit var mainActivity: MainActivity
     private lateinit var scene:Scene
@@ -47,16 +49,35 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         val firstPlatform = spawner.platforms[0]
         transform.position.x = GameView.windowWidth / 2.0F
         transform.position.y = firstPlatform.transform.position.y - 100.0F
-
+        isdead=false
     }
 
     fun jump(){
         start = true
         val dt = GameThread.deltaTime
         velocity.y = -20F ;
+
+        if(firsttouch)
+        {
+
+            mediaplayer.seekTo(0);
+            mediaplayer.start();
+            firsttouch=false
+        }
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override fun update() {
+        val distance = abs(Camera.transform.position.y - transform.position.y)
+        val distanceToBottom = Camera.screenHeight - distance
+
+        if(distanceToBottom < 0.0f)
+        {
+            isdead=true
+        }
+
+        if(isdead)return
+
         val Width = GameView.windowWidth.toFloat()
         val dt = GameThread.deltaTime
         aabb.pos = transform.position
@@ -70,7 +91,6 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         {
             transform.position.x=Width
         }
-        Camera.transform.position.y -= 2.0f//camera movement
         if (Scene.touchEvent && !Isjump) {
             Isjump=true
             firsttouch=true
@@ -78,11 +98,16 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
             Scene.touchEvent = false
         }
         else velocity.y += 0.5F
+        if(transform.position.y<100f)
+        {
+            Camera.transform.position.y -= 3.0f
+        }
+        else
+        Camera.transform.position.y -= 2.0f//camera movement
     }
 
     override fun onSensorDataChanged(x: Float, y: Float, z: Float) {
-        velocity.x -=x
-        //todo...
+        velocity.x -=(x*1.5f)
     }
 
     override fun onCollided(obj: GameObject) {
@@ -104,14 +129,6 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
             velocity.y = 0.0F //collision resolution
             Isjump=false
             Scene.touchEvent = false
-
-            if(firsttouch)
-            {
-
-                mediaplayer.seekTo(0);
-                mediaplayer.start();
-                firsttouch=false
-            }
         }
         else
             return

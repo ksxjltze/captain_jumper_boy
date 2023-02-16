@@ -17,6 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat"
         tools:targetApi="31" >
+
         <activity
             android:name=".ui.LeaderboardActivity"
             android:exported="false"

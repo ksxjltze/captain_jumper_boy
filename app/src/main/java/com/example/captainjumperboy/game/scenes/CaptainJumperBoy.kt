@@ -4,10 +4,7 @@ import android.content.res.Resources
 import com.example.captainjumperboy.R
 import com.example.captainjumperboy.engine.*
 import com.example.captainjumperboy.engine.assets.Image
-import com.example.captainjumperboy.game.scripts.Background
-import com.example.captainjumperboy.game.scripts.Highscore
-import com.example.captainjumperboy.game.scripts.PlatformSpawner
-import com.example.captainjumperboy.game.scripts.Player
+import com.example.captainjumperboy.game.scripts.*
 import com.example.captainjumperboy.math.Collision
 import com.example.captainjumperboy.math.Vector2D
 import com.example.captainjumperboy.ui.GameView
@@ -27,23 +24,23 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
         val platformSpawner = createObject("spawner")
         platformSpawner.addScript<PlatformSpawner>()
 
-        //test background/foreground
-        val background = createObject()
-        background.apply {
-            name = "Background2"
-            addComponent(Sprite(Image(R.drawable.matt_big)).apply { layer = Layer.UI })
-            transform.apply {
-                scale = Vector2D(10F, 10F)
-                position = Vector2D(500F, 600F)
-            }
-        }
+//        //test background/foreground
+//        val background = createObject()
+//        background.apply {
+//            name = "Background2"
+//            addComponent(Sprite(Image(R.drawable.matt_big)).apply { layer = Layer.UI })
+//            transform.apply {
+//                scale = Vector2D(10F, 10F)
+//                position = Vector2D(500F, 600F)
+//            }
+//        }
 
         playerObject = createObject()
         playerObject.name="Player"
         playerObject.transform.position.x = 300F
         playerObject.transform.scale.x = 1.5F
         playerObject.transform.scale.y = 1.5F
-        playerObject.addComponent(SpriteSheet(R.drawable.player,1,3))
+        playerObject.addComponent(SpriteSheet(R.drawable.spritesheet_player,1,15))
         playerObject.addComponent(Collision.AABB(playerObject.transform.position,playerObject.transform.scale*0.5f))
         playerObject.addScript<Player>()
         playerObject.getScript<Player>()?.setMainActivity(this.view.context as MainActivity)
@@ -54,6 +51,27 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
         text.addComponent(Text())
         text.addScript<Highscore>()
         text.getScript<Highscore>()?.setScene(this)
+        //val width= GameView.windowWidth.toFloat()
+
+        val tutorialtext = createObject()
+        tutorialtext.apply {
+            name = "Background2"
+            addComponent(Text(Vector2D(),"Tap to jump and tilt to move, don't fall",5F))
+            transform.apply {
+                scale = Vector2D(10F, 15F)
+                position = Vector2D(500f, 800f)
+            }
+        }
+
+
+        val gameover = createObject()
+        gameover.apply {
+            name = "gameover"
+            addComponent(Sprite(Image(R.drawable.gameover)).apply { layer = Layer.UI })
+
+            addScript<Gameover>()
+        }
+        gameover.getScript<Gameover>()?.setScene(this)
     }
     override fun update() {
         super.update()
