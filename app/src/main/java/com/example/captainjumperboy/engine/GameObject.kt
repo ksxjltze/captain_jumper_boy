@@ -11,8 +11,14 @@ import kotlin.reflect.typeOf
 class GameObject {
     var componentList = ArrayList<Component>()
     var scriptList = ArrayList<Scriptable>()
+    var parent : GameObject = this
 
     var active : Boolean = true
+        get() {
+            if (parent != this)
+                return parent.active && field
+            return field
+        }
     var name : String = "GameObject"
     var transform = Transform()
 

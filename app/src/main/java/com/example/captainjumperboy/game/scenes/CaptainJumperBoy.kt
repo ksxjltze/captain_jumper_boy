@@ -103,8 +103,32 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
                 position.y = 1000F
                 scale = Vector2D(5F, 12F)
             }
-
             addComponent(Sprite(Image(R.drawable.bird)).apply { layer = Layer.UI })
+
+            val buttonSize = Vector2D(3F, 2F)
+
+            //CREATE MENU OBJECTS
+            //RESUME
+            createObject("ResumeButton").apply {
+                transform.apply {
+                    position.x = pauseMenu.transform.position.x
+                    position.y = pauseMenu.transform.position.y - 200F
+                    scale = buttonSize
+                }
+                parent = pauseMenu
+                addComponent(Sprite(Image(R.drawable.swole)).apply { layer = Layer.UI_FOREGROUND })
+            }
+
+            //QUIT
+            createObject("QuitButton").apply {
+                transform.apply {
+                    position.x = pauseMenu.transform.position.x
+                    position.y = pauseMenu.transform.position.y + 200F
+                    scale = buttonSize
+                }
+                parent = pauseMenu
+                addComponent(Sprite(Image(R.drawable.swole)).apply { layer = Layer.UI_FOREGROUND })
+            }
         }
     }
     override fun update() {
