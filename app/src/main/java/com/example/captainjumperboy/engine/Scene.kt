@@ -93,6 +93,8 @@ open class Scene(var view: GameView) {
 
     fun debugDrawColliders(canvas: Canvas){
         for (gameObject in gameObjectList){
+            if (!gameObject.active)
+                continue
 
             val aabb = gameObject.getComponent<Collision.AABB>() ?: continue
             val min = Vector2D(aabb.pos.x - aabb.absoluteHalfSize.x , aabb.pos.y - aabb.absoluteHalfSize.y )

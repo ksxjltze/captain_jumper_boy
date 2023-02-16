@@ -117,6 +117,7 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
                 }
                 parent = pauseMenu
                 addComponent(Sprite(Image(R.drawable.swole)).apply { layer = Layer.UI_FOREGROUND })
+                addComponent(UIRect(transform.position, transform.scale * 0.5F))
             }
 
             //QUIT
@@ -128,6 +129,7 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
                 }
                 parent = pauseMenu
                 addComponent(Sprite(Image(R.drawable.swole)).apply { layer = Layer.UI_FOREGROUND })
+                addComponent(UIRect(transform.position, transform.scale * 0.5F))
             }
         }
     }

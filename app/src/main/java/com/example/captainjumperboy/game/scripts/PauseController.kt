@@ -11,17 +11,28 @@ import com.example.captainjumperboy.math.Collision
 
 class PauseController : Scriptable() {
     private lateinit var pauseButton : GameObject
-    private lateinit var pauseButtonAABB : Collision.AABB
     private lateinit var pauseMenu : GameObject
+    private lateinit var resumeButton : GameObject
+    private lateinit var quitButton : GameObject
+
+    private lateinit var pauseButtonAABB : Collision.AABB
+    private lateinit var resumeButtonAABB : Collision.AABB
+    private lateinit var quitButtonAABB : Collision.AABB
 
     var isPaused = false
 
     override fun start() {
         pauseButton = findObject("PauseButton")
-        pauseButtonAABB = pauseButton.getComponentForced<Collision.AABB>()
-
         pauseMenu = findObject("PauseMenu")
+        resumeButton = findObject("ResumeButton")
+        quitButton = findObject("QuitButton")
+
         pauseMenu.active = false
+
+        //kotlin is so pog
+        pauseButtonAABB = pauseButton.getComponentForced()
+        resumeButtonAABB = resumeButton.getComponentForced()
+        quitButtonAABB = quitButton.getComponentForced()
     }
 
     override fun pausedUpdate() {
@@ -36,8 +47,24 @@ class PauseController : Scriptable() {
         }
 
         //paused
-        //todo: pause menu
-        Scene.activeScene.paused = isPaused
+        //update pause menu
+        if (Input.touchEvent){
+            var unpause = false
+
+            if (resumeButtonAABB.isPointInside(Input.touchPos)){
+                unpause = true
+            }
+            else if(quitButtonAABB.isPointInside(Input.touchPos)){
+                unpause = true
+            }
+
+            if (unpause){
+                isPaused = false
+                pauseMenu.active = false
+            }
+
+            Scene.activeScene.paused = isPaused
+        }
 
     }
 
