@@ -93,7 +93,7 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
                 scale.y = 5F
             }
 
-            addComponent(Sprite(Image(R.drawable.captain_jumper)).apply { layer = Layer.UI })
+            addComponent(Sprite(Image(R.drawable.pause)).apply { layer = Layer.UI })
             addComponent(UIRect(transform.position, transform.scale * 0.5F))
         }
 
@@ -105,7 +105,7 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
                 position.y = 1000F
                 scale = Vector2D(5F, 12F)
             }
-            addComponent(Sprite(Image(R.drawable.bird)).apply { layer = Layer.UI })
+            addComponent(Sprite(Image(R.drawable.winningtile)).apply { layer = Layer.UI })
 
             val buttonSize = Vector2D(3F, 2F)
 
@@ -118,7 +118,7 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
                     scale = buttonSize
                 }
                 parent = pauseMenu
-                addComponent(Sprite(Image(R.drawable.swole)).apply { layer = Layer.UI_FOREGROUND })
+                addComponent(Sprite(Image(R.drawable.start)).apply { layer = Layer.UI_FOREGROUND })
                 addComponent(UIRect(transform.position, transform.scale * 0.5F))
             }
 
@@ -130,7 +130,7 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
                     scale = buttonSize
                 }
                 parent = pauseMenu
-                addComponent(Sprite(Image(R.drawable.swole)).apply { layer = Layer.UI_FOREGROUND })
+                addComponent(Sprite(Image(R.drawable.exit)).apply { layer = Layer.UI_FOREGROUND })
                 addComponent(UIRect(transform.position, transform.scale * 0.5F))
             }
         }
