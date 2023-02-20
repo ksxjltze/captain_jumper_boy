@@ -3,6 +3,7 @@ package com.stepbros.captainjumperboy.game.scripts
 import com.stepbros.captainjumperboy.R
 import com.stepbros.captainjumperboy.engine.Camera
 import com.stepbros.captainjumperboy.engine.GameObject
+import com.stepbros.captainjumperboy.engine.GameThread
 import com.stepbros.captainjumperboy.engine.Sprite
 import com.stepbros.captainjumperboy.engine.assets.Assets
 import com.stepbros.captainjumperboy.engine.assets.Image
@@ -21,6 +22,8 @@ class PlatformSpawner : Scriptable() {
 
     //score manager
     private lateinit var scoreManager : ScoreManager
+    private lateinit var player : GameObject
+    private lateinit var playerscript : Player
 
     //spawner variables
     private var spawnCounter = 0 //used to set new spawn position after initial spawning
@@ -69,12 +72,11 @@ class PlatformSpawner : Scriptable() {
 
     override fun start() {
         scoreManager = findObject("GameManager").getScript<ScoreManager>()!!
+        player = findObject("Player")
+        playerscript = player.getScript<Player>() ?: return
     }
 
     override fun update() {
-
-        val player = findObject("Player")
-        val playerscript = player.getScript<Player>() ?: return
         if(playerscript.isdead) {
             return
         }

@@ -94,10 +94,10 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
         val pauseButton = createObject("PauseButton")
         pauseButton.apply {
             transform.apply {
-                position.x = 800F
-                position.y = 200F
-                scale.x = 5F
-                scale.y = 5F
+                position.x = 80F
+                position.y = 65F
+                scale.x = 1F
+                scale.y = 1F
             }
 
             addComponent(Sprite(Image(R.drawable.pause)).apply { layer = Layer.UI })
