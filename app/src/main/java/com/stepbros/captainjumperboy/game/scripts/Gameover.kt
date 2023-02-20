@@ -2,10 +2,7 @@ package com.stepbros.captainjumperboy.game.scripts
 
 import android.media.MediaPlayer
 import com.stepbros.captainjumperboy.R
-import com.stepbros.captainjumperboy.engine.GameThread
-import com.stepbros.captainjumperboy.engine.Scene
-import com.stepbros.captainjumperboy.engine.Sprite
-import com.stepbros.captainjumperboy.engine.Text
+import com.stepbros.captainjumperboy.engine.*
 import com.stepbros.captainjumperboy.engine.assets.Assets
 import com.stepbros.captainjumperboy.engine.component.Scriptable
 import com.stepbros.captainjumperboy.ui.GameView
@@ -71,6 +68,10 @@ class Gameover : Scriptable() {
                text.str=""//remove tutorial text
                 sprite.image.Alpha+=5
                 //go to gameover activity to input score
+            }
+            if (Input.touchEvent)
+            {
+                GameThread.exit()
             }
         }
 
