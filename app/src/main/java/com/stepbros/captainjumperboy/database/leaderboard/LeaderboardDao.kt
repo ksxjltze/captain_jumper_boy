@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.Flow
 interface LeaderboardDao {
 
     //Gets all the scores in ascending order
-    @Query("SELECT * FROM leaderboard_table ORDER BY id ASC")
+    @Query("SELECT * FROM leaderboard_table ORDER BY score DESC")
     fun getAll(): Flow<List<Leaderboard>> //observe data changes w/ Flow
     //asynchronous flow (Flow) will allow the DAO to continuously emit data from the database without blocking the main thread
 
