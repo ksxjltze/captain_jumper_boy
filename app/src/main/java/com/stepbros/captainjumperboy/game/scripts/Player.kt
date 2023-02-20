@@ -79,6 +79,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         if(isdead)return
 
         val Width = GameView.windowWidth.toFloat()
+        val Height = GameView.windowHeight.toFloat()
         val dt = GameThread.deltaTime
 //        aabb.pos = transform.position //MOVED TO CaptainJumperBoy UPDATE
         transform.position.x += velocity.x
@@ -91,44 +92,30 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         {
             transform.position.x=Width
         }
-        if (Input.touchEvent && !Isjump) {
-            Isjump=true
-            firsttouch=true
-            jump()
-//            Input.touchEvent = false
-        }
-        else velocity.y += 0.5F
-        if(transform.position.y<100f)
+        if(Isjump)
         {
-            Camera.transform.position.y -= 3.0f
+            jump()
+            Isjump=false
+        }
+        else velocity.y += 1F
+
+        if(transform.position.y<Camera.screenHeight/2.0f && !Isjump)
+        {
+            Camera.transform.position.y +=velocity.y
         }
         else
         Camera.transform.position.y -= 2.0f//camera movement
     }
 
     override fun onSensorDataChanged(x: Float, y: Float, z: Float) {
-        velocity.x -=(x*1.5f)
+        velocity.x -=(x*2f)
     }
 
     override fun onCollided(obj: GameObject) {
-        //Log.d("MainActivity","Player Collided")
-        val platformAABB = obj.getComponent<Collision.AABB>()
-        var platformTop = 0.0F
-        var playerBottom = 0.0F
-        if (platformAABB != null)
+        if(obj.name=="Platform" && velocity.y>0 ) //only collide if its going down
         {
-            platformTop = platformAABB.pos.y - platformAABB.absoluteHalfSize.y
-        }
-        playerBottom = transform.position.y + aabb.absoluteHalfSize.y
-        if(obj.name=="Platform" && velocity.y>0 &&
-            ((playerBottom) <= platformTop + velocity.y)) //only collide if its going down
-        {
-            //val overlap = platformAABB?.let { aabb.getOverlap(it) }
-            //Log.d("MainActivity","Player Collided w/ Platform")
-            transform.position.y -= velocity.y
-            velocity.y = 0.0F //collision resolution
-            Isjump=false
-//            Input.touchEvent = false
+            firsttouch=true
+            Isjump=true
         }
         else
             return

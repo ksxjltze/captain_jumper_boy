@@ -47,7 +47,7 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
         playerObject = createObject()
         playerObject.name="Player"
         playerObject.transform.position.x = 300F
-        playerObject.transform.scale.x = 1.5F
+        playerObject.transform.scale.x = 1F
         playerObject.transform.scale.y = 1.5F
         playerObject.addComponent(SpriteSheet(R.drawable.spritesheet_player,1,15))
         playerObject.addComponent(Collision.AABB(playerObject.transform.position,playerObject.transform.scale*0.5f).apply { autoRescale = false })
@@ -97,7 +97,7 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
                 position.x = 800F
                 position.y = 200F
                 scale.x = 5F
-                scale.y = 5F
+                scale.y = 2F
             }
 
             addComponent(Sprite(Image(R.drawable.pause)).apply { layer = Layer.UI })
