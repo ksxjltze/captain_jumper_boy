@@ -27,11 +27,13 @@ class LeaderboardRepository(private val leaderboardDao: LeaderboardDao) {
     @WorkerThread
     suspend fun insert(leaderboard: Leaderboard) { //suspend tells the compiler that this needs to be called from a coroutine or suspending function.
         leaderboardDao.insert(leaderboard)
+        leaderboardDao.updateIds()
     }
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun deleteAll() { //suspend tells the compiler that this needs to be called from a coroutine or suspending function.
         leaderboardDao.deleteAll()
+        leaderboardDao.resetPrimaryKey()
     }
 }

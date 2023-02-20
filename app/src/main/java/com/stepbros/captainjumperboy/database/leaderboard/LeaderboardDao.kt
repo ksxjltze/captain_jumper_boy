@@ -21,9 +21,12 @@ interface LeaderboardDao {
     //asynchronous flow (Flow) will allow the DAO to continuously emit data from the database without blocking the main thread
 
     //By default, all queries MUST be executed on a separate thread thus we need suspend functions
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(leaderboard : Leaderboard)
 
     @Query("DELETE FROM leaderboard_table")
     suspend fun deleteAll()
+
+    @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'leaderboard_table'")
+    suspend fun resetPrimaryKey()
 }
