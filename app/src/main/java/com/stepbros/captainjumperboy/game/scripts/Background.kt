@@ -22,7 +22,7 @@ class Background : Scriptable() {
         transform.scale.x =Width/100.0f
         transform.scale.y = Height/100.0f
         transform.rotation = 0F
-        initialPosition = transform.position.y
+       // initialPosition = transform.position.y
     }
 
    override fun update() {
@@ -34,6 +34,6 @@ class Background : Scriptable() {
        // Does not work well because camera is tied to players position, and that
        // is not the center of the screen
 
-       transform.position.y = Camera.transform.position.y+initialPosition-5//magic number
+       //transform.position.y = Camera.transform.position.y+initialPosition-5//magic number
     }
 }

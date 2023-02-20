@@ -1,7 +1,9 @@
 package com.stepbros.captainjumperboy.game.scenes
 
+import android.icu.text.ListFormatter
 import com.stepbros.captainjumperboy.R
 import com.stepbros.captainjumperboy.engine.*
+import com.stepbros.captainjumperboy.engine.Camera.Companion.transform
 import com.stepbros.captainjumperboy.engine.assets.Image
 import com.stepbros.captainjumperboy.game.scripts.*
 import com.stepbros.captainjumperboy.math.Collision
@@ -17,11 +19,16 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
         gameObjectList.clear()
         paused = false
 
-        val BG = createObject("background")
-        val mainmenu = Image(R.drawable.mainmenu)
-        BG.addComponent(Sprite(mainmenu).apply { layer = Layer.BACKGROUND })
-        BG.addScript<Background>()
-        BG.getScript<Background>()?.setScene(this)
+        //damn laggy
+//        val BG = createObject("background")
+//        val mainmenu = Image(R.drawable.mainmenu, false)
+//        BG.addComponent(Sprite(mainmenu).apply { layer = Layer.STATIC_BACKGROUND })
+//        BG.transform.apply {
+//            scale = Vector2D(2F, 2F)
+//            position = Vector2D(mainmenu.originalWidth / 2F, mainmenu.originalHeight / 2F)
+//        }
+       // BG.addScript<Background>()
+//        BG.getScript<Background>()?.setScene(this)
 
         val platformSpawner = createObject("spawner")
         platformSpawner.addScript<PlatformSpawner>()

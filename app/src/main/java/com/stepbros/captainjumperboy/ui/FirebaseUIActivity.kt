@@ -36,8 +36,8 @@ class FirebaseUIActivity : AppCompatActivity() {
         // Choose authentication providers
         val providers = arrayListOf(
                 AuthUI.IdpConfig.EmailBuilder().build(),
-                AuthUI.IdpConfig.AnonymousBuilder().build(),
-                AuthUI.IdpConfig.GoogleBuilder().build())
+                AuthUI.IdpConfig.AnonymousBuilder().build())
+//                AuthUI.IdpConfig.GoogleBuilder().build())
 //                AuthUI.IdpConfig.PhoneBuilder().build(),
 //                AuthUI.IdpConfig.GoogleBuilder().build(),
 //                AuthUI.IdpConfig.FacebookBuilder().build(),

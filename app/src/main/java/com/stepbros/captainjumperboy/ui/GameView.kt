@@ -63,7 +63,7 @@ class GameView(context : Context) : SurfaceView(context), SurfaceHolder.Callback
     override fun draw(canvas: Canvas?) {
         super.draw(canvas)
         if (canvas != null) {
-            canvas.drawColor(Color.WHITE)
+            canvas.drawColor(Color.BLACK)
             scene.draw(canvas)
         }
     }
