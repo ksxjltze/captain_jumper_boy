@@ -6,7 +6,7 @@ import kotlin.math.abs
 
 
 class Collision {
-    open class AABB(var pos: Vector2D, var halfSize: Vector2D) : Component()
+    class AABB(var pos: Vector2D, var halfSize: Vector2D) : Component()
     {
         var absoluteHalfSize : Vector2D
         var autoRescale = true //SEE SCENE UPDATE

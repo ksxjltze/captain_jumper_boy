@@ -1,9 +1,6 @@
 package com.stepbros.captainjumperboy.game.scripts
 
-import com.stepbros.captainjumperboy.engine.GameObject
-import com.stepbros.captainjumperboy.engine.GameThread
-import com.stepbros.captainjumperboy.engine.Input
-import com.stepbros.captainjumperboy.engine.Scene
+import com.stepbros.captainjumperboy.engine.*
 import com.stepbros.captainjumperboy.engine.component.Scriptable
 import com.stepbros.captainjumperboy.math.Collision
 
@@ -13,9 +10,9 @@ class PauseController : Scriptable() {
     private lateinit var resumeButton : GameObject
     private lateinit var quitButton : GameObject
 
-    private lateinit var pauseButtonAABB : Collision.AABB
-    private lateinit var resumeButtonAABB : Collision.AABB
-    private lateinit var quitButtonAABB : Collision.AABB
+    private lateinit var pauseButtonAABB : UIRect
+    private lateinit var resumeButtonAABB : UIRect
+    private lateinit var quitButtonAABB : UIRect
 
     var isPaused = false
 

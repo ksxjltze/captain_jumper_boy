@@ -47,7 +47,7 @@ class PlatformSpawner : Scriptable() {
             platform.name="Platform"
             platform.addComponent(Sprite(birdImage))
             platform.transform.scale.y = 0.5F
-            platform.transform.scale.x = 5F
+            platform.transform.scale.x = 4F
             platform.transform.position.y = -i * platformDistance + startY
             platform.transform.position.x = GetRandomPosX()+(platform.transform.scale.x*0.5f)
 
@@ -83,7 +83,6 @@ class PlatformSpawner : Scriptable() {
 
         platforms.forEach{ plat->
             val aabb = plat.getComponent<Collision.AABB>() ?: return
-            aabb.pos = plat.transform.position
 
             val distance = abs(Camera.transform.position.y - plat.transform.position.y)
             val distanceToBottom = Camera.screenHeight - distance
