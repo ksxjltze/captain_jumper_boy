@@ -27,6 +27,10 @@ class LeaderboardActivity : AppCompatActivity() {
     //views
     private lateinit var clearBtn : Button
 
+    //adapters
+    private val localAdapter = LeaderboardAdapter(this)
+    private val globalAdapter = LeaderboardAdapter(this)
+
     private val viewModel: LeaderboardViewModel by viewModels{
         LeaderboardViewModelFactory((application as GameApplication).repository)
     }
@@ -38,8 +42,14 @@ class LeaderboardActivity : AppCompatActivity() {
         val switch = findViewById<SwitchCompat>(R.id.globalSwitch)
         switch.setOnCheckedChangeListener { compoundButton, b ->
             when (compoundButton.isChecked){
-                true -> clearBtn.visibility = View.GONE
-                false -> clearBtn.visibility = View.VISIBLE
+                true -> {
+                    clearBtn.visibility = View.GONE
+                    recyclerView.adapter = globalAdapter
+                }
+                false -> {
+                    clearBtn.visibility = View.VISIBLE
+                    recyclerView.adapter = localAdapter
+                }
             }
         }
 
@@ -49,13 +59,12 @@ class LeaderboardActivity : AppCompatActivity() {
         recyclerView.addItemDecoration(
             DividerItemDecoration(recyclerView.context, LinearLayoutManager.VERTICAL)
         )
-        val adapter = LeaderboardAdapter(this)
-        recyclerView.adapter = adapter
+        recyclerView.adapter = localAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         viewModel.allScores.observe(this, Observer { scores ->
             // Update the cached copy of the digits in the adapter.
-            scores?.let { adapter.submitList(it) }
+            scores?.let { localAdapter.submitList(it) }
         })
 
         clearBtn = findViewById<Button>(R.id.clearBtn)

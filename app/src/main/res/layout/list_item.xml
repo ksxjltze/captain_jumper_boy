@@ -15,25 +15,25 @@
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="16sp"
-        tools:text="1." />
+        tools:text="9999" />
 
     <TextView
         android:id="@+id/leaderboardName"
-        android:layout_width="250dp"
+        android:layout_width="245dp"
         android:layout_height="24dp"
-        android:textAlignment="center"
+        android:textAlignment="viewStart"
         android:textColor="@color/white"
         android:textSize="16sp"
         tools:text="Bryan Koh" />
 
     <TextView
         android:id="@+id/leaderboardScore"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="24dp"
-        android:textAlignment="center"
+        android:textAlignment="viewStart"
         android:textColor="@color/white"
         android:textSize="16sp"
-        tools:text="99999" />
+        tools:text="9999999999" />
 
 
 </LinearLayout>
