@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.FirebaseDatabase
 import com.stepbros.captainjumperboy.GameApplication
 import com.stepbros.captainjumperboy.R
 import com.stepbros.captainjumperboy.viewmodel.LeaderboardViewModel

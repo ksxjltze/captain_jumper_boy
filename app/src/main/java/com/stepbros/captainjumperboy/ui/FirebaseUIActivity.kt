@@ -10,6 +10,8 @@ import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.ActionCodeSettings
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.stepbros.captainjumperboy.GameApplication
 import com.stepbros.captainjumperboy.R
 
@@ -31,6 +33,10 @@ class FirebaseUIActivity : AppCompatActivity() {
         createSignInIntent()
     }
 
+    private fun goToMainMenu(){
+        startActivity(Intent(this, MainMenuActivity::class.java))
+    }
+
     private fun createSignInIntent() {
         // [START auth_fui_create_intent]
         // Choose authentication providers
@@ -44,6 +50,7 @@ class FirebaseUIActivity : AppCompatActivity() {
 //                AuthUI.IdpConfig.TwitterBuilder().build())
 
         // Create and launch sign-in intent
+        if (Firebase.auth.currentUser == null) {
         val signInIntent = AuthUI.getInstance()
                 .createSignInIntentBuilder()
                 .setAvailableProviders(providers)
@@ -51,6 +58,11 @@ class FirebaseUIActivity : AppCompatActivity() {
                 .setIsSmartLockEnabled(false) //sign in error happens wihtout this
                 .build()
         signInLauncher.launch(signInIntent)
+        }
+        else{
+            (application as GameApplication).auth = FirebaseAuth.getInstance()
+            goToMainMenu()
+        }
         // [END auth_fui_create_intent]
     }
 
@@ -59,8 +71,8 @@ class FirebaseUIActivity : AppCompatActivity() {
         val response = result.idpResponse
         if (result.resultCode == RESULT_OK) {
             // Successfully signed in
-            (application as GameApplication).user = FirebaseAuth.getInstance().currentUser!!
-            startActivity(Intent(this, MainMenuActivity::class.java))
+            (application as GameApplication).auth = FirebaseAuth.getInstance()
+            goToMainMenu()
             // ...
         } else {
             // Sign in failed. If response is null the user canceled the

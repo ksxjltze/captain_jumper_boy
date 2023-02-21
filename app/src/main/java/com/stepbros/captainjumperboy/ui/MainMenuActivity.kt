@@ -20,7 +20,7 @@ class MainMenuActivity : AppCompatActivity() {
         val leaderboardBtn: Button = findViewById(R.id.leaderboardBtn)
         val playerIdText : TextView = findViewById(R.id.playerIdText)
 
-        playerIdText.text = (application as GameApplication).user.displayName
+        playerIdText.text = (application as GameApplication).auth.currentUser?.displayName ?: "GUEST"
 
         startbtn.setOnClickListener {
             Toast.makeText(this, "Game starting!", Toast.LENGTH_SHORT).show()

@@ -33,7 +33,7 @@ class GameThread(private var surfaceHolder: SurfaceHolder, private var gameView:
 
         fun saveScoreLocal(score : Int){
             val app = (game.gameView.context.applicationContext as GameApplication)
-            val name = app.user.displayName ?: "GUEST"
+            val name = app.auth.currentUser?.displayName ?: "GUEST"
             val leaderboard = Leaderboard(0, name, score)
             game.scope.launch {
                 app.repository.insert(leaderboard)
