@@ -18,6 +18,7 @@ import com.google.firebase.ktx.Firebase
 import com.stepbros.captainjumperboy.GameApplication
 import com.stepbros.captainjumperboy.R
 import com.stepbros.captainjumperboy.database.leaderboard.GlobalLeaderboardAdapter
+import com.stepbros.captainjumperboy.database.leaderboard.Highscore
 import com.stepbros.captainjumperboy.database.leaderboard.Leaderboard
 import com.stepbros.captainjumperboy.viewmodel.LeaderboardViewModel
 import com.stepbros.captainjumperboy.viewmodel.LeaderboardViewModelFactory
@@ -40,18 +41,24 @@ class LeaderboardActivity : AppCompatActivity() {
         LeaderboardViewModelFactory((application as GameApplication).repository)
     }
 
+    public override fun onPause() {
+        globalAdapter.stopListening()
+        super.onPause()
+    }
+    override fun onResume() {
+        super.onResume()
+        globalAdapter.startListening()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_leaderboard)
 
         db = Firebase.database
-        val scoresRef = db.reference.child(SCORES_CHILD)
+        val scoresRef = db.reference.child(SCORES_CHILD).orderByChild("score")
 
-        val leaderboard = Leaderboard(0, "Bryan Koh", 2000000)
-        scoresRef.push().setValue(leaderboard)
-
-        val options = FirebaseRecyclerOptions.Builder<Leaderboard>()
-            .setQuery(scoresRef, Leaderboard::class.java)
+        val options = FirebaseRecyclerOptions.Builder<Highscore>()
+            .setQuery(scoresRef, Highscore::class.java)
             .build()
         globalAdapter = GlobalLeaderboardAdapter(options)
 

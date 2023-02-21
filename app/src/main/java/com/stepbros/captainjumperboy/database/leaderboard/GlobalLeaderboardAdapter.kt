@@ -9,14 +9,19 @@ import com.stepbros.captainjumperboy.R
 import edu.singaporetech.madata.adapter.LeaderboardAdapter
 
 class GlobalLeaderboardAdapter(
-    private val options: FirebaseRecyclerOptions<Leaderboard>)
- : FirebaseRecyclerAdapter<Leaderboard, ViewHolder>(options){
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    private val options: FirebaseRecyclerOptions<Highscore>)
+ : FirebaseRecyclerAdapter<Highscore, LeaderboardAdapter.LeaderboardViewHolder>(options){
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LeaderboardAdapter.LeaderboardViewHolder {
        return LeaderboardAdapter.LeaderboardViewHolder.create(parent)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int, model: Leaderboard) {
-        val leaderboard = options.snapshots[position]
-        (holder as LeaderboardAdapter.LeaderboardViewHolder).bind(leaderboard.id.toString(), leaderboard.name, leaderboard.score.toString())
+    override fun onBindViewHolder(
+        holder: LeaderboardAdapter.LeaderboardViewHolder,
+        position: Int,
+        model: Highscore
+    ) {
+        val leaderboard = options.snapshots.reversed()[position] //probably really expensive lol
+        holder.bind((position + 1).toString(), leaderboard.name, leaderboard.score.toString())
     }
+
  }
