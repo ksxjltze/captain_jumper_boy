@@ -3,10 +3,15 @@ package com.stepbros.captainjumperboy.ui
 import android.app.Application
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.firebase.ui.auth.AuthUI
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.stepbros.captainjumperboy.GameApplication
 import com.stepbros.captainjumperboy.R
 
@@ -15,6 +20,14 @@ class MainMenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mainmenu)
+
+        val auth = Firebase.auth
+        if (auth.currentUser == null) {
+            // Not signed in, launch the Sign In activity
+            startActivity(Intent(this, FirebaseUIActivity::class.java))
+            finish()
+            return
+        }
 
         val startbtn: Button = findViewById(R.id.playbtn)
         val leaderboardBtn: Button = findViewById(R.id.leaderboardBtn)
@@ -36,4 +49,27 @@ class MainMenuActivity : AppCompatActivity() {
         }
 
     }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.sign_out_menu -> {
+                signOut()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun signOut() {
+        AuthUI.getInstance().signOut(this)
+        startActivity(Intent(this, FirebaseUIActivity::class.java))
+        finish()
+    }
+
 }
