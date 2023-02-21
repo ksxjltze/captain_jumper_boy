@@ -24,6 +24,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
     private lateinit var mainActivity: MainActivity
     private lateinit var scene:Scene
     val mediaplayer = MediaPlayer.create(Assets.view.context, R.raw.jump2)
+    val playeroffset:Float=1F
     //private var spritesheet = gameObject.getComponent<SpriteSheet>()
     private lateinit var anim : SpriteSheet
 
@@ -53,7 +54,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
     fun jump(){
         start = true
         val dt = GameThread.deltaTime
-        velocity.y = -20F ;
+        velocity.y = -25F ;
 
         if(firsttouch)
         {
@@ -108,11 +109,19 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
     }
 
     override fun onSensorDataChanged(x: Float, y: Float, z: Float) {
-        velocity.x -=(x*2f)
+        velocity.x -=(x*2.5f)
     }
 
     override fun onCollided(obj: GameObject) {
-        if(obj.name=="Platform" && velocity.y>0 ) //only collide if its going down
+        val platformAABB = obj.getComponent<Collision.AABB>()
+        var platformTop = 0.0F
+        var playerBottom = 0.0F
+        if (platformAABB != null) {
+            platformTop = platformAABB.pos.y - platformAABB.absoluteHalfSize.y
+        }
+        playerBottom = transform.position.y + aabb.absoluteHalfSize.y+playeroffset
+        if(obj.name=="Platform"  &&
+            ((playerBottom) <= platformTop + velocity.y)) //only collide if its going down
         {
             firsttouch=true
             Isjump=true

@@ -33,6 +33,10 @@ class PlatformSpawner : Scriptable() {
     {
         return rng.nextFloat() * 1000F
     }
+    private fun GetRandomScaleX() : Float
+    {
+        return rng.nextFloat() * 3F
+    }
 
     //initial spawn
     private fun spawn(){
@@ -95,7 +99,7 @@ class PlatformSpawner : Scriptable() {
                 plat.transform.position.y = startY + offset
 
                 plat.transform.position.x = GetRandomPosX() + (plat.transform.scale.x * 0.5f)
-                plat.transform.scale.x = 5F
+                plat.transform.scale.x = 2F+GetRandomScaleX()
 
                 //MOVED TO CaptainJumperBoy UPDATE (UPDATE ALL AABBs)
 //                aabb.pos=plat.transform.position
