@@ -109,7 +109,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
     }
 
     override fun onSensorDataChanged(x: Float, y: Float, z: Float) {
-        velocity.x -=(x*2.5f)
+        velocity.x -=(x*3f)
     }
 
     override fun onCollided(obj: GameObject) {
