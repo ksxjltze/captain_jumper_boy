@@ -51,7 +51,7 @@ class LeaderboardAdapter(private val context: Context) :
      * Replace the contents of a view with a new view item (invoked by the layout manager)
      */
     override fun onBindViewHolder(viewHolder: LeaderboardViewHolder, position: Int) {
-        Log.d("LeaderboardActivity", "onBindViewHolder")
+        //Log.d("LeaderboardActivity", "onBindViewHolder")
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         val current = getItem(position)

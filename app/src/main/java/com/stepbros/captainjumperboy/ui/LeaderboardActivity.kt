@@ -11,9 +11,14 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.stepbros.captainjumperboy.GameApplication
 import com.stepbros.captainjumperboy.R
+import com.stepbros.captainjumperboy.database.leaderboard.GlobalLeaderboardAdapter
+import com.stepbros.captainjumperboy.database.leaderboard.Leaderboard
 import com.stepbros.captainjumperboy.viewmodel.LeaderboardViewModel
 import com.stepbros.captainjumperboy.viewmodel.LeaderboardViewModelFactory
 import edu.singaporetech.madata.adapter.LeaderboardAdapter
@@ -29,7 +34,7 @@ class LeaderboardActivity : AppCompatActivity() {
 
     //adapters
     private val localAdapter = LeaderboardAdapter(this)
-    private val globalAdapter = LeaderboardAdapter(this)
+    private lateinit var globalAdapter : GlobalLeaderboardAdapter
 
     private val viewModel: LeaderboardViewModel by viewModels{
         LeaderboardViewModelFactory((application as GameApplication).repository)
@@ -38,6 +43,14 @@ class LeaderboardActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_leaderboard)
+
+        db = Firebase.database
+        val scoresRef = db.reference.child(SCORES_CHILD)
+
+        val options = FirebaseRecyclerOptions.Builder<Leaderboard>()
+            .setQuery(scoresRef, Leaderboard::class.java)
+            .build()
+        globalAdapter = GlobalLeaderboardAdapter(options)
 
         val switch = findViewById<SwitchCompat>(R.id.globalSwitch)
         switch.setOnCheckedChangeListener { compoundButton, b ->
@@ -71,5 +84,9 @@ class LeaderboardActivity : AppCompatActivity() {
         clearBtn.setOnClickListener {
             viewModel.deleteAll()
         }
+    }
+
+    companion object{
+        const val SCORES_CHILD = "scores"
     }
 }

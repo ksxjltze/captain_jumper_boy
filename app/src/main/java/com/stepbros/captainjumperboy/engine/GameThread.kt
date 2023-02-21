@@ -27,6 +27,7 @@ class GameThread(private var surfaceHolder: SurfaceHolder, private var gameView:
         var deltaTime : Float = 0F
 
         fun exit(){
+            Input.touchEvent = false
             game.setRunning(false)
             game.isExit = true
         }

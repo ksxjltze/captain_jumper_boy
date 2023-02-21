@@ -23,6 +23,7 @@ class PauseController : Scriptable() {
         quitButton = findObject("QuitButton")
 
         pauseMenu.active = false
+        isPaused = false
 
         //kotlin is so pog
         pauseButtonAABB = pauseButton.getComponentForced()
