@@ -3,13 +3,19 @@ package com.stepbros.captainjumperboy.engine
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
 import android.graphics.Canvas
+import android.util.Log
 import android.view.SurfaceHolder
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.snapshots
 import com.google.firebase.ktx.Firebase
 import com.stepbros.captainjumperboy.GameApplication
 import com.stepbros.captainjumperboy.database.leaderboard.Highscore
 import com.stepbros.captainjumperboy.database.leaderboard.Leaderboard
+import com.stepbros.captainjumperboy.engine.GameThread.Companion.deltaTime
+import com.stepbros.captainjumperboy.engine.GameThread.Companion.game
 import com.stepbros.captainjumperboy.math.Transform
 import com.stepbros.captainjumperboy.ui.GameView
 import com.stepbros.captainjumperboy.ui.LeaderboardActivity
@@ -55,15 +61,52 @@ class GameThread(private var surfaceHolder: SurfaceHolder, private var gameView:
             val user = app.auth.currentUser
             if (user != null){
                 val scoresRef = db.reference.child(LeaderboardActivity.SCORES_CHILD)
-                val name = user.displayName
+                val name = user.displayName ?: return
 
-                if (name != null){
-                    val highscore = Highscore()
-                    highscore.name = name
-                    highscore.score = score
-                    highscore.userId = user.uid
-                    scoresRef.push().setValue(highscore)
-                }
+                val highscore = Highscore()
+                highscore.name = name
+                highscore.score = score
+                highscore.userId = user.uid
+
+                val query = scoresRef.orderByChild("userId").equalTo(user.uid)
+                query.addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        //find first matching entry (matches user uid)
+                        var entry : DataSnapshot? = null
+                        for (child in snapshot.children){
+                            val userIdAny = child.child("userId").value ?: continue
+                            val userId = userIdAny as String
+                            if (userId != user.uid)
+                                continue
+
+                            entry = child
+                            break
+                        }
+
+                        //no such entry, create new
+                        if (entry == null){
+                            scoresRef.push().setValue(highscore)
+                            return
+                        }
+
+                        //fetch latest high score
+                        val value = entry.child("score").value
+                        if (value != null){
+                            app.highscore = (value as Long).toInt()
+                        }
+
+                        if (score <= app.highscore) //score is not high score
+                            return
+
+                        //update high score
+                        entry.ref.setValue(highscore)
+
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        Log.i("TEST", "KABOOM")
+                    }
+                })
 
             }
         }
