@@ -47,6 +47,9 @@ class LeaderboardActivity : AppCompatActivity() {
         db = Firebase.database
         val scoresRef = db.reference.child(SCORES_CHILD)
 
+        val leaderboard = Leaderboard(0, "Bryan Koh", 2000000)
+        scoresRef.push().setValue(leaderboard)
+
         val options = FirebaseRecyclerOptions.Builder<Leaderboard>()
             .setQuery(scoresRef, Leaderboard::class.java)
             .build()
