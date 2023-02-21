@@ -56,6 +56,8 @@ class Gameover : Scriptable() {
             if(playonce)//play this audio once
             {
                 GameThread.saveScoreLocal(scoreManager.score)
+                GameThread.saveHighscore(scoreManager.score)
+
                 mediaplayer.seekTo(0);
                 mediaplayer.start();
                 playonce=false
@@ -65,7 +67,7 @@ class Gameover : Scriptable() {
             {
                 val tutorial = findObject("Background2")
                 val text:Text = tutorial.getComponent<Text>() ?: return
-               text.str=""//remove tutorial text
+                text.str=""//remove tutorial text
                 sprite.image.Alpha+=5
                 //go to gameover activity to input score
             }

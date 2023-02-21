@@ -4,13 +4,20 @@ import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
 import android.graphics.Canvas
 import android.view.SurfaceHolder
+import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.snapshots
+import com.google.firebase.ktx.Firebase
 import com.stepbros.captainjumperboy.GameApplication
+import com.stepbros.captainjumperboy.database.leaderboard.Highscore
 import com.stepbros.captainjumperboy.database.leaderboard.Leaderboard
 import com.stepbros.captainjumperboy.math.Transform
 import com.stepbros.captainjumperboy.ui.GameView
+import com.stepbros.captainjumperboy.ui.LeaderboardActivity
 import com.stepbros.captainjumperboy.ui.MainMenuActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.launch
 
 class GameThread(private var surfaceHolder: SurfaceHolder, private var gameView: GameView) : Thread() {
@@ -38,6 +45,26 @@ class GameThread(private var surfaceHolder: SurfaceHolder, private var gameView:
             val leaderboard = Leaderboard(0, name, score)
             game.scope.launch {
                 app.repository.insert(leaderboard)
+            }
+        }
+
+        fun saveHighscore(score : Int){
+            val app = (game.gameView.context.applicationContext as GameApplication)
+            val db = Firebase.database
+
+            val user = app.auth.currentUser
+            if (user != null){
+                val scoresRef = db.reference.child(LeaderboardActivity.SCORES_CHILD)
+                val name = user.displayName
+
+                if (name != null){
+                    val highscore = Highscore()
+                    highscore.name = name
+                    highscore.score = score
+                    highscore.userId = user.uid
+                    scoresRef.push().setValue(highscore)
+                }
+
             }
         }
 
