@@ -1,9 +1,12 @@
 package com.stepbros.captainjumperboy.ui
 
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.Button
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SwitchCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,8 +19,13 @@ import com.stepbros.captainjumperboy.viewmodel.LeaderboardViewModelFactory
 import edu.singaporetech.madata.adapter.LeaderboardAdapter
 
 class LeaderboardActivity : AppCompatActivity() {
+    private lateinit var db: FirebaseDatabase
+
     // view binding to access view elements
     private lateinit var recyclerView : RecyclerView
+
+    //views
+    private lateinit var clearBtn : Button
 
     private val viewModel: LeaderboardViewModel by viewModels{
         LeaderboardViewModelFactory((application as GameApplication).repository)
@@ -26,6 +34,14 @@ class LeaderboardActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_leaderboard)
+
+        val switch = findViewById<SwitchCompat>(R.id.globalSwitch)
+        switch.setOnCheckedChangeListener { compoundButton, b ->
+            when (compoundButton.isChecked){
+                true -> clearBtn.visibility = View.GONE
+                false -> clearBtn.visibility = View.VISIBLE
+            }
+        }
 
         recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         // call the method addItemDecoration with the
@@ -42,7 +58,7 @@ class LeaderboardActivity : AppCompatActivity() {
             scores?.let { adapter.submitList(it) }
         })
 
-        val clearBtn = findViewById<Button>(R.id.clearBtn)
+        clearBtn = findViewById<Button>(R.id.clearBtn)
         clearBtn.setOnClickListener {
             viewModel.deleteAll()
         }

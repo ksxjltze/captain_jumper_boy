@@ -8,4 +8,5 @@
     <string name="nameString">%1$s</string>
     <string name="scoreString">%1$d</string>
     <string name="sign_out">Sign Out</string>
+    <string name="global_string">Global</string>
 </resources>
