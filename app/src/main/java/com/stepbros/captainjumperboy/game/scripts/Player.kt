@@ -26,7 +26,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
     private lateinit var scene:Scene
     val mediaplayer = MediaPlayer.create(Assets.view.context, R.raw.jump2)
     val playeroffset:Float=1F
-    var lastCollidedPlatformID = 0
+    var lastCollidedPlatformY = 2500F
     //private var spritesheet = gameObject.getComponent<SpriteSheet>()
     private lateinit var anim : SpriteSheet
     //score manager
@@ -102,11 +102,8 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         }
         else
         {
-            val difficultyMultiplier = scoreManager.score / scoreManager.scoreIncrement
-            Log.i("Vel", velocity.y.toString())
-
             if(velocity.y > 0.0f)
-                velocity.y += (1F + (difficultyMultiplier * 0.05F))
+                velocity.y += (1F + (scoreManager.score / scoreManager.scoreIncrement * 0.05F))
             else
                 velocity.y += 1F
         }
@@ -134,9 +131,9 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         if(obj.name=="Platform"  &&
             ((playerBottom) <= platformTop + velocity.y)) //only collide if its going down
         {
-            if(obj.id != lastCollidedPlatformID)
+            if(obj.transform.position.y < lastCollidedPlatformY)
             {
-                lastCollidedPlatformID = obj.id
+                lastCollidedPlatformY = obj.transform.position.y
                 scoreManager.incrementScore()
             }
             firsttouch=true

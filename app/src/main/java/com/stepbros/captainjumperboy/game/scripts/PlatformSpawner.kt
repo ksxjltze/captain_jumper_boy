@@ -47,7 +47,6 @@ class PlatformSpawner : Scriptable() {
         for (i in 0 until count){
             val platform = createObject()
             platform.name="Platform"
-            platform.id = i
             platform.addComponent(Sprite(birdImage))
             platform.transform.scale.y = 0.5F
             platform.transform.scale.x = 4F
