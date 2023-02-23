@@ -2,6 +2,7 @@ package com.stepbros.captainjumperboy.game.scripts
 
 import android.annotation.SuppressLint
 import android.media.MediaPlayer
+import android.util.Log
 import com.stepbros.captainjumperboy.R
 import com.stepbros.captainjumperboy.engine.*
 import com.stepbros.captainjumperboy.engine.assets.Assets
@@ -57,8 +58,8 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
 
     fun jump(){
         start = true
-        val dt = GameThread.deltaTime
-        velocity.y = -25F ;
+
+        velocity.y = -25F
 
         if(firsttouch)
         {
@@ -83,11 +84,9 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         if(isdead)return
 
         val Width = GameView.windowWidth.toFloat()
-        val Height = GameView.windowHeight.toFloat()
-        val dt = GameThread.deltaTime
-//        aabb.pos = transform.position //MOVED TO CaptainJumperBoy UPDATE
         transform.position.x += velocity.x
         transform.position.y += velocity.y
+
         if(transform.position.x>= Width)
         {
             transform.position.x=0.0f
@@ -101,7 +100,16 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
             jump()
             Isjump=false
         }
-        else velocity.y += 1F
+        else
+        {
+            val difficultyMultiplier = scoreManager.score / scoreManager.scoreIncrement
+            Log.i("Vel", velocity.y.toString())
+
+            if(velocity.y > 0.0f)
+                velocity.y += (1F + (difficultyMultiplier * 0.05F))
+            else
+                velocity.y += 1F
+        }
 
         if(transform.position.y<Camera.screenHeight/2.0f && !Isjump)
         {
