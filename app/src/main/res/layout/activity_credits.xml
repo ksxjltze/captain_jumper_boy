@@ -10,6 +10,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:srcCompat="@drawable/credits"
-        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteX="-128dp"
         tools:layout_editor_absoluteY="0dp" />
+
+    <Button
+        android:id="@+id/backBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="88dp"
+        android:text="@string/backBtn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
