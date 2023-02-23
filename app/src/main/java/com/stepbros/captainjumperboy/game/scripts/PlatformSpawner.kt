@@ -20,8 +20,6 @@ class PlatformSpawner : Scriptable() {
     private val count = 15
     private val rng = Random(LocalTime.now().second)
 
-    //score manager
-    private lateinit var scoreManager : ScoreManager
     private lateinit var player : GameObject
     private lateinit var playerscript : Player
 
@@ -49,6 +47,7 @@ class PlatformSpawner : Scriptable() {
         for (i in 0 until count){
             val platform = createObject()
             platform.name="Platform"
+            platform.id = i
             platform.addComponent(Sprite(birdImage))
             platform.transform.scale.y = 0.5F
             platform.transform.scale.x = 4F
@@ -75,7 +74,6 @@ class PlatformSpawner : Scriptable() {
     }
 
     override fun start() {
-        scoreManager = findObject("GameManager").getScript<ScoreManager>()!!
         player = findObject("Player")
         playerscript = player.getScript<Player>() ?: return
     }
@@ -108,7 +106,6 @@ class PlatformSpawner : Scriptable() {
 //                aabb.RecalculateHalfSize(plat.transform.scale*0.5f)
                 //Highscore+=100
 
-                scoreManager.incrementScore()
             }
         }
     }

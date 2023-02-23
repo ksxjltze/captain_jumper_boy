@@ -22,6 +22,7 @@ class GameObject {
     var visible = true
 
     var name : String = "GameObject"
+    var id  = 0
     var transform = Transform()
 
     fun startEarly() {

@@ -25,8 +25,11 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
     private lateinit var scene:Scene
     val mediaplayer = MediaPlayer.create(Assets.view.context, R.raw.jump2)
     val playeroffset:Float=1F
+    var lastCollidedPlatformID = 0
     //private var spritesheet = gameObject.getComponent<SpriteSheet>()
     private lateinit var anim : SpriteSheet
+    //score manager
+    private lateinit var scoreManager : ScoreManager
 
     fun setScene(s:Scene)
     {
@@ -49,6 +52,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         transform.position.y = firstPlatform.transform.position.y - 100.0F
         isdead=false
         anim = gameObject.getComponent<SpriteSheet>() ?: return
+        scoreManager = findObject("GameManager").getScript<ScoreManager>()!!
     }
 
     fun jump(){
@@ -64,7 +68,6 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
             mediaplayer.start();
             firsttouch=false
         }
-
     }
 
     @SuppressLint("SuspiciousIndentation")
@@ -123,8 +126,14 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         if(obj.name=="Platform"  &&
             ((playerBottom) <= platformTop + velocity.y)) //only collide if its going down
         {
+            if(obj.id != lastCollidedPlatformID)
+            {
+                lastCollidedPlatformID = obj.id
+                scoreManager.incrementScore()
+            }
             firsttouch=true
             Isjump=true
+
         }
         else
             return
