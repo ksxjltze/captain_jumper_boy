@@ -21,12 +21,14 @@
         <activity
             android:name=".ui.LeaderboardActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:parentActivityName=".ui.MainMenuActivity" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity android:name=".ui.FirebaseUIActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -48,6 +50,16 @@
             android:name=".ui.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.CreditsActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.MainMenuActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
     </application>
 
 </manifest>

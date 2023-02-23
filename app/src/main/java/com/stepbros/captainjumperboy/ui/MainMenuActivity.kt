@@ -37,6 +37,7 @@ class MainMenuActivity : AppCompatActivity() {
 
         val startbtn: Button = findViewById(R.id.playbtn)
         val leaderboardBtn: Button = findViewById(R.id.leaderboardBtn)
+        val creditsBtn: Button = findViewById(R.id.creditsBtn)
         val playerIdText : TextView = findViewById(R.id.playerIdText)
 
         playerIdText.text = (application as GameApplication).auth.currentUser?.displayName ?: "GUEST"
@@ -51,6 +52,14 @@ class MainMenuActivity : AppCompatActivity() {
             Toast.makeText(this, "Leaderboard!", Toast.LENGTH_SHORT).show()
             //Go to leaderboard
             val intent = Intent(this, LeaderboardActivity::class.java)
+            startActivity(intent)
+        }
+
+        creditsBtn.setOnClickListener {
+
+            Toast.makeText(this, "Credits!", Toast.LENGTH_SHORT).show()
+            //Go to leaderboard
+            val intent = Intent(this, CreditsActivity::class.java)
             startActivity(intent)
         }
 
