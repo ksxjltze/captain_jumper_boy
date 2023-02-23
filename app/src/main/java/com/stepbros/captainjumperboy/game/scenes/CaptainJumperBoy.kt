@@ -72,8 +72,6 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
                 position = Vector2D(500f, 800f)
             }
         }
-
-
         val gameover = createObject()
         gameover.apply {
             name = "gameover"

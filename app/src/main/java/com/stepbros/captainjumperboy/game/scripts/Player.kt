@@ -103,7 +103,7 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         else
         {
             if(velocity.y > 0.0f)
-                velocity.y += (1F + (scoreManager.score / scoreManager.scoreIncrement * 0.05F))
+                velocity.y += (1F + (scoreManager.score / scoreManager.scoreIncrement * 0.03F))
             else
                 velocity.y += 1F
         }
