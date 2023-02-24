@@ -47,7 +47,10 @@ class GameThread(private var surfaceHolder: SurfaceHolder, private var gameView:
 
         fun saveScoreLocal(score : Int){
             val app = (game.gameView.context.applicationContext as GameApplication)
-            val name = app.auth.currentUser?.displayName ?: "GUEST"
+            var name = app.auth.currentUser?.displayName ?: "GUEST"
+            if (name.isEmpty())
+                name = "GUEST"
+
             val leaderboard = Leaderboard(0, name, score)
             game.scope.launch {
                 app.repository.insert(leaderboard)
@@ -62,6 +65,9 @@ class GameThread(private var surfaceHolder: SurfaceHolder, private var gameView:
             if (user != null){
                 val scoresRef = db.reference.child(LeaderboardActivity.SCORES_CHILD)
                 val name = user.displayName ?: return
+
+                if (name.isEmpty())
+                    return
 
                 val highscore = Highscore()
                 highscore.name = name

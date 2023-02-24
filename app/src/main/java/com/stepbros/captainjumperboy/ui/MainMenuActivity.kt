@@ -40,7 +40,14 @@ class MainMenuActivity : AppCompatActivity() {
         val creditsBtn: Button = findViewById(R.id.creditsBtn)
         val playerIdText : TextView = findViewById(R.id.playerIdText)
 
-        playerIdText.text = (application as GameApplication).auth.currentUser?.displayName ?: "GUEST"
+        val user = (application as GameApplication).auth.currentUser!!
+        playerIdText.text = user.displayName.let {
+            if (it != null) {
+                if (it.isEmpty())
+                    return@let "GUEST"
+            }
+            it ?: "GUEST"
+        }
 
         startbtn.setOnClickListener {
             Toast.makeText(this, "Game starting!", Toast.LENGTH_SHORT).show()
