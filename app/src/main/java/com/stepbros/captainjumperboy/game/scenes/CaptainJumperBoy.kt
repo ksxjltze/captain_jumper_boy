@@ -65,7 +65,7 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
         val tutorialtext = createObject()
         tutorialtext.apply {
             name = "Background2"
-            addComponent(Text(Vector2D(),"Tap to jump and tilt to move, don't fall",5F)
+            addComponent(Text(Vector2D(),"Tilt your phone to move, don't fall",5F)
                 .apply { useWorldPos = true })
             transform.apply {
                 scale = Vector2D(10F, 15F)
