@@ -47,13 +47,16 @@ class Player : Scriptable(), OnSensorDataChanged, OnCollidedListener
         val platformSpawner = findObject("spawner")
         val spawner = platformSpawner.getScript<PlatformSpawner>() ?: return
         mediaplayer.isLooping = false
+        lastCollidedPlatformY = 2500F
         mediaplayer.setVolume(10f,10f)
         val firstPlatform = spawner.platforms[0]
         transform.position.x = GameView.windowWidth / 2.0F
         transform.position.y = firstPlatform.transform.position.y - 100.0F
         isdead=false
+        firsttouch=false
         anim = gameObject.getComponent<SpriteSheet>() ?: return
         scoreManager = findObject("GameManager").getScript<ScoreManager>()!!
+        Camera.transform.position.y=0f
     }
 
     fun jump(){

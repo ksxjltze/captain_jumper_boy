@@ -68,7 +68,6 @@ open class Scene(var view: GameView) {
             gameObjectList[i].startEarly()
         }
     }
-
     fun start(){
         activeScene = this //kinda redundant (already set in startEarly)
 
@@ -125,7 +124,7 @@ open class Scene(var view: GameView) {
     open fun draw(canvas: Canvas){
         gameObjectList.forEach {gameObject ->  gameObject.draw(renderer)}
         renderer.draw(canvas)
-        debugDrawColliders(canvas)
+        //debugDrawColliders(canvas)
     }
 
     fun debugDrawColliders(canvas: Canvas){

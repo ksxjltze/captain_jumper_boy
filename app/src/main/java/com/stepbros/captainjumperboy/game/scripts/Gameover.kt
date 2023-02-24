@@ -5,18 +5,24 @@ import com.stepbros.captainjumperboy.R
 import com.stepbros.captainjumperboy.engine.*
 import com.stepbros.captainjumperboy.engine.assets.Assets
 import com.stepbros.captainjumperboy.engine.component.Scriptable
+import com.stepbros.captainjumperboy.game.scenes.CaptainJumperBoy
 import com.stepbros.captainjumperboy.ui.GameView
 
 class Gameover : Scriptable() {
-    private lateinit var scene: Scene
-    private var initialPosition = 0.0f
+    private lateinit var scene: CaptainJumperBoy
+    //private var initialPosition = 0.0f
+
+    private lateinit var restartButton : GameObject
+    private lateinit var menuButton : GameObject
+    private lateinit var restartButtonAABB : UIRect
+    private lateinit var menuButtonAABB : UIRect
 
     var playonce:Boolean=true
     val mediaplayer = MediaPlayer.create(Assets.view.context, R.raw.dead)
 
     private lateinit var scoreManager: ScoreManager
 
-    fun setScene(s: Scene)
+    fun setScene(s: CaptainJumperBoy)
     {
         this.scene=s
     }
@@ -24,13 +30,15 @@ class Gameover : Scriptable() {
         mediaplayer.isLooping = false
         mediaplayer.setVolume(10f,10f)
 
+        restartButton = findObject("RestartButton")
+        menuButton = findObject("MenuButton")
+        restartButtonAABB = restartButton.getComponentForced()
+        menuButtonAABB = menuButton.getComponentForced()
+
         val Width= GameView.windowWidth.toFloat()
         val Height= GameView.windowHeight.toFloat()
-
-
-
         transform.rotation = 0F
-        initialPosition = transform.position.y
+        //initialPosition = transform.position.y
         val sprite = gameObject.getComponent<Sprite>() ?: return
         transform.scale.x = (Width+50)/sprite.image.originalWidth
         transform.scale.y = (Height+50)/sprite.image.originalHeight
@@ -39,6 +47,9 @@ class Gameover : Scriptable() {
         sprite.image.Alpha=0
 
         scoreManager = findObject("GameManager").getScript<ScoreManager>()!!
+
+        restartButton.visible=false
+        menuButton.visible=false
     }
 
     override fun update() {
@@ -71,12 +82,27 @@ class Gameover : Scriptable() {
                 sprite.image.Alpha+=5
                 //go to gameover activity to input score
             }
-            if (Input.touchEvent)
+            if (Input.touchEvent ||sprite.image.Alpha>=255)//if touch or screen at full opacity, show buttons
             {
-                GameThread.exit()
+                sprite.image.Alpha=255
+                restartButton.active=true
+                menuButton.active=true
+                restartButton.visible=true
+                menuButton.visible=true
+            }
+            if (Input.touchEvent && sprite.image.Alpha>=255)
+            {
+                if (restartButtonAABB.isPointInside(Input.touchPos))
+                {
+                    scene.Restart()
+                }
+                else if (menuButtonAABB.isPointInside(Input.touchPos))
+                {
+                    GameThread.exit()
+                }
             }
             val text:Text = tutorial.getComponent<Text>() ?: return
-            text.str="Tap on screen to continue"//remove tutorial text
+            text.str=""//remove tutorial text
         }
 
     }

@@ -1,9 +1,7 @@
 package com.stepbros.captainjumperboy.game.scenes
 
-import android.icu.text.ListFormatter
 import com.stepbros.captainjumperboy.R
 import com.stepbros.captainjumperboy.engine.*
-import com.stepbros.captainjumperboy.engine.Camera.Companion.transform
 import com.stepbros.captainjumperboy.engine.assets.Image
 import com.stepbros.captainjumperboy.game.scripts.*
 import com.stepbros.captainjumperboy.math.Collision
@@ -13,9 +11,13 @@ import com.stepbros.captainjumperboy.ui.MainActivity
 
 
 class CaptainJumperBoy(view : GameView) : Scene(view){
-    private var playerObject : GameObject
+    private lateinit var playerObject : GameObject
     private var cameraSpeed = 2.0F
     init {
+        init()
+    }
+    fun init()
+    {
         gameObjectList.clear()
         paused = false
 
@@ -27,7 +29,7 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
 //            scale = Vector2D(2F, 2F)
 //            position = Vector2D(mainmenu.originalWidth / 2F, mainmenu.originalHeight / 2F)
 //        }
-       // BG.addScript<Background>()
+        // BG.addScript<Background>()
 //        BG.getScript<Background>()?.setScene(this)
 
         val platformSpawner = createObject("spawner")
@@ -78,8 +80,34 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
             addComponent(Sprite(Image(R.drawable.gameover, false)).apply { layer = Layer.UI })
 
             addScript<Gameover>()
+            getScript<Gameover>()?.setScene(this@CaptainJumperBoy)
+            val buttonSize = Vector2D(3F, 2F)
+
+            //CREATE MENU OBJECTS
+            //RESTART
+            createObject("RestartButton").apply {
+                transform.apply {
+                    position.x = gameover.transform.position.x + 550F
+                    position.y = gameover.transform.position.y + 1600F
+                    scale = buttonSize
+                }
+                parent = gameover
+                addComponent(Sprite(Image(R.drawable.restart)).apply { layer = Layer.UI_FOREGROUND })
+                addComponent(UIRect(transform.position, transform.scale * 0.5F))
+            }
+
+            //GOTOMENU
+            createObject("MenuButton").apply {
+                transform.apply {
+                    position.x = gameover.transform.position.x + 550F
+                    position.y = gameover.transform.position.y + 2000F
+                    scale = buttonSize
+                }
+                parent = gameover
+                addComponent(Sprite(Image(R.drawable.menu)).apply { layer = Layer.UI_FOREGROUND })
+                addComponent(UIRect(transform.position, transform.scale * 0.5F))
+            }
         }
-        gameover.getScript<Gameover>()?.setScene(this)
 
         //GAME MANAGER
         val gameManager = createObject("GameManager")
@@ -140,10 +168,10 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
             }
         }
     }
-    override fun update() {
-        super.update()
-//        if (playerObject.getScript<Player>()?.start == true)
-//            Camera.transform.position.y += GameThread.deltaTime * cameraSpeed
-        //collision loop..need to destroy platforms out of viewport otherwise this will get slower..
+    fun Restart()
+    {
+        init()
+        this.startEarly()
+        this.start()
     }
 }

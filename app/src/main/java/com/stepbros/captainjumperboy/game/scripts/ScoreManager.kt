@@ -12,6 +12,6 @@ class ScoreManager : Scriptable() {
     }
 
     override fun start() {
-
+        score = 0
     }
 }

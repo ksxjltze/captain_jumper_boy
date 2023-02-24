@@ -69,6 +69,7 @@ class PlatformSpawner : Scriptable() {
     }
 
     override fun startEarly(){
+        spawnCounter = 0 //used to set new spawn position after initial spawning
         spawn()
     }
 

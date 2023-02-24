@@ -15,6 +15,8 @@ class PauseController : Scriptable() {
     private lateinit var quitButtonAABB : UIRect
 
     var isPaused = false
+    private lateinit var player : GameObject
+    private lateinit var playerscript : Player
 
     override fun start() {
         pauseButton = findObject("PauseButton")
@@ -24,14 +26,20 @@ class PauseController : Scriptable() {
 
         pauseMenu.active = false
         isPaused = false
-
+        pauseButton.visible=true
         //kotlin is so pog
         pauseButtonAABB = pauseButton.getComponentForced()
         resumeButtonAABB = resumeButton.getComponentForced()
         quitButtonAABB = quitButton.getComponentForced()
+        player = findObject("Player")
+        playerscript = player.getScript<Player>() ?: return
     }
 
     override fun pausedUpdate() {
+        if(playerscript.isdead) {
+            pauseButton.visible = false//cannot see pause button upon death
+            return
+        }
         //not paused, check for button press
         if (!isPaused){
             //pause button was pressed
