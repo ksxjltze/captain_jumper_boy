@@ -75,7 +75,7 @@ class CaptainJumperBoy(view : GameView) : Scene(view){
         val gameover = createObject()
         gameover.apply {
             name = "gameover"
-            addComponent(Sprite(Image(R.drawable.gameover)).apply { layer = Layer.UI })
+            addComponent(Sprite(Image(R.drawable.gameover, false)).apply { layer = Layer.UI })
 
             addScript<Gameover>()
         }

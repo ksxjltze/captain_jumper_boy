@@ -27,13 +27,15 @@ class Gameover : Scriptable() {
         val Width= GameView.windowWidth.toFloat()
         val Height= GameView.windowHeight.toFloat()
 
-        transform.position.x = Width/2.0f
-        transform.position.y = Height/2.0f
-        transform.scale.x =Width/100.0f
-        transform.scale.y = Height/100.0f
+
+
         transform.rotation = 0F
         initialPosition = transform.position.y
         val sprite = gameObject.getComponent<Sprite>() ?: return
+        transform.scale.x = (Width+50)/sprite.image.originalWidth
+        transform.scale.y = (Height+50)/sprite.image.originalHeight
+        //transform.position.x = Width/2.0f
+        //transform.position.y = Height/2.0f
         sprite.image.Alpha=0
 
         scoreManager = findObject("GameManager").getScript<ScoreManager>()!!
