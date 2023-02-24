@@ -25,7 +25,7 @@ class Highscore : Scriptable() {
         transform.rotation = 0F
         val text:Text = gameObject.getComponent<Text>() ?: return
         text.str = "HIGHSCORE"
-        text.textcolor = Color.RED
+        text.textcolor = Color.WHITE
 //        initialPosition = transform.position.y
 
         scoreManager = findObject("GameManager").getScript<ScoreManager>()!!

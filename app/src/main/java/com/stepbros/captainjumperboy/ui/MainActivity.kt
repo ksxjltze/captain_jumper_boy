@@ -7,6 +7,7 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -39,6 +40,9 @@ class MainActivity : Activity(), SensorEventListener {
 
         /** Set GameView as our UI as we will be drawing on a Canvas not layouts **/
         setContentView(GameView(this))
+
+        /** Keep screen on when playing game **/
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         /** Set up Sensors */
         //todo could move into separate class
