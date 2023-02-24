@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.lifecycle.Observer
@@ -92,7 +93,17 @@ class LeaderboardActivity : AppCompatActivity() {
 
         clearBtn = findViewById<Button>(R.id.clearBtn)
         clearBtn.setOnClickListener {
-            viewModel.deleteAll()
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Confirmation")
+            builder.setMessage("Are you sure you want to clear the leaderboard? (This cannot be undone!)")
+            builder.setPositiveButton("Yes") { dialog, which ->
+                viewModel.deleteAll() //clears the database
+            }
+            builder.setNegativeButton("No") { dialog, which ->
+                // Do nothing
+            }
+            val dialog = builder.create()
+            dialog.show()
         }
     }
 
