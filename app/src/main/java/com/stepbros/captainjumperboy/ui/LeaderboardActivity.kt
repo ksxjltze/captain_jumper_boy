@@ -1,9 +1,11 @@
 package com.stepbros.captainjumperboy.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -90,6 +92,15 @@ class LeaderboardActivity : AppCompatActivity() {
             // Update the cached copy of the digits in the adapter.
             scores?.let { localAdapter.submitList(it) }
         })
+
+        val backBtn: Button = findViewById(R.id.backBtn2)
+
+        backBtn.setOnClickListener {
+            Toast.makeText(this, "Back to Main Menu!", Toast.LENGTH_SHORT).show()
+            //Go to leaderboard
+            val intent = Intent(this, MainMenuActivity::class.java)
+            startActivity(intent)
+        }
 
         clearBtn = findViewById<Button>(R.id.clearBtn)
         clearBtn.setOnClickListener {
