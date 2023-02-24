@@ -66,9 +66,9 @@ public abstract class LeaderboardRoomDatabase : RoomDatabase() {
                 scope.launch {
                     //populateDatabase(database.leaderboardDao())
                     Log.d("LeaderboardDatabase", "POPULATE DATABASE")
-                    database.leaderboardDao().insert(Leaderboard(1, "Bryan Koh", 9999))
-                    database.leaderboardDao().insert(Leaderboard(2, "Darrick", 9999))
-                    database.leaderboardDao().insert(Leaderboard(3, "LJK Algorithm", 9999))
+                    database.leaderboardDao().insert(Leaderboard(1, "LJK Algorithm", 5200))
+                    database.leaderboardDao().insert(Leaderboard(2, "Darrick", 2600))
+                    database.leaderboardDao().insert(Leaderboard(3, "Bryan", 2500))
                 }
             }
         }
