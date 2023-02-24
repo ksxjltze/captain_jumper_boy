@@ -63,11 +63,9 @@ class Gameover : Scriptable() {
                 playonce=false
             }
             val sprite = gameObject.getComponent<Sprite>() ?: return
+            val tutorial = findObject("Background2")
             if(sprite.image.Alpha<=255)
             {
-                val tutorial = findObject("Background2")
-                val text:Text = tutorial.getComponent<Text>() ?: return
-                text.str=""//remove tutorial text
                 sprite.image.Alpha+=5
                 //go to gameover activity to input score
             }
@@ -75,6 +73,8 @@ class Gameover : Scriptable() {
             {
                 GameThread.exit()
             }
+            val text:Text = tutorial.getComponent<Text>() ?: return
+            text.str="Tap on screen to continue"//remove tutorial text
         }
 
     }
